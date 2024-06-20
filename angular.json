@@ -30,7 +30,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+                            "src/styles.less"
             ],
             "scripts": []
           },
@@ -56,7 +56,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -93,7 +99,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+                            "src/styles.less"
             ],
             "scripts": []
           }
