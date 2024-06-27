@@ -11,8 +11,10 @@ export class HomeComponent {
   login() {
     this.authService.login().subscribe({
       next: (response) => {
-        const { data } = response;
-        window.location.href = data.url;
+        const {
+          data: { url },
+        } = response;
+        window.location.href = url;
       },
       error: (error) => {
         console.error('Error:', error);
