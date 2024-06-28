@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
     <span>SpoX</span>
     <span class="spacer"></span>
-    <button mat-button>Home</button>
-    <button mat-button>About</button>
-    <button mat-button>Contact</button>
+    <button>Home</button>
+    <button (click)="isAuthenticated ? logout() : login()">{{isAuthenticated ?"Logout" : "Login"}}</button>
+
 </mat-toolbar>

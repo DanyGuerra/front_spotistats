@@ -9,5 +9,5 @@ export const authResolver: ResolveFn<Observable<IResponseAuthLog>> = (
 ) => {
   const authService = inject(AuthService);
   const userId = route.paramMap.get('usernameid');
-  return authService.getAuthLog(userId);
+  return authService.getAuthLogByUserId(userId);
 };

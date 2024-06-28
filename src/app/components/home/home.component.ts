@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -6,8 +6,17 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  isAuthenticated: boolean = false;
+
   constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.isAuthenticated().subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+    });
+  }
+
   login() {
     this.authService.login().subscribe({
       next: (response) => {
@@ -20,5 +29,9 @@ export class HomeComponent {
         console.error('Error:', error);
       },
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

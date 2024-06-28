@@ -12,8 +12,8 @@ export const authGuard: CanActivateFn = async (
   const id = route.paramMap.get('usernameid');
 
   try {
-    const response = await firstValueFrom(authService.getAuthLog(id));
-    console.log(response);
+    const response = await firstValueFrom(authService.getAuthLogByUserId(id));
+
     if (response.statusCode === 200) {
       return true;
     } else {

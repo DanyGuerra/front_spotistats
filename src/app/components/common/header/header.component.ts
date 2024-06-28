@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,4 +10,32 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
 })
-export class HeaderComponent {}
+export class HeaderComponent implements OnInit {
+  isAuthenticated: boolean = false;
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService
+      .isAuthenticated()
+      .subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated));
+  }
+
+  login() {
+    this.authService.login().subscribe({
+      next: (response) => {
+        const {
+          data: { url },
+        } = response;
+        window.location.href = url;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      },
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+}
