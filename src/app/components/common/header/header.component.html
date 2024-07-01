@@ -1,7 +1,6 @@
-<mat-toolbar color="primary">
-    <span>SpoX</span>
-    <span class="spacer"></span>
-    <button>Home</button>
-    <button (click)="isAuthenticated ? logout() : login()">{{isAuthenticated ?"Logout" : "Login"}}</button>
-
-</mat-toolbar>
+<span>SpoX</span>
+<span class="spacer"></span>
+<p-button size="small" [outlined]="true">Home</p-button>
+<p-button size="small" (click)="isAuthenticated ? logout() : login()">
+  {{ isAuthenticated ? "Logout" : "Login" }}
+</p-button>

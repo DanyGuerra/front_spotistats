@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { PagenotfoundComponent } from './components/common/pagenotfound/pagenotfound.component';
 import { LoginErrorComponent } from './components/login-error/login-error.component';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { LoginErrorComponent } from './components/login-error/login-error.compon
     HeaderComponent,
     BrowserAnimationsModule,
     HttpClientModule,
+    ButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

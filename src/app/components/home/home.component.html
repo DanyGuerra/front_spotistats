@@ -1,4 +1,5 @@
 <app-header></app-header>
 <p>This is the Home</p>
-<button mat-button *ngIf="isAuthenticated" (click)="logout()">Logout</button> 
-<button mat-button *ngIf="!isAuthenticated" (click)="login()">Login</button> 
+<p-button size="small" (click)="isAuthenticated ? logout() : login()">{{
+  isAuthenticated ? "Logout" : "Login"
+}}</p-button>

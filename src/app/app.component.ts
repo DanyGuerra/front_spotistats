@@ -14,15 +14,15 @@ export class AppComponent implements OnInit {
     const idLog = localStorage.getItem(LocalStorage.LogId);
 
     if (idLog) {
-      this.authService.getAuthLog(idLog).subscribe(
-        () => {
+      this.authService.getAuthLog(idLog).subscribe({
+        next: () => {
           this.authService.setAuthenticated(true);
         },
-        () => {
+        error: () => {
           this.authService.setAuthenticated(false);
           localStorage.removeItem(LocalStorage.LogId);
-        }
-      );
+        },
+      });
     }
   }
 }
