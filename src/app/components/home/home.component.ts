@@ -1,20 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private authSuscription: Subscription | null = null;
   isAuthenticated: boolean = false;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.isAuthenticated().subscribe((isAuthenticated) => {
-      this.isAuthenticated = isAuthenticated;
-    });
+    this.authSuscription = this.authService
+      .isAuthenticated()
+      .subscribe((isAuthenticated) => {
+        this.isAuthenticated = isAuthenticated;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.authSuscription?.unsubscribe;
   }
 
   login() {

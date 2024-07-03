@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { ButtonModule } from 'primeng/button';
+import { Router, RouterModule } from '@angular/router';
+import { LocalStorage } from 'src/constants/localStorage';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private authSuscription: Subscription | null = null;
   isAuthenticated: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService
+    this.authSuscription = this.authService
       .isAuthenticated()
       .subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated));
+  }
+
+  ngOnDestroy(): void {
+    this.authSuscription?.unsubscribe();
   }
 
   login() {
@@ -37,5 +45,14 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  goMyProfile() {
+    const displayName = localStorage.getItem(LocalStorage.UserId);
+    if (displayName) {
+      this.router.navigate([`/${displayName}`]);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }
