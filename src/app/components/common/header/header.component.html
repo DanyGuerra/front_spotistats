@@ -1,6 +1,19 @@
-<span>SpoX</span>
-<span class="spacer"></span>
-<p-button size="small" [outlined]="true">Home</p-button>
-<p-button size="small" (click)="isAuthenticated ? logout() : login()">
-  {{ isAuthenticated ? "Logout" : "Login" }}
-</p-button>
+<div class="grid">
+  <div class="col-4"></div>
+  <div class="col-4 flex justify-content-center">
+    <span class="flex align-items-center" routerLink="/">SpoX</span>
+  </div>
+  <div class="col-4 flex justify-content-end">
+    <p-button
+      *ngIf="isAuthenticated"
+      size="small"
+      [outlined]="true"
+      [link]="true"
+      (click)="goMyProfile()"
+      >My perfil</p-button
+    >
+    <p-button size="small" (click)="isAuthenticated ? logout() : login()">
+      {{ isAuthenticated ? "Logout" : "Login" }}
+    </p-button>
+  </div>
+</div>
