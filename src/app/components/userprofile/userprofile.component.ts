@@ -20,6 +20,7 @@ export class UserprofileComponent implements OnInit {
     this.route.data.subscribe(({ authData }) => {
       const infoResponse: IResponseAuthLog = authData;
       localStorage.setItem(LocalStorage.LogId, infoResponse.data._id);
+      localStorage.setItem(LocalStorage.UserId, infoResponse.data.usernameId);
       this.authService.setAuthenticated(true);
     });
   }

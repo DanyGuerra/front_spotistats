@@ -12,6 +12,7 @@ import { LocalStorage } from 'src/constants/localStorage';
 })
 export class AuthService {
   private hostApiSpox = environment.hostApiSpox;
+  private hostApiSpoxContext = environment.hostApiSpoxContext;
   private isAuthenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
@@ -19,7 +20,7 @@ export class AuthService {
 
   login(): Observable<IResponseLogin> {
     return this.http.get<IResponseLogin>(
-      `${this.hostApiSpox}api/v1/auth/login`,
+      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/login`,
       {
         withCredentials: true,
       }
@@ -28,6 +29,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(LocalStorage.LogId);
+    localStorage.removeItem(LocalStorage.UserId);
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/']);
   }
@@ -42,7 +44,7 @@ export class AuthService {
 
   getAuthLog(id: string | null): Observable<IResponseAuthLog> {
     return this.http.get<IResponseAuthLog>(
-      `${this.hostApiSpox}api/v1/auth/get-log?id=${id}`,
+      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log?id=${id}`,
       {
         withCredentials: true,
       }
@@ -51,10 +53,17 @@ export class AuthService {
 
   getAuthLogByUserId(id: string | null): Observable<IResponseAuthLog> {
     return this.http.get<IResponseAuthLog>(
-      `${this.hostApiSpox}api/v1/auth/get-log-userid?userid=${id}`,
+      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log-userid?userid=${id}`,
       {
         withCredentials: true,
       }
+    );
+  }
+
+  logRefresh(id: string | null): Observable<IResponseAuthLog> {
+    return this.http.post<IResponseAuthLog>(
+      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/token/refresh?userid=${id}`,
+      {}
     );
   }
 }
