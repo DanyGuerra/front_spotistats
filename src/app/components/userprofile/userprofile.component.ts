@@ -10,7 +10,6 @@ import { LocalStorage } from 'src/constants/localStorage';
   styleUrls: ['./userprofile.component.less'],
 })
 export class UserprofileComponent implements OnInit {
-  isAuthenticated: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService

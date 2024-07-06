@@ -42,18 +42,18 @@ export class AuthService {
     this.isAuthenticatedSubject.next(isAuthenticated);
   }
 
-  getAuthLog(id: string | null): Observable<IResponseAuthLog> {
+  getAuthLog(logId: string | null): Observable<IResponseAuthLog> {
     return this.http.get<IResponseAuthLog>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log?id=${id}`,
+      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log?id=${logId}`,
       {
         withCredentials: true,
       }
     );
   }
 
-  getAuthLogByUserId(id: string | null): Observable<IResponseAuthLog> {
+  getAuthLogByUserId(userId: string | null): Observable<IResponseAuthLog> {
     return this.http.get<IResponseAuthLog>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log-userid?userid=${id}`,
+      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log-userid?userid=${userId}`,
       {
         withCredentials: true,
       }
