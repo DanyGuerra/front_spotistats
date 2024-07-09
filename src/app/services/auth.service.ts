@@ -5,7 +5,6 @@ import { IResponseAuthLog } from '../interfaces/IResponseAuthLog.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { LocalStorage } from 'src/constants/localStorage';
 
 @Injectable({
   providedIn: 'root',
@@ -28,8 +27,7 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem(LocalStorage.LogId);
-    localStorage.removeItem(LocalStorage.UserId);
+    localStorage.clear();
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/']);
   }
@@ -62,7 +60,7 @@ export class AuthService {
 
   logRefresh(id: string | null): Observable<IResponseAuthLog> {
     return this.http.post<IResponseAuthLog>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/token/refresh?userid=${id}`,
+      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/token/refresh?id=${id}`,
       {}
     );
   }
