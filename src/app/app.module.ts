@@ -6,11 +6,12 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { PagenotfoundComponent } from './components/common/pagenotfound/pagenotfound.component';
 import { LoginErrorComponent } from './components/login-error/login-error.component';
 import { ButtonModule } from 'primeng/button';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { ButtonModule } from 'primeng/button';
     HttpClientModule,
     ButtonModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
