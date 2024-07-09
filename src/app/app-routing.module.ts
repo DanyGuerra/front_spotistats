@@ -6,6 +6,7 @@ import { PagenotfoundComponent } from './components/common/pagenotfound/pagenotf
 import { authGuard } from './guards/auth.guard';
 import { LoginErrorComponent } from './components/login-error/login-error.component';
 import { authResolver } from './resolvers/auth.resolver';
+import { dataStatsResolver } from './resolvers/dataStats.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     resolve: {
       authData: authResolver,
+      dataStats: dataStatsResolver,
     },
   },
   { path: '**', component: PagenotfoundComponent },
