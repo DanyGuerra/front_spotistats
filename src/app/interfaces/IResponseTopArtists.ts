@@ -11,7 +11,7 @@ export interface Data {
   offset: number;
   href: string;
   next: string;
-  previous: any;
+  previous: string | null;
 }
 
 export interface Item {
