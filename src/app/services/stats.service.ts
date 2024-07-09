@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IResponseUserInfo } from '../interfaces/IResponseUserInfo';
-environment;
 import { TopInfoLimit, TopTimeRange } from 'src/constants/types';
 import { IResponseTopArtists } from '../interfaces/IResponseTopArtists';
+import { IResponseTopTracks } from '../interfaces/IResponseTopTracks';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +29,16 @@ export class StatsService {
   ): Observable<IResponseTopArtists> {
     return this.http.get<IResponseTopArtists>(
       `${this.hostApiSpox}${this.hostApiSpoxContext}stats/top-artists?id=${logId}&limit=${limit}&time_range=${timeRange}`
+    );
+  }
+
+  getTopTracks(
+    logId: string | null,
+    limit: TopInfoLimit = 50,
+    timeRange: TopTimeRange = TopTimeRange.LongTerm
+  ): Observable<IResponseTopTracks> {
+    return this.http.get<IResponseTopTracks>(
+      `${this.hostApiSpox}${this.hostApiSpoxContext}stats/top-tracks?id=${logId}&limit=${limit}&time_range=${timeRange}`
     );
   }
 }
