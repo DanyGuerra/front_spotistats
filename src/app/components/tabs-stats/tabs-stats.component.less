@@ -1,0 +1,38 @@
+.image-container {
+  overflow: hidden;
+}
+
+::ng-deep p-card {
+  .p-card-body {
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-container {
+    height: 100px;
+  }
+  ::ng-deep p-card {
+    width: 100px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .image-container {
+    height: 150px;
+  }
+
+  ::ng-deep p-card {
+    width: 150px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .image-container {
+    height: 250px;
+  }
+
+  ::ng-deep p-card {
+    width: 250px;
+  }
+}
