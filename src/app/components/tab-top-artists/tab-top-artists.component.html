@@ -1,0 +1,36 @@
+<div class="flex gap-4 flex-column">
+  <div class="flex justify-content-center">
+    <p-selectButton
+      [options]="stateOptions"
+      [(ngModel)]="value"
+      optionLabel="label"
+      optionValue="value"
+      (onChange)="onOptionChange($event)"
+    />
+  </div>
+  <div class="flex justify-content-center">
+    <div class="flex flex-wrap gap-3 justify-content-center">
+      <div *ngIf="!topArtists">No Data</div>
+      <p-card
+        *ngFor="let artist of topArtists"
+        class="cursor-pointer custom-card"
+        (click)="handleImageClick(artist.external_urls.spotify)"
+      >
+        <ng-template pTemplate="header">
+          <div class="image-container p-0">
+            <p-image
+              [src]="artist.images[0].url"
+              [alt]="artist.name"
+              width="100%"
+            ></p-image>
+          </div>
+        </ng-template>
+
+        <p class="font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0">
+          {{ artist.rank_number }}. &nbsp;
+          {{ artist.name }}
+        </p>
+      </p-card>
+    </div>
+  </div>
+</div>
