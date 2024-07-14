@@ -1,0 +1,43 @@
+<div class="flex gap-4 flex-column">
+  <div class="flex justify-content-center">
+    <p-selectButton
+      [options]="stateOptions"
+      [(ngModel)]="value"
+      optionLabel="label"
+      optionValue="value"
+      (onChange)="onChangeHandle($event)"
+    />
+  </div>
+  <div class="flex justify-content-center">
+    <div class="flex flex-wrap gap-3 justify-content-center">
+      <div *ngIf="!topTracks">No Data</div>
+      <p-card *ngFor="let track of topTracks" class="custom-card">
+        <ng-template pTemplate="header">
+          <div class="image-wrapper">
+            <p-image
+              [src]="track.album.images[0].url"
+              [alt]="track.name"
+              width="100%"
+              class="cursor-pointer"
+              (click)="handleImageClick(track.external_urls.spotify)"
+            ></p-image>
+            <app-audio-player
+              class="button-player"
+              [urlPreview]="track.preview_url"
+            ></app-audio-player>
+          </div>
+        </ng-template>
+
+        <p class="font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0">
+          {{ track.rank_number }}. &nbsp;
+          {{ track.name }}
+        </p>
+        <p
+          class="font-bold text-300 text-xs sm:text-xs md:text-base lg:text-base m-0 p-0"
+        >
+          {{ track.artists[0].name }}
+        </p>
+      </p-card>
+    </div>
+  </div>
+</div>
