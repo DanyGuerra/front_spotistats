@@ -56,3 +56,5 @@ export enum TopTimeRange {
   MediumTerm = 'medium_term', // approximately last 6 months
   ShortTerm = 'short_term', // approximately last 4 weeks
 }
+
+export const defaultTopRange = TopTimeRange.ShortTerm;
