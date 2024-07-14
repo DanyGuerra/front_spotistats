@@ -25,6 +25,7 @@ export interface TopArtistItem {
   popularity: number;
   type: string;
   uri: string;
+  rank_number: number;
 }
 
 export interface ExternalUrls {
