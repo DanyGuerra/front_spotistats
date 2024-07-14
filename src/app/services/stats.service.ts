@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IResponseUserInfo } from '../interfaces/IResponseUserInfo';
-import { TopInfoLimit, TopTimeRange } from 'src/constants/types';
+import {
+  TopInfoLimit,
+  TopTimeRange,
+  defaultTopRange,
+} from 'src/constants/types';
 import { IResponseTopArtists } from '../interfaces/IResponseTopArtists';
 import { IResponseTopTracks } from '../interfaces/IResponseTopTracks';
+import { LocalStorage } from 'src/constants/localStorage';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +18,10 @@ import { IResponseTopTracks } from '../interfaces/IResponseTopTracks';
 export class StatsService {
   private hostApiSpox = environment.hostApiSpox;
   private hostApiSpoxContext = environment.hostApiSpoxContext;
+  private topTracksSubject: BehaviorSubject<IResponseTopTracks | undefined> =
+    new BehaviorSubject<IResponseTopTracks | undefined>(undefined);
+  private topArtistsSubject: BehaviorSubject<IResponseTopArtists | undefined> =
+    new BehaviorSubject<IResponseTopArtists | undefined>(undefined);
 
   constructor(private http: HttpClient) {}
 
@@ -23,22 +32,71 @@ export class StatsService {
   }
 
   getTopArtists(
-    logId: string | null,
     limit: TopInfoLimit = 50,
-    timeRange: TopTimeRange = TopTimeRange.LongTerm
+    timeRange: TopTimeRange = defaultTopRange
   ): Observable<IResponseTopArtists> {
     return this.http.get<IResponseTopArtists>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}stats/top-artists?id=${logId}&limit=${limit}&time_range=${timeRange}`
+      `${this.hostApiSpox}${
+        this.hostApiSpoxContext
+      }stats/top-artists?id=${localStorage.getItem(
+        LocalStorage.LogId
+      )}&limit=${limit}&time_range=${timeRange}`
     );
   }
 
   getTopTracks(
-    logId: string | null,
     limit: TopInfoLimit = 50,
-    timeRange: TopTimeRange = TopTimeRange.LongTerm
+    timeRange: TopTimeRange = defaultTopRange
   ): Observable<IResponseTopTracks> {
     return this.http.get<IResponseTopTracks>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}stats/top-tracks?id=${logId}&limit=${limit}&time_range=${timeRange}`
+      `${this.hostApiSpox}${
+        this.hostApiSpoxContext
+      }stats/top-tracks?id=${localStorage.getItem(
+        LocalStorage.LogId
+      )}&limit=${limit}&time_range=${timeRange}`
     );
+  }
+
+  setTopTracks(
+    topTracks:IResponseTopTracks
+  ) {
+     this.topTracksSubject.next(topTracks);
+  }
+
+  setTopTracksByTimerange(
+    timeRange: TopTimeRange = TopTimeRange.LongTerm,
+    limit: TopInfoLimit = 50
+  ) {
+    this.getTopTracks(limit, timeRange).subscribe({
+      next: (data) => {
+        this.topTracksSubject.next(data);
+      },
+    });
+  }
+
+  setTopArtists(topArtists: IResponseTopArtists) {
+    this.topArtistsSubject.next(topArtists);
+  }
+
+  setTopArtistsByRange(
+    timeRange: TopTimeRange = TopTimeRange.LongTerm,
+    limit: TopInfoLimit = 50
+  ) {
+    if (!timeRange || !limit) {
+      return;
+    }
+    this.getTopArtists(limit, timeRange).subscribe({
+      next: (data) => {
+        this.topArtistsSubject.next(data);
+      },
+    });
+  }
+
+  getTopTracksSubject(): Observable<IResponseTopTracks | undefined> {
+    return this.topTracksSubject.asObservable();
+  }
+
+  getTopArtistsSubject(): Observable<IResponseTopArtists | undefined> {
+    return this.topArtistsSubject.asObservable();
   }
 }
