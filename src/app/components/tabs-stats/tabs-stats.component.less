@@ -2,37 +2,60 @@
   overflow: hidden;
 }
 
-::ng-deep p-card {
+.image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.image-wrapper p-image {
+  display: block;
+  width: 100%;
+}
+
+.button-player {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  z-index: 10;
+}
+
+.custom-card {
+  .p-card.p-component {
+    height: 100%;
+  }
   .p-card-body {
     padding: 0;
+  }
+  .p-card-content {
+    padding: 10px 5px;
   }
 }
 
 @media (max-width: 768px) {
   .image-container {
-    height: 100px;
+    height: 80px;
   }
-  ::ng-deep p-card {
-    width: 100px;
+  .custom-card {
+    width: 80px;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .image-container {
-    height: 150px;
+    height: 120px;
   }
 
-  ::ng-deep p-card {
-    width: 150px;
+  .custom-card {
+    width: 120px;
   }
 }
 
 @media (min-width: 1025px) {
   .image-container {
-    height: 250px;
+    height: 180px;
   }
 
-  ::ng-deep p-card {
-    width: 250px;
+  .custom-card {
+    width: 180px;
   }
 }

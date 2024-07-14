@@ -1,30 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { ImageModule } from 'primeng/image';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { TabViewModule } from 'primeng/tabview';
 import { HeaderComponent } from '../common/header/header.component';
-import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
-import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
+import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
+import { TabTopArtistsComponent } from '../tab-top-artists/tab-top-artists.component';
+import { TabTopTracksComponent } from '../tab-top-tracks/tab-top-tracks.component';
 
 @Component({
   selector: 'app-tabs-stats',
   standalone: true,
   imports: [
     TabViewModule,
-    CardModule,
-    ImageModule,
     HeaderComponent,
     CommonModule,
+    AudioPlayerComponent,
+    TabTopArtistsComponent,
+    TabTopTracksComponent,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class TabsStatsComponent {
-  @Input() topArtists!: TopArtistItem[];
-  @Input() topTracks!: TopTrackItem[];
-
-  handleImageClick(url: string) {
-    window.open(url, '_blank');
-  }
-}
+export class TabsStatsComponent {}

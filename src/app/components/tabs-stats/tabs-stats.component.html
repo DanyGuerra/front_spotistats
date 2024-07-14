@@ -1,54 +1,10 @@
 <section class="m-3">
   <p-tabView>
     <p-tabPanel header="Top Artists">
-      <div class="flex justify-content-center">
-        <div class="flex flex-wrap gap-3 justify-content-center">
-          <p-card
-            *ngFor="let artist of topArtists"
-            class="cursor-pointer"
-            (click)="handleImageClick(artist.external_urls.spotify)"
-          >
-            <ng-template pTemplate="header">
-              <div class="image-container p-0">
-                <p-image
-                  [src]="artist.images[0].url"
-                  [alt]="artist.name"
-                  width="100%"
-                ></p-image>
-              </div>
-            </ng-template>
-
-            <p class="font-bold sm:text-sm md:text-lg lg:text-lg m-0 p-0">
-              {{ artist.name }}
-            </p>
-          </p-card>
-        </div>
-      </div>
+      <app-tab-top-artists></app-tab-top-artists>
     </p-tabPanel>
     <p-tabPanel header="Top Tracks">
-      <div class="flex justify-content-center">
-        <div class="flex flex-wrap gap-3 justify-content-center">
-          <p-card
-            *ngFor="let track of topTracks"
-            class="cursor-pointer"
-            (click)="handleImageClick(track.external_urls.spotify)"
-          >
-            <ng-template pTemplate="header">
-              <div class="image-container p-0">
-                <p-image
-                  [src]="track.album.images[0].url"
-                  [alt]="track.name"
-                  width="100%"
-                ></p-image>
-              </div>
-            </ng-template>
-
-            <p class="font-bold sm:text-sm md:text-lg lg:text-lg m-0 p-0">
-              {{ track.name }}
-            </p>
-          </p-card>
-        </div>
-      </div>
+      <app-tab-top-tracks></app-tab-top-tracks>
     </p-tabPanel>
   </p-tabView>
 </section>
