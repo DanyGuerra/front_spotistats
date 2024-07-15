@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IResponseUserInfo } from '../interfaces/IResponseUserInfo';
 import {
@@ -18,12 +18,27 @@ import { LocalStorage } from 'src/constants/localStorage';
 export class StatsService {
   private hostApiSpox = environment.hostApiSpox;
   private hostApiSpoxContext = environment.hostApiSpoxContext;
+
   private topTracksSubject: BehaviorSubject<IResponseTopTracks | undefined> =
     new BehaviorSubject<IResponseTopTracks | undefined>(undefined);
   private topArtistsSubject: BehaviorSubject<IResponseTopArtists | undefined> =
     new BehaviorSubject<IResponseTopArtists | undefined>(undefined);
+  private isDataLoadingSubject: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getTopArtists().subscribe({
+      next: (data) => {
+        this.setTopArtists(data);
+      },
+    });
+
+    this.getTopTracks().subscribe({
+      next: (data) => {
+        this.setTopTracks(data);
+      },
+    });
+  }
 
   getUserInfo(logId: string | null): Observable<IResponseUserInfo> {
     return this.http.get<IResponseUserInfo>(
@@ -35,32 +50,52 @@ export class StatsService {
     limit: TopInfoLimit = 50,
     timeRange: TopTimeRange = defaultTopRange
   ): Observable<IResponseTopArtists> {
-    return this.http.get<IResponseTopArtists>(
-      `${this.hostApiSpox}${
-        this.hostApiSpoxContext
-      }stats/top-artists?id=${localStorage.getItem(
-        LocalStorage.LogId
-      )}&limit=${limit}&time_range=${timeRange}`
-    );
+    this.setIsDataLoading(true);
+    return this.http
+      .get<IResponseTopArtists>(
+        `${this.hostApiSpox}${
+          this.hostApiSpoxContext
+        }stats/top-artists?id=${localStorage.getItem(
+          LocalStorage.LogId
+        )}&limit=${limit}&time_range=${timeRange}`
+      )
+      .pipe(
+        finalize(() => {
+          this.setIsDataLoading(false);
+        })
+      );
   }
 
   getTopTracks(
     limit: TopInfoLimit = 50,
     timeRange: TopTimeRange = defaultTopRange
   ): Observable<IResponseTopTracks> {
-    return this.http.get<IResponseTopTracks>(
-      `${this.hostApiSpox}${
-        this.hostApiSpoxContext
-      }stats/top-tracks?id=${localStorage.getItem(
-        LocalStorage.LogId
-      )}&limit=${limit}&time_range=${timeRange}`
-    );
+    this.setIsDataLoading(true);
+    return this.http
+      .get<IResponseTopTracks>(
+        `${this.hostApiSpox}${
+          this.hostApiSpoxContext
+        }stats/top-tracks?id=${localStorage.getItem(
+          LocalStorage.LogId
+        )}&limit=${limit}&time_range=${timeRange}`
+      )
+      .pipe(
+        finalize(() => {
+          this.setIsDataLoading(false);
+        })
+      );
   }
 
-  setTopTracks(
-    topTracks:IResponseTopTracks
-  ) {
-     this.topTracksSubject.next(topTracks);
+  setIsDataLoading(isLoading: boolean) {
+    this.isDataLoadingSubject.next(isLoading);
+  }
+
+  isDataLoading(): Observable<boolean> {
+    return this.isDataLoadingSubject.asObservable();
+  }
+
+  setTopTracks(topTracks: IResponseTopTracks) {
+    this.topTracksSubject.next(topTracks);
   }
 
   setTopTracksByTimerange(
