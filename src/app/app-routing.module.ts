@@ -1,24 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserprofileComponent } from './components/user-profile/user-profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { PagenotfoundComponent } from './components/common/pagenotfound/pagenotfound.component';
 import { authGuard } from './guards/auth.guard';
 import { LoginErrorComponent } from './components/login-error/login-error.component';
-import { authResolver } from './resolvers/auth.resolver';
-import { dataStatsResolver } from './resolvers/dataStats.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login-error', component: LoginErrorComponent },
   {
     path: ':usernameid',
-    component: UserprofileComponent,
+    loadComponent: () =>
+      import('./components/user-profile/user-profile.component').then(
+        (m) => m.UserprofileComponent
+      ),
     canActivate: [authGuard],
-    resolve: {
-      authData: authResolver,
-      dataStats: dataStatsResolver,
-    },
   },
   { path: '**', component: PagenotfoundComponent },
 ];
