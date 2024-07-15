@@ -19,6 +19,10 @@
   z-index: 10;
 }
 
+.p-tabview-panels {
+  min-height: 80vh;
+}
+
 .custom-card {
   .p-card.p-component {
     height: 100%;
@@ -31,12 +35,21 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .image-container {
     height: 80px;
   }
   .custom-card {
     width: 80px;
+  }
+}
+
+@media (min-width: 481px) and(max-width: 768px) {
+  .image-container {
+    height: 100px;
+  }
+  .custom-card {
+    width: 100px;
   }
 }
 

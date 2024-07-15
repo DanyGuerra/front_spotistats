@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
-import {
-  IResponseTopTracks,
-  TopTrackItem,
-} from 'src/app/interfaces/IResponseTopTracks';
+import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
 import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
 import { CommonModule } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { TopTimeRange, defaultTopRange } from 'src/constants/types';
 import { DropdownModule } from 'primeng/dropdown';
-import { ActivatedRoute } from '@angular/router';
 import { StatsService } from 'src/app/services/stats.service';
 import { Subscription } from 'rxjs';
+import { SkeletonModule } from 'primeng/skeleton';
+
+const skeletonCardNumber = 20;
 
 @Component({
   selector: 'app-tab-top-tracks',
@@ -27,13 +26,17 @@ import { Subscription } from 'rxjs';
     SelectButtonModule,
     FormsModule,
     DropdownModule,
+    SkeletonModule,
   ],
   templateUrl: './tab-top-tracks.component.html',
   styleUrls: ['./tab-top-tracks.component.less'],
 })
-export class TabTopTracksComponent {
+export class TabTopTracksComponent implements OnInit, OnDestroy {
   topTracks!: TopTrackItem[] | undefined;
+  isLoading: boolean = false;
   topTracksSuscription!: Subscription;
+  isLoadingSuscription!: Subscription;
+  skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
 
   stateOptions: any[] = [
     { label: '4 weeks', value: TopTimeRange.ShortTerm },
@@ -43,35 +46,31 @@ export class TabTopTracksComponent {
 
   value: string = defaultTopRange;
 
-  constructor(
-    private route: ActivatedRoute,
-    private statsService: StatsService
-  ) {}
+  constructor(private statsService: StatsService) {}
 
   ngOnInit(): void {
-    const dataTopTracks: IResponseTopTracks =
-      this.route.snapshot.data['dataStats']['tracks'];
-
-    this.statsService.setTopTracks(dataTopTracks);
-
     this.topTracksSuscription = this.statsService
       .getTopTracksSubject()
       .subscribe((data) => {
         this.topTracks = data?.data.items;
       });
+
+    this.isLoadingSuscription = this.statsService
+      .isDataLoading()
+      .subscribe((isLoading) => {
+        this.isLoading = isLoading;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.topTracksSuscription.unsubscribe();
   }
 
   handleImageClick(url: string) {
     window.open(url, '_blank');
   }
 
-  onChangeHandle(event: any){
-if (event.value === null || event.value === undefined) {
-      this.value = defaultTopRange;
-      this.statsService.setTopTracksByTimerange(defaultTopRange);
-    } else {
-      this.value = event.value;
-      this.statsService.setTopTracksByTimerange(event.value);
-    }
+  onChangeHandle(event: any) {
+    this.statsService.setTopTracksByTimerange(event.value);
   }
 }
