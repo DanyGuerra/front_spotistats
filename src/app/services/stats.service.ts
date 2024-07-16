@@ -48,7 +48,8 @@ export class StatsService {
 
   getTopArtists(
     limit: TopInfoLimit = 50,
-    timeRange: TopTimeRange = defaultTopRange
+    timeRange: TopTimeRange = defaultTopRange,
+    offset: TopInfoLimit = 0
   ): Observable<IResponseTopArtists> {
     this.setIsDataLoading(true);
     return this.http
@@ -57,7 +58,7 @@ export class StatsService {
           this.hostApiSpoxContext
         }stats/top-artists?id=${localStorage.getItem(
           LocalStorage.LogId
-        )}&limit=${limit}&time_range=${timeRange}`
+        )}&limit=${limit}&time_range=${timeRange}&offset=${offset}`
       )
       .pipe(
         finalize(() => {
@@ -115,12 +116,13 @@ export class StatsService {
 
   setTopArtistsByRange(
     timeRange: TopTimeRange = TopTimeRange.LongTerm,
-    limit: TopInfoLimit = 50
+    limit: TopInfoLimit = 50,
+    offset: TopInfoLimit = 0
   ) {
     if (!timeRange || !limit) {
       return;
     }
-    this.getTopArtists(limit, timeRange).subscribe({
+    this.getTopArtists(limit, timeRange, offset).subscribe({
       next: (data) => {
         this.topArtistsSubject.next(data);
       },

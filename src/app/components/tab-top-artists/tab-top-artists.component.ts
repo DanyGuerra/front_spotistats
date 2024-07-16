@@ -10,6 +10,8 @@ import { StatsService } from 'src/app/services/stats.service';
 import { Subscription } from 'rxjs';
 import { defaultTopRange } from 'src/constants/types';
 import { SkeletonModule } from 'primeng/skeleton';
+import { PaginatorModule } from 'primeng/paginator';
+import { IdataPagination } from 'src/app/interfaces/IDataPagination';
 
 const skeletonCardNumber: number = 20;
 
@@ -23,6 +25,7 @@ const skeletonCardNumber: number = 20;
     SelectButtonModule,
     FormsModule,
     SkeletonModule,
+    PaginatorModule,
   ],
   templateUrl: './tab-top-artists.component.html',
   styleUrls: ['./tab-top-artists.component.less'],
@@ -30,10 +33,16 @@ const skeletonCardNumber: number = 20;
 export class TabTopArtistsComponent implements OnInit, OnDestroy {
   topArtists!: TopArtistItem[] | undefined;
   topArtistSubject!: Subscription;
-  value: string = defaultTopRange;
+  timeRange: TopTimeRange = defaultTopRange;
   isLoadingSuscription!: Subscription;
   isLoading: boolean = false;
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
+  dataPagination: IdataPagination = {
+    first: 0,
+    rows: 0,
+    totalRecords: 0,
+    rowsPerPageOptions: [10, 20, 30, 40, 50],
+  };
 
   stateOptions: any[] = [
     { label: '4 weeks', value: TopTimeRange.ShortTerm },
@@ -47,7 +56,16 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
     this.topArtistSubject = this.statsService
       .getTopArtistsSubject()
       .subscribe((data) => {
-        this.topArtists = data?.data.items;
+        if (data && data.data) {
+          console.log(data.data);
+          this.topArtists = data?.data.items;
+          this.dataPagination = {
+            ...this.dataPagination,
+            rows: data.data.limit,
+            first: data.data.offset,
+            totalRecords: data.data.total,
+          };
+        }
       });
 
     this.isLoadingSuscription = this.statsService
@@ -68,5 +86,15 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
 
   onOptionChange(event: any) {
     this.statsService.setTopArtistsByRange(event.value);
+  }
+
+  onPageChange(event: any) {
+    console.log(event.first);
+
+    this.statsService.setTopArtistsByRange(
+      this.timeRange,
+      event.rows,
+      event.first
+    );
   }
 }

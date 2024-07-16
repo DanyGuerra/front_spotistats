@@ -3,12 +3,19 @@
     <p-selectButton
       [allowEmpty]="false"
       [options]="stateOptions"
-      [(ngModel)]="value"
+      [(ngModel)]="timeRange"
       optionLabel="label"
       optionValue="value"
       (onChange)="onOptionChange($event)"
     />
   </div>
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="dataPagination.first"
+    [rows]="dataPagination.rows"
+    [totalRecords]="dataPagination.totalRecords"
+    [rowsPerPageOptions]="dataPagination.rowsPerPageOptions"
+  />
   <div class="flex justify-content-center">
     <div class="flex flex-wrap gap-3 justify-content-center">
       <!-- NO DATA -->
