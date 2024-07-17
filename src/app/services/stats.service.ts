@@ -68,8 +68,9 @@ export class StatsService {
   }
 
   getTopTracks(
+    timeRange: TopTimeRange = defaultTopRange,
     limit: TopInfoLimit = 50,
-    timeRange: TopTimeRange = defaultTopRange
+    offset: TopInfoLimit = 0
   ): Observable<IResponseTopTracks> {
     this.setIsDataLoading(true);
     return this.http
@@ -78,7 +79,7 @@ export class StatsService {
           this.hostApiSpoxContext
         }stats/top-tracks?id=${localStorage.getItem(
           LocalStorage.LogId
-        )}&limit=${limit}&time_range=${timeRange}`
+        )}&limit=${limit}&time_range=${timeRange}&offset=${offset}`
       )
       .pipe(
         finalize(() => {
@@ -101,9 +102,10 @@ export class StatsService {
 
   setTopTracksByTimerange(
     timeRange: TopTimeRange = TopTimeRange.LongTerm,
-    limit: TopInfoLimit = 50
+    limit: TopInfoLimit = 50,
+    offset: TopInfoLimit = 0
   ) {
-    this.getTopTracks(limit, timeRange).subscribe({
+    this.getTopTracks(timeRange, limit, offset).subscribe({
       next: (data) => {
         this.topTracksSubject.next(data);
       },

@@ -1,4 +1,4 @@
-export interface IdataPagination {
+export interface IDataPagination {
   first: number;
   rows: number;
   totalRecords: number;
