@@ -11,6 +11,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { StatsService } from 'src/app/services/stats.service';
 import { Subscription } from 'rxjs';
 import { SkeletonModule } from 'primeng/skeleton';
+import { PaginatorModule } from 'primeng/paginator';
+import { IDataPagination } from 'src/app/interfaces/IDataPagination';
 
 const skeletonCardNumber = 20;
 
@@ -27,6 +29,7 @@ const skeletonCardNumber = 20;
     FormsModule,
     DropdownModule,
     SkeletonModule,
+    PaginatorModule,
   ],
   templateUrl: './tab-top-tracks.component.html',
   styleUrls: ['./tab-top-tracks.component.less'],
@@ -37,6 +40,12 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
   topTracksSuscription!: Subscription;
   isLoadingSuscription!: Subscription;
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
+  dataPagination: IDataPagination = {
+    first: 0,
+    rows: 50,
+    totalRecords: 0,
+    rowsPerPageOptions: [10, 20, 30, 40, 50],
+  };
 
   stateOptions: any[] = [
     { label: '4 weeks', value: TopTimeRange.ShortTerm },
@@ -44,7 +53,7 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
     { label: 'lifetime', value: TopTimeRange.LongTerm },
   ];
 
-  value: string = defaultTopRange;
+  value: TopTimeRange = defaultTopRange;
 
   constructor(private statsService: StatsService) {}
 
@@ -52,7 +61,15 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
     this.topTracksSuscription = this.statsService
       .getTopTracksSubject()
       .subscribe((data) => {
-        this.topTracks = data?.data.items;
+        if (data && data.data) {
+          this.topTracks = data.data.items;
+          this.dataPagination = {
+            ...this.dataPagination,
+            first: data.data.offset,
+            totalRecords: data.data.total,
+            rows: data.data.limit,
+          };
+        }
       });
 
     this.isLoadingSuscription = this.statsService
@@ -72,5 +89,13 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
 
   onChangeHandle(event: any) {
     this.statsService.setTopTracksByTimerange(event.value);
+  }
+
+  onPageChange(event: any) {
+    this.statsService.setTopTracksByTimerange(
+      this.value,
+      event.rows,
+      event.first
+    );
   }
 }

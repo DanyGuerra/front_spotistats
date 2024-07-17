@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 import { defaultTopRange } from 'src/constants/types';
 import { SkeletonModule } from 'primeng/skeleton';
 import { PaginatorModule } from 'primeng/paginator';
-import { IdataPagination } from 'src/app/interfaces/IDataPagination';
+import { IDataPagination } from 'src/app/interfaces/IDataPagination';
 
 const skeletonCardNumber: number = 20;
 
@@ -37,7 +37,7 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   isLoadingSuscription!: Subscription;
   isLoading: boolean = false;
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
-  dataPagination: IdataPagination = {
+  dataPagination: IDataPagination = {
     first: 0,
     rows: 0,
     totalRecords: 0,
