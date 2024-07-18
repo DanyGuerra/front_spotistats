@@ -57,7 +57,6 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
       .getTopArtistsSubject()
       .subscribe((data) => {
         if (data && data.data) {
-          console.log(data.data);
           this.topArtists = data?.data.items;
           this.dataPagination = {
             ...this.dataPagination,
@@ -89,8 +88,6 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: any) {
-    console.log(event.first);
-
     this.statsService.setTopArtistsByRange(
       this.timeRange,
       event.rows,
