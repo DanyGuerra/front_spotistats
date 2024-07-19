@@ -26,6 +26,7 @@ $shade700: #3f3f46 !default;
 $shade800: #27272a !default;
 $shade900: #18181b !default;
 $shade950: #09090b !default;
+$shade1000: #000 !default;
 
 $disabledInputBg: $shade700 !default;
 $hoverBg: rgba(255, 255, 255, 0.03) !default;
@@ -35,6 +36,7 @@ $fontFamily: "Inter var", sans-serif !default;
 $fontSize: 1rem !default;
 $fontWeight: normal !default;
 $textColor: $shade000 !default;
+$textColorInverted: $shade1000 !default;
 $textSecondaryColor: $shade400 !default;
 $borderRadius: 6px !default;
 $transitionDuration: 0.2s !default;

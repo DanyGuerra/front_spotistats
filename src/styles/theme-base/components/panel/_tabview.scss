@@ -39,9 +39,9 @@
 
             &.p-highlight {
                 .p-tabview-nav-link {
-                    background: $tabviewHeaderActiveBg;
+                    background: $primaryColor;
                     border-color: $tabviewHeaderActiveBorderColor;
-                    color: $tabviewHeaderTextActiveColor;
+                    color: $textColorInverted;
                 }
             }
         }

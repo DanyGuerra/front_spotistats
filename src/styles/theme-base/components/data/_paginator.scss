@@ -77,9 +77,9 @@
             border-radius: $paginatorElementBorderRadius;
 
             &.p-highlight {
-                background: $highlightBg;
+                background: $primaryColor;
                 border-color: $highlightBg;
-                color: $highlightTextColor;
+                color: $textColorInverted;
             }
 
             &:not(.p-highlight):hover {

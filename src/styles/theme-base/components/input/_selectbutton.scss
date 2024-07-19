@@ -24,7 +24,7 @@
         &.p-highlight {
             background: $toggleButtonActiveBg;
             border-color: $toggleButtonActiveBorderColor;
-            color: $toggleButtonTextActiveColor;
+            color: $primaryColor;
 
             .p-button-icon-left,
             .p-button-icon-right {
@@ -34,7 +34,7 @@
             &:hover {
                 background: $toggleButtonActiveHoverBg;
                 border-color: $toggleButtonActiveHoverBorderColor;
-                color: $toggleButtonTextActiveHoverColor;
+                color: $primaryLightColor;
 
                 .p-button-icon-left,
                 .p-button-icon-right {
