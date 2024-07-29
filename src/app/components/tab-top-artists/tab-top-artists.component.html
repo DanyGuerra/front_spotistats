@@ -20,7 +20,7 @@
     <div class="flex flex-wrap gap-3 justify-content-center">
       <!-- NO DATA -->
       <div
-        *ngIf="!topArtists && !isLoading"
+        *ngIf="topArtists?.length === 0 && !isLoading"
         class="flex justify-content-center align h-24rem align-items-center"
       >
         <span class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl"
