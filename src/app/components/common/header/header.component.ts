@@ -5,11 +5,12 @@ import { ButtonModule } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
 import { LocalStorage } from 'src/constants/localStorage';
 import { Subscription } from 'rxjs';
+import { IconlogoComponent } from '../icons/iconlogo/iconlogo.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, ButtonModule, RouterModule],
+  imports: [CommonModule, ButtonModule, RouterModule, IconlogoComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
 })
@@ -20,6 +21,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    const idLog = localStorage.getItem(LocalStorage.LogId);
+
+    if (idLog) {
+      this.authService.getAuthLog(idLog).subscribe({
+        next: () => {
+          this.authService.setAuthenticated(true);
+        },
+        error: () => {
+          this.authService.setAuthenticated(false);
+          localStorage.removeItem(LocalStorage.LogId);
+        },
+      });
+    }
     this.authSuscription = this.authService
       .isAuthenticated()
       .subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated));
