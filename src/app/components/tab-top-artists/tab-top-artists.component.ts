@@ -12,8 +12,7 @@ import { defaultTopRange } from 'src/constants/types';
 import { SkeletonModule } from 'primeng/skeleton';
 import { PaginatorModule } from 'primeng/paginator';
 import { IDataPagination } from 'src/app/interfaces/IDataPagination';
-
-const skeletonCardNumber: number = 20;
+import { skeletonCardNumber } from 'src/constants/types';
 
 @Component({
   selector: 'app-tab-top-artists',

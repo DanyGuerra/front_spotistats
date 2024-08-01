@@ -58,3 +58,5 @@ export enum TopTimeRange {
 }
 
 export const defaultTopRange = TopTimeRange.ShortTerm;
+
+export const skeletonCardNumber: number = 20;
