@@ -1,16 +1,16 @@
 $colors: (
-    "blue": #3b82f6,
-    "green": #22c55e,
-    "yellow": #eab308,
-    "cyan": #06b6d4,
-    "pink": #ec4899,
-    "indigo": #6366f1,
-    "teal": #14b8a6,
-    "orange": #f97316,
-    "bluegray": #64748b,
-    "purple": #a855f7,
-    "red": #ff3d32,
-    "primary": $primaryColor,
+  "blue": #3b82f6,
+  "green": #22c55e,
+  "yellow": #eab308,
+  "cyan": #06b6d4,
+  "pink": #ec4899,
+  "indigo": #6366f1,
+  "teal": #14b8a6,
+  "orange": #f97316,
+  "bluegray": #64748b,
+  "purple": #a855f7,
+  "red": #ff3d32,
+  "primary": $primaryColor,
 );
 
 //reused color variables
@@ -32,7 +32,7 @@ $disabledInputBg: $shade700 !default;
 $hoverBg: rgba(255, 255, 255, 0.03) !default;
 
 //global
-$fontFamily: "Inter var", sans-serif !default;
+$fontFamily: "JetBrains Mono" !default;
 $fontSize: 1rem !default;
 $fontWeight: normal !default;
 $textColor: $shade000 !default;
@@ -41,14 +41,14 @@ $textSecondaryColor: $shade400 !default;
 $borderRadius: 6px !default;
 $transitionDuration: 0.2s !default;
 $formElementTransition: background-color $transitionDuration,
-    color $transitionDuration, border-color $transitionDuration,
-    box-shadow $transitionDuration, outline-color $transitionDuration !default;
+  color $transitionDuration, border-color $transitionDuration,
+  box-shadow $transitionDuration, outline-color $transitionDuration !default;
 $actionIconTransition: background-color $transitionDuration,
-    color $transitionDuration, border-color $transitionDuration,
-    box-shadow $transitionDuration, outline-color $transitionDuration !default;
+  color $transitionDuration, border-color $transitionDuration,
+  box-shadow $transitionDuration, outline-color $transitionDuration !default;
 $listItemTransition: background-color $transitionDuration,
-    color $transitionDuration, border-color $transitionDuration,
-    box-shadow $transitionDuration, outline-color $transitionDuration !default;
+  color $transitionDuration, border-color $transitionDuration,
+  box-shadow $transitionDuration, outline-color $transitionDuration !default;
 $primeIconFontSize: 1rem !default;
 $divider: 1px solid $shade700 !default;
 $inlineSpacing: 0.5rem !default;
@@ -127,7 +127,7 @@ $inputOverlayBg: $inputListBg !default;
 $inputOverlayHeaderBg: $inputListHeaderBg !default;
 $inputOverlayBorder: 1px solid $shade700 !default;
 $inputOverlayShadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-    0 2px 4px -2px rgb(0 0 0 / 0.1) !default;
+  0 2px 4px -2px rgb(0 0 0 / 0.1) !default;
 
 //password
 $passwordMeterBg: $shade700 !default;
@@ -149,7 +149,7 @@ $buttonActiveBg: $primaryLighterColor !default;
 $buttonTextActiveColor: $primaryTextColor !default;
 $buttonActiveBorderColor: $primaryLighterColor !default;
 $raisedButtonShadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !default;
+  0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !default;
 $roundedButtonBorderRadius: 2rem !default;
 
 $textButtonHoverBgOpacity: 0.04 !default;
@@ -631,7 +631,7 @@ $contrastMessageIconColor: $shade950 !default;
 $overlayContentBorder: 1px solid $shade700 !default;
 $overlayContentBg: $shade900 !default;
 $overlayContainerShadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1) !default;
+  0 8px 10px -6px rgb(0 0 0 / 0.1) !default;
 
 //dialog
 $dialogHeaderBg: $shade900 !default;
@@ -706,7 +706,7 @@ $submenuHeaderFontWeight: 600 !default;
 $overlayMenuBg: $menuBg !default;
 $overlayMenuBorder: 1px solid $shade700 !default;
 $overlayMenuShadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-    0 2px 4px -2px rgb(0 0 0 / 0.1) !default;
+  0 2px 4px -2px rgb(0 0 0 / 0.1) !default;
 $verticalMenuPadding: 0.25rem 0.25rem !default;
 $menuSeparatorMargin: 2px 0 !default;
 
@@ -873,54 +873,54 @@ $imagePreviewActionIconFontSize: 1.5rem !default;
 $imagePreviewActionIconBorderRadius: 50% !default;
 
 :root {
-    font-family: "Inter var", sans-serif;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    font-variation-settings: normal;
-    --font-family: "Inter var", sans-serif;
-    --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    --text-color: #{$shade000};
-    --text-color-secondary: #{$shade400};
-    --primary-color: #{$primaryColor};
-    --primary-color-text: #{$primaryTextColor};
-    --surface-0: #18181b;
-    --surface-50: #27272a;
-    --surface-100: #3f3f46;
-    --surface-200: #52525b;
-    --surface-300: #71717a;
-    --surface-400: #a1a1aa;
-    --surface-500: #d4d4d8;
-    --surface-600: #e4e4e7;
-    --surface-700: #f4f4f5;
-    --surface-800: #fafafa;
-    --surface-900: #ffffff;
-    --gray-0: #ffffff;
-    --gray-50: #fafafa;
-    --gray-100: #f4f4f5;
-    --gray-200: #e4e4e7;
-    --gray-300: #d4d4d8;
-    --gray-400: #a1a1aa;
-    --gray-500: #71717a;
-    --gray-600: #52525b;
-    --gray-700: #3f3f46;
-    --gray-800: #27272a;
-    --gray-900: #18181b;
-    --content-padding: 1.125rem;
-    --inline-spacing: #{$inlineSpacing};
-    --border-radius: #{$borderRadius};
-    --surface-ground: #09090b;
-    --surface-section: #18181b;
-    --surface-card: #18181b;
-    --surface-overlay: #18181b;
-    --surface-border: #27272a;
-    --surface-hover: rgba(255, 255, 255, 0.03);
-    --focus-ring: #{$focusShadow};
-    --maskbg: #{$maskBg};
-    --highlight-bg: #{$highlightBg};
-    --highlight-text-color: #{$highlightTextColor};
-    --p-anchor-gutter: 2px;
-    color-scheme: dark;
+  font-family: "JetBrains Mono";
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-variation-settings: normal;
+  --font-family: "JetBrains Mono";
+  --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  --text-color: #{$shade000};
+  --text-color-secondary: #{$shade400};
+  --primary-color: #{$primaryColor};
+  --primary-color-text: #{$primaryTextColor};
+  --surface-0: #18181b;
+  --surface-50: #27272a;
+  --surface-100: #3f3f46;
+  --surface-200: #52525b;
+  --surface-300: #71717a;
+  --surface-400: #a1a1aa;
+  --surface-500: #d4d4d8;
+  --surface-600: #e4e4e7;
+  --surface-700: #f4f4f5;
+  --surface-800: #fafafa;
+  --surface-900: #ffffff;
+  --gray-0: #ffffff;
+  --gray-50: #fafafa;
+  --gray-100: #f4f4f5;
+  --gray-200: #e4e4e7;
+  --gray-300: #d4d4d8;
+  --gray-400: #a1a1aa;
+  --gray-500: #71717a;
+  --gray-600: #52525b;
+  --gray-700: #3f3f46;
+  --gray-800: #27272a;
+  --gray-900: #18181b;
+  --content-padding: 1.125rem;
+  --inline-spacing: #{$inlineSpacing};
+  --border-radius: #{$borderRadius};
+  --surface-ground: #09090b;
+  --surface-section: #18181b;
+  --surface-card: #18181b;
+  --surface-overlay: #18181b;
+  --surface-border: #27272a;
+  --surface-hover: rgba(255, 255, 255, 0.03);
+  --focus-ring: #{$focusShadow};
+  --maskbg: #{$maskBg};
+  --highlight-bg: #{$highlightBg};
+  --highlight-text-color: #{$highlightTextColor};
+  --p-anchor-gutter: 2px;
+  color-scheme: dark;
 }
 
 :root {
-    --p-focus-ring-color: var(--primary-color);
+  --p-focus-ring-color: var(--primary-color);
 }

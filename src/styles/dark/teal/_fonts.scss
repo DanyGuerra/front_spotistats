@@ -1,16 +1,32 @@
 @font-face {
-  font-family: 'Inter var';
+  font-family: "JetBrains Mono";
   font-weight: 100 900;
   font-display: swap;
   font-style: normal;
-  font-named-instance: 'Regular';
-  src: url("./fonts/Inter-roman.var.woff2?v=3.19") format("woff2");
+  font-named-instance: "Regular";
+  src: url("./fonts/JetBrainsMono-Regular.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Inter var';
+  font-family: "JetBrains Mono";
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "SemiBold";
+  src: url("./fonts/JetBrainsMono-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Bold";
+  src: url("./fonts/JetBrainsMono-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "JetBrains Mono";
   font-weight: 100 900;
   font-display: swap;
   font-style: italic;
-  font-named-instance: 'Italic';
-  src: url("./fonts/Inter-italic.var.woff2?v=3.19") format("woff2");
+  font-named-instance: "Italic";
+  src: url("./fonts/JetBrainsMono-Italic.ttf") format("truetype");
 }
