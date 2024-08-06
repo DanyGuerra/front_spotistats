@@ -32,7 +32,7 @@ $disabledInputBg: $shade700 !default;
 $hoverBg: rgba(255, 255, 255, 0.03) !default;
 
 //global
-$fontFamily: "JetBrains Mono" !default;
+$fontFamily: "Roboto" !default;
 $fontSize: 1rem !default;
 $fontWeight: normal !default;
 $textColor: $shade000 !default;
@@ -873,10 +873,10 @@ $imagePreviewActionIconFontSize: 1.5rem !default;
 $imagePreviewActionIconBorderRadius: 50% !default;
 
 :root {
-  font-family: "JetBrains Mono";
+  font-family: "Roboto";
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   font-variation-settings: normal;
-  --font-family: "JetBrains Mono";
+  --font-family: "Roboto";
   --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   --text-color: #{$shade000};
   --text-color-secondary: #{$shade400};

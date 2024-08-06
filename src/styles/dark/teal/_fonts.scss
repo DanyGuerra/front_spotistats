@@ -30,3 +30,37 @@
   font-named-instance: "Italic";
   src: url("./fonts/JetBrainsMono-Italic.ttf") format("truetype");
 }
+@font-face {
+  font-family: "Roboto";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url("./fonts/Roboto-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Bold";
+  src: url("./fonts/Roboto-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "SemiBold";
+  src: url("./fonts/Roboto-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Roboto";
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  font-named-instance: "Italic";
+  src: url("./fonts/Roboto-Italic.ttf") format("truetype");
+}
+
+
