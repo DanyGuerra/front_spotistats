@@ -5,6 +5,7 @@ import { ImageModule } from 'primeng/image';
 import { HeaderComponent } from '../common/header/header.component';
 import { CommonModule } from '@angular/common';
 import { TabsStatsComponent } from '../tabs-stats/tabs-stats.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-userprofile',
@@ -16,6 +17,7 @@ import { TabsStatsComponent } from '../tabs-stats/tabs-stats.component';
     HeaderComponent,
     CommonModule,
     TabsStatsComponent,
+    RouterModule,
   ],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.less'],

@@ -15,6 +15,29 @@ const routes: Routes = [
         (m) => m.UserprofileComponent
       ),
     canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/tabs-stats/tabs-stats.component').then(
+            (m) => m.TabsStatsComponent
+          ),
+      },
+      {
+        path: 'top-tracks',
+        loadComponent: () =>
+          import('./components/tab-top-tracks/tab-top-tracks.component').then(
+            (m) => m.TabTopTracksComponent
+          ),
+      },
+      {
+        path: 'top-artists',
+        loadComponent: () =>
+          import('./components/tab-top-artists/tab-top-artists.component').then(
+            (m) => m.TabTopArtistsComponent
+          ),
+      },
+    ],
   },
   { path: '**', component: PagenotfoundComponent },
 ];

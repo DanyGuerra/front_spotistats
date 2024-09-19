@@ -5,6 +5,7 @@ import { HeaderComponent } from '../common/header/header.component';
 import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
 import { TabTopArtistsComponent } from '../tab-top-artists/tab-top-artists.component';
 import { TabTopTracksComponent } from '../tab-top-tracks/tab-top-tracks.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -16,6 +17,7 @@ import { TabTopTracksComponent } from '../tab-top-tracks/tab-top-tracks.componen
     AudioPlayerComponent,
     TabTopArtistsComponent,
     TabTopTracksComponent,
+    RouterModule,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],
