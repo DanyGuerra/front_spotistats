@@ -11,6 +11,8 @@ import { PagenotfoundComponent } from './components/common/pagenotfound/pagenotf
 import { LoginErrorComponent } from './components/login-error/login-error.component';
 import { ButtonModule } from 'primeng/button';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,11 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     ButtonModule,
+    ToastModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    MessageService,
   ],
   bootstrap: [AppComponent],
 })

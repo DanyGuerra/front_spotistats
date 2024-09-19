@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private authSuscription: Subscription | null = null;
   isAuthenticated: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.authSuscription = this.authService
@@ -34,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         window.location.href = url;
       },
       error: (error) => {
-        console.error('Error:', error);
+        this.toastService.showError('Error', error.message);
       },
     });
   }

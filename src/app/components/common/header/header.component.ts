@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LocalStorage } from 'src/constants/localStorage';
 import { Subscription } from 'rxjs';
 import { IconlogoComponent } from '../icons/iconlogo/iconlogo.component';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private authSuscription: Subscription | null = null;
   isAuthenticated: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     const idLog = localStorage.getItem(LocalStorage.LogId);
@@ -52,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         window.location.href = url;
       },
       error: (error) => {
-        console.error('Error:', error);
+        this.toastService.showError('Error', error.message);
       },
     });
   }
