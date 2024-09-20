@@ -1,6 +1,10 @@
 <div class="audio-player" appClickOutside (clickOutside)="onClickedOutside()">
   <audio #audio>
-    <source [src]="urlPreview" type="audio/mpeg" />
+    <source
+      *ngIf="isPlaying && urlPreview"
+      [src]="urlPreview"
+      type="audio/mpeg"
+    />
   </audio>
   <div class="controls">
     <div
