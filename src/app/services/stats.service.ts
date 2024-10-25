@@ -26,19 +26,7 @@ export class StatsService {
   private isDataLoadingSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {
-    this.getTopArtists().subscribe({
-      next: (data) => {
-        this.setTopArtists(data);
-      },
-    });
-
-    this.getTopTracks().subscribe({
-      next: (data) => {
-        this.setTopTracks(data);
-      },
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   getUserInfo(logId: string | null): Observable<IResponseUserInfo> {
     return this.http.get<IResponseUserInfo>(
@@ -47,8 +35,8 @@ export class StatsService {
   }
 
   getTopArtists(
-    limit: TopInfoLimit = 50,
     timeRange: TopTimeRange = defaultTopRange,
+    limit: TopInfoLimit = 20,
     offset: TopInfoLimit = 0
   ): Observable<IResponseTopArtists> {
     this.setIsDataLoading(true);
@@ -69,7 +57,7 @@ export class StatsService {
 
   getTopTracks(
     timeRange: TopTimeRange = defaultTopRange,
-    limit: TopInfoLimit = 50,
+    limit: TopInfoLimit = 20,
     offset: TopInfoLimit = 0
   ): Observable<IResponseTopTracks> {
     this.setIsDataLoading(true);
@@ -102,7 +90,7 @@ export class StatsService {
 
   setTopTracksByTimerange(
     timeRange: TopTimeRange = TopTimeRange.LongTerm,
-    limit: TopInfoLimit = 50,
+    limit: TopInfoLimit = 20,
     offset: TopInfoLimit = 0
   ) {
     this.getTopTracks(timeRange, limit, offset).subscribe({
@@ -118,13 +106,13 @@ export class StatsService {
 
   setTopArtistsByRange(
     timeRange: TopTimeRange = TopTimeRange.LongTerm,
-    limit: TopInfoLimit = 50,
+    limit: TopInfoLimit = 20,
     offset: TopInfoLimit = 0
   ) {
     if (!timeRange || !limit) {
       return;
     }
-    this.getTopArtists(limit, timeRange, offset).subscribe({
+    this.getTopArtists(timeRange, limit, offset).subscribe({
       next: (data) => {
         this.topArtistsSubject.next(data);
       },
