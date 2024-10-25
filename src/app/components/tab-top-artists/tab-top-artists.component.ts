@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
@@ -28,6 +28,7 @@ import { skeletonCardNumber } from 'src/constants/types';
   ],
   templateUrl: './tab-top-artists.component.html',
   styleUrls: ['./tab-top-artists.component.less'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TabTopArtistsComponent implements OnInit, OnDestroy {
   topArtists!: TopArtistItem[] | undefined;
@@ -49,7 +50,9 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
     { label: 'lifetime', value: TopTimeRange.LongTerm },
   ];
 
-  constructor(private statsService: StatsService) {}
+  constructor(private statsService: StatsService) {
+    this.statsService.setTopArtistsByRange(TopTimeRange.ShortTerm);
+  }
 
   ngOnInit(): void {
     this.topArtistSubject = this.statsService

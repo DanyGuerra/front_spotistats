@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
@@ -32,6 +32,7 @@ import { skeletonCardNumber } from 'src/constants/types';
   ],
   templateUrl: './tab-top-tracks.component.html',
   styleUrls: ['./tab-top-tracks.component.less'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TabTopTracksComponent implements OnInit, OnDestroy {
   topTracks!: TopTrackItem[] | undefined;
@@ -54,7 +55,9 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
 
   value: TopTimeRange = defaultTopRange;
 
-  constructor(private statsService: StatsService) {}
+  constructor(private statsService: StatsService) {
+    this.statsService.setTopTracksByTimerange(TopTimeRange.ShortTerm);
+  }
 
   ngOnInit(): void {
     this.topTracksSuscription = this.statsService

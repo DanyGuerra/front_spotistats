@@ -9,4 +9,8 @@ body {
   font-family: "Roboto";
 }
 
+.icon-primary {
+  color: var(--primary-color); // Usa la variable de color primario del tema de PrimeNG
+}
+
 @import "./styles/dark/teal/theme.scss";
