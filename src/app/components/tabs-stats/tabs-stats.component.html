@@ -1,115 +1,111 @@
-<h1>My top Stats</h1>
-
-<div *ngIf="!topArtists || topArtists.length === 0 || isLoading">
-  <div class="flex flex-wrap">
-    <p-card class="custom-card">
-      <ng-template pTemplate="header">
-        <div class="image-container p-0">
-          <p-skeleton width="100%" height="150px"></p-skeleton>
-        </div>
-      </ng-template>
-      <p class="font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0">
-        <p-skeleton width="70%"></p-skeleton>
-      </p>
-    </p-card>
-  </div>
+<div class="flex align-items-center justify-content-center">
+  <h1 class="m-0 text-primary">My top Stats</h1>
 </div>
 
-<p-carousel
-  [value]="topArtists"
-  [numVisible]="5"
-  [numScroll]="1"
-  circular="true"
-  autoplayInterval="3000"
-  showIndicators="false"
-  [responsiveOptions]="responsiveOptions"
-  *ngIf="topArtists && topArtists.length > 0 && !isLoading"
->
-  <ng-template let-artist pTemplate="item">
-    <p-card
-      class="cursor-pointer custom-card"
-      (click)="handleImageClick(artist.external_urls.spotify)"
-      *ngIf="!artist.showMore"
-    >
-      <ng-template pTemplate="header">
-        <div class="image-container p-0">
-          <p-image
-            [src]="artist.images[0].url"
-            [alt]="artist.name"
-            width="100%"
-          ></p-image>
+<div class="grid">
+  <!-- TOP ARTISTS -->
+  <section class="md:col-6 col-12">
+    <div class="flex align-items-center justify-content-center gap-4">
+      <h3 class="">Top Artists</h3>
+      <p-button
+        label="Show all"
+        icon="pi pi-eye"
+        size="small"
+        routerLink="./top-artists"
+      />
+    </div>
+
+    <p-dataView #dv [value]="topArtists">
+      <ng-template pTemplate="list" let-topArtists>
+        <div class="grid grid-nogutter pl-4">
+          <div
+            class="col-12 cursor-pointer hover:shadow-8"
+            *ngFor="let artist of topArtists; let first = first"
+            (click)="handleClick(artist.external_urls.spotify)"
+          >
+            <div
+              class="flex justify-content-between gap-3"
+              [ngClass]="{ 'border-top-1 surface-border': !first }"
+            >
+              <div
+                class="flex justify-content-center align-items-center text-4xl font-bold text-primary"
+              >
+                # {{ artist.rank_number }}
+              </div>
+              <div class="flex w-5rem pb-2">
+                <img
+                  class="block xl:block mx-auto border-round w-full"
+                  [src]="artist.images[0].url"
+                  [alt]="artist.name"
+                />
+              </div>
+              <div
+                class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
+              >
+                <div class="text-lg font-medium text-900">
+                  {{ artist.name }}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </ng-template>
+    </p-dataView>
+  </section>
 
-      <p class="font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0">
-        {{ artist.rank_number }}. &nbsp;
-        {{ artist.name }}
-      </p>
-    </p-card>
-    <div
-      *ngIf="artist.showMore"
-      class="flex justify-content-center align-items-center flex-column gap-1 h-full"
-    >
+  <!-- TOP TRACKS -->
+  <section class="md:col-6 col-12">
+    <div class="flex align-items-center justify-content-center gap-4">
+      <h3>Top Tracks</h3>
       <p-button
-        routerLink="top-artists"
-        icon="pi pi-arrow-right"
-        severity="primary"
-        [rounded]="true"
+        label="Show all"
+        icon="pi pi-eye"
+        size="small"
+        routerLink="./top-tracks"
       />
-      <div class="text-sm font-bold">Ver más</div>
     </div>
-  </ng-template>
-</p-carousel>
 
-<p-carousel
-  [value]="topTracks"
-  [numVisible]="5"
-  [numScroll]="1"
-  circular="true"
-  autoplayInterval="3000"
-  showIndicators="false"
-  [responsiveOptions]="responsiveOptions"
-  *ngIf="topTracks && topTracks.length > 0 && !isLoading"
->
-  <ng-template let-track pTemplate="item">
-    <p-card class="custom-card" *ngIf="!track.showMore">
-      <ng-template pTemplate="header">
-        <div class="image-wrapper">
-          <p-image
-            [src]="track.album.images[0].url"
-            [alt]="track.name"
-            width="100%"
-            class="cursor-pointer"
-            (click)="handleImageClick(track.external_urls.spotify)"
-          ></p-image>
-          <app-audio-player
-            class="button-player"
-            [urlPreview]="track.preview_url"
-          ></app-audio-player>
+    <p-dataView #dv [value]="topTracks">
+      <ng-template pTemplate="list" let-topArtists>
+        <div class="grid grid-nogutter pl-4">
+          <div
+            class="col-12 cursor-pointer hover:shadow-8"
+            *ngFor="let track of topTracks; let first = first"
+            (click)="handleClick(track.external_urls.spotify)"
+          >
+            <div
+              class="flex justify-content-between gap-3"
+              [ngClass]="{ 'border-top-1 surface-border': !first }"
+            >
+              <div
+                class="flex justify-content-center align-items-center text-4xl font-bold text-primary"
+              >
+                # {{ track.rank_number }}
+              </div>
+              <div class="flex w-5rem pb-2">
+                <img
+                  class="block xl:block mx-auto border-round w-full"
+                  [src]="track.album.images[0].url"
+                  [alt]="track.name"
+                />
+              </div>
+              <div
+                class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
+              >
+                <div class="text-lg font-medium text-900">
+                  {{ track.name }}
+                </div>
+              </div>
+              <div class="flex align-items-center justify-content-center">
+                <app-audio-player
+                  (click)="$event.stopPropagation()"
+                  [urlPreview]="track.preview_url"
+                ></app-audio-player>
+              </div>
+            </div>
+          </div>
         </div>
       </ng-template>
-
-      <p class="font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0">
-        {{ track.rank_number }}. &nbsp;
-        {{ track.name }}
-      </p>
-      <p
-        class="font-bold text-300 text-xs sm:text-xs md:text-base lg:text-base m-0 p-0"
-      >
-        {{ track.artists[0].name }}
-      </p>
-    </p-card>
-    <div
-      *ngIf="track.showMore"
-      class="flex justify-content-center align-items-center flex-column gap-1 h-full"
-    >
-      <p-button
-        routerLink="top-tracks"
-        icon="pi pi-arrow-right"
-        severity="primary"
-        [rounded]="true"
-      />
-      <div class="text-sm font-bold">Ver más</div>
-    </div>
-  </ng-template>
-</p-carousel>
+    </p-dataView>
+  </section>
+</div>

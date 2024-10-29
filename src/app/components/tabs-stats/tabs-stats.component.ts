@@ -21,6 +21,7 @@ import { StatsService } from 'src/app/services/stats.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
 import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
+import { DataViewModule } from 'primeng/dataview';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -39,14 +40,15 @@ import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
     CardModule,
     ImageModule,
     SkeletonModule,
+    DataViewModule,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
 export class TabsStatsComponent {
-  topArtists: (TopArtistItem | { showMore: boolean })[] = [];
-  topTracks: (TopTrackItem | { showMore: boolean })[] = [];
+  topArtists: TopArtistItem[] = [];
+  topTracks: TopTrackItem[] = [];
   topArtistSubject!: Subscription;
   topTracksSubject!: Subscription;
   timeRange: TopTimeRange = defaultTopRange;
@@ -65,7 +67,7 @@ export class TabsStatsComponent {
       .getTopArtistsSubject()
       .subscribe((data) => {
         if (data && data.data) {
-          this.topArtists = [...data?.data.items, { showMore: true }];
+          this.topArtists = data?.data.items;
         }
       });
 
@@ -73,7 +75,7 @@ export class TabsStatsComponent {
       .getTopTracksSubject()
       .subscribe((data) => {
         if (data && data.data) {
-          this.topTracks = [...data?.data.items, { showMore: true }];
+          this.topTracks = data?.data.items;
         }
       });
 
@@ -107,7 +109,7 @@ export class TabsStatsComponent {
     this.isLoadingSuscription.unsubscribe();
   }
 
-  handleImageClick(url: string) {
+  handleClick(url: string) {
     window.open(url, '_blank');
   }
 }

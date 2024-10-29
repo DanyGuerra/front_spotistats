@@ -1,4 +1,8 @@
-<div class="audio-player" appClickOutside (clickOutside)="onClickedOutside()">
+<div
+  class="audio-player z-5"
+  appClickOutside
+  (clickOutside)="onClickedOutside()"
+>
   <audio #audio>
     <source
       *ngIf="isPlaying && urlPreview"
