@@ -24,20 +24,21 @@
             (click)="handleClick(artist.external_urls.spotify)"
           >
             <div
-              class="flex justify-content-between gap-3"
+              class="flex justify-content-between gap-3 py-1"
               [ngClass]="{ 'border-top-1 surface-border': !first }"
             >
               <div
-                class="flex justify-content-center align-items-center text-4xl font-bold text-primary"
+                class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
               >
                 # {{ artist.rank_number }}
               </div>
-              <div class="flex w-5rem pb-2">
-                <img
-                  class="block xl:block mx-auto border-round w-full"
+
+              <div class="flex w-5rem h-5rem overflow-hidden pb-2">
+                <p-image
                   [src]="artist.images[0].url"
                   [alt]="artist.name"
-                />
+                  width="100%"
+                ></p-image>
               </div>
               <div
                 class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
@@ -67,27 +68,27 @@
 
     <p-dataView #dv [value]="topTracks">
       <ng-template pTemplate="list" let-topArtists>
-        <div class="grid grid-nogutter pl-4">
+        <div class="grid grid-nogutter">
           <div
             class="col-12 cursor-pointer hover:shadow-8"
             *ngFor="let track of topTracks; let first = first"
             (click)="handleClick(track.external_urls.spotify)"
           >
             <div
-              class="flex justify-content-between gap-3"
+              class="flex justify-content-between gap-3 py-1"
               [ngClass]="{ 'border-top-1 surface-border': !first }"
             >
               <div
-                class="flex justify-content-center align-items-center text-4xl font-bold text-primary"
+                class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
               >
                 # {{ track.rank_number }}
               </div>
-              <div class="flex w-5rem pb-2">
-                <img
-                  class="block xl:block mx-auto border-round w-full"
+              <div class="flex w-5rem h-5rem overflow-hidden pb-2">
+                <p-image
                   [src]="track.album.images[0].url"
                   [alt]="track.name"
-                />
+                  width="100%"
+                ></p-image>
               </div>
               <div
                 class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
