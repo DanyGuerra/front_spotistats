@@ -22,6 +22,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
 import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
 import { DataViewModule } from 'primeng/dataview';
+import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -54,7 +56,7 @@ export class TabsStatsComponent {
   timeRange: TopTimeRange = defaultTopRange;
   isLoadingSuscription!: Subscription;
   isLoading: boolean = false;
-  responsiveOptions: any[] | undefined;
+  tracksPlayed: TrackPlayed[] = [];
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
 
   constructor(private statsService: StatsService) {
@@ -85,23 +87,9 @@ export class TabsStatsComponent {
         this.isLoading = isLoading;
       });
 
-    this.responsiveOptions = [
-      {
-        breakpoint: '1199px',
-        numVisible: 5,
-        numScroll: 5,
-      },
-      {
-        breakpoint: '991px',
-        numVisible: 4,
-        numScroll: 4,
-      },
-      {
-        breakpoint: '767px',
-        numVisible: 2,
-        numScroll: 2,
-      },
-    ];
+    this.statsService.getTracksCurrentlyPlayed(10).subscribe((data) => {
+      this.tracksPlayed = data.data.items;
+    });
   }
 
   ngOnDestroy(): void {
@@ -111,5 +99,10 @@ export class TabsStatsComponent {
 
   handleClick(url: string) {
     window.open(url, '_blank');
+  }
+
+  timeFromNowUTC(date: string, language: 'es' | 'en' = 'en'): string {
+    moment.locale(language);
+    return moment.utc(date).fromNow();
   }
 }

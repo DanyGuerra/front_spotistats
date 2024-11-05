@@ -11,6 +11,7 @@ import {
 import { IResponseTopArtists } from '../interfaces/IResponseTopArtists';
 import { IResponseTopTracks } from '../interfaces/IResponseTopTracks';
 import { LocalStorage } from 'src/constants/localStorage';
+import { IResponseCurrentlyPlayed } from '../interfaces/IResponseCurrentlyPlayed';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,27 @@ export class StatsService {
     return this.http.get<IResponseUserInfo>(
       `${this.hostApiSpox}${this.hostApiSpoxContext}stats/me?id=${logId}`
     );
+  }
+
+  getTracksCurrentlyPlayed(
+    limit: TopInfoLimit = 50,
+    before: string = '',
+    after: string = ''
+  ): Observable<IResponseCurrentlyPlayed> {
+    this.setIsDataLoading(true);
+    return this.http
+      .get<IResponseCurrentlyPlayed>(
+        `${this.hostApiSpox}${
+          this.hostApiSpoxContext
+        }stats/recently-played?id=${localStorage.getItem(
+          LocalStorage.LogId
+        )}&limit=${limit}&before=${before}&after=${after}`
+      )
+      .pipe(
+        finalize(() => {
+          this.setIsDataLoading(false);
+        })
+      );
   }
 
   getTopArtists(
