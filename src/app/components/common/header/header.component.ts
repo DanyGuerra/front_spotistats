@@ -56,8 +56,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         } = response;
         window.location.href = url;
       },
-      error: (error) => {
-        this.toastService.showError('Error', error.message);
+      error: () => {
+        this.toastService.showError('Error', 'Something went wrong, try later');
       },
     });
   }
