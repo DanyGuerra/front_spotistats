@@ -45,7 +45,7 @@
           (click)="handleImageClick(artist.external_urls.spotify)"
         >
           <ng-template pTemplate="header">
-            <div class="image-container p-0">
+            <div class="image-container p-0 border-circle">
               <p-image
                 [src]="artist.images[0].url"
                 [alt]="artist.name"

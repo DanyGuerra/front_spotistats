@@ -26,20 +26,22 @@
           >No data</span
         >
       </div>
+
       <ng-container *ngIf="isLoading">
-        <div
-          *ngFor="let skeleton of skeletonElements"
-          class="flex flex-column custom-card gap-2"
-        >
-          <p-skeleton width="100%" height="100%" class="image-container" />
+        <div *ngFor="let skeleton of skeletonElements">
+          <p-skeleton width="100%" height="100%" />
           <p-skeleton width="80%" height="1rem" />
           <p-skeleton width="60%" height="1rem" />
         </div>
       </ng-container>
+
       <ng-container *ngIf="!isLoading">
-        <p-card *ngFor="let track of topTracks" class="custom-card">
+        <p-card
+          *ngFor="let track of topTracks"
+          class="custom-card w-5rem md:w-8rem lg:w-10rem"
+        >
           <ng-template pTemplate="header">
-            <div class="image-wrapper">
+            <div class="relative">
               <p-image
                 [src]="track.album.images[0].url"
                 [alt]="track.name"
@@ -47,8 +49,9 @@
                 class="cursor-pointer"
                 (click)="handleImageClick(track.external_urls.spotify)"
               ></p-image>
+
               <app-audio-player
-                class="button-player"
+                class="absolute bottom-0 left-0 w-2rem h-2rem sm:w-2rem sm:h-2rem md:w-3rem md:h-3rem"
                 [urlPreview]="track.preview_url"
               ></app-audio-player>
             </div>

@@ -2,11 +2,11 @@
   <h1 class="m-0 text-primary">My top Stats</h1>
 </div>
 
-<div class="grid">
+<div class="flex align-items-center justify-content-center flex-wrap">
   <!-- TOP ARTISTS -->
-  <section class="md:col-6 col-12">
+  <section class="md:w-6 w-12">
     <div class="flex align-items-center justify-content-center gap-4">
-      <h3 class="">Top Artists</h3>
+      <h2 class="">Top Artists</h2>
       <p-button
         label="Show all"
         icon="pi pi-eye"
@@ -30,10 +30,12 @@
               <div
                 class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
               >
-                # {{ artist.rank_number }}
+                #{{ artist.rank_number }}
               </div>
 
-              <div class="flex w-5rem h-5rem overflow-hidden pb-2">
+              <div
+                class="flex w-5rem h-5rem overflow-hidden pb-2 border-circle"
+              >
                 <p-image
                   [src]="artist.images[0].url"
                   [alt]="artist.name"
@@ -55,9 +57,9 @@
   </section>
 
   <!-- TOP TRACKS -->
-  <section class="md:col-6 col-12">
+  <section class="md:w-6 w-12">
     <div class="flex align-items-center justify-content-center gap-4">
-      <h3>Top Tracks</h3>
+      <h2>Top Tracks</h2>
       <p-button
         label="Show all"
         icon="pi pi-eye"
@@ -69,44 +71,100 @@
     <p-dataView #dv [value]="topTracks">
       <ng-template pTemplate="list" let-topArtists>
         <div class="grid grid-nogutter">
+          <div></div>
           <div
-            class="col-12 cursor-pointer hover:shadow-8"
+            class="col-12 hover:shadow-8"
             *ngFor="let track of topTracks; let first = first"
-            (click)="handleClick(track.external_urls.spotify)"
           >
             <div
               class="flex justify-content-between gap-3 py-1"
               [ngClass]="{ 'border-top-1 surface-border': !first }"
             >
               <div
-                class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+                class="flex flex-1 cursor-pointer gap-3"
+                (click)="handleClick(track.external_urls.spotify)"
               >
-                # {{ track.rank_number }}
-              </div>
-              <div class="flex w-5rem h-5rem overflow-hidden pb-2">
-                <p-image
-                  [src]="track.album.images[0].url"
-                  [alt]="track.name"
-                  width="100%"
-                ></p-image>
-              </div>
-              <div
-                class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
-              >
-                <div class="text-lg font-medium text-900">
-                  {{ track.name }}
+                <div
+                  class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+                >
+                  #{{ track.rank_number }}
+                </div>
+                <div class="flex w-5rem h-5rem overflow-hidden pb-2">
+                  <p-image
+                    [src]="track.album.images[0].url"
+                    [alt]="track.name"
+                    width="100%"
+                  ></p-image>
+                </div>
+                <div
+                  class="flex flex-column justify-content-center justify-content-center flex-1"
+                >
+                  <div class="text-lg font-medium text-900">
+                    {{ track.name }}
+                  </div>
+                  <div class="text-base text-400 font-medium">
+                    {{ track.artists[0].name }}
+                  </div>
                 </div>
               </div>
-              <div class="flex align-items-center justify-content-center">
-                <app-audio-player
-                  (click)="$event.stopPropagation()"
-                  [urlPreview]="track.preview_url"
-                ></app-audio-player>
+
+              <div class="flex align-items-center justify-content-center px-4">
+                <div class="w-2rem h-2rem">
+                  <app-audio-player
+                    [urlPreview]="track.preview_url"
+                  ></app-audio-player>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </ng-template>
     </p-dataView>
+  </section>
+
+  <!-- TODO: change player button overlay -->
+  <!-- RECENTLY PLAYED -->
+  <section class="md:w-8 w-11">
+    <div class="flex align-items-center justify-content-center gap-4">
+      <h2 class="">Recently played</h2>
+      <p-button
+        label="Show all"
+        icon="pi pi-eye"
+        size="small"
+        routerLink="./recently-played"
+      />
+    </div>
+    <div class="flex flex-column justify-content-start gap-3">
+      <div
+        *ngFor="let trackPlayed of tracksPlayed; let first = first"
+        class="flex justify-content-between align-items-center gap-3 hover"
+        [ngClass]="{ 'border-top-1 surface-border': !first }"
+      >
+        <div class="w-2rem h-2rem">
+          <app-audio-player
+            [urlPreview]="trackPlayed.track.preview_url"
+          ></app-audio-player>
+        </div>
+        <div class="w-3rem h-3rem overflow-hidden">
+          <p-image
+            [src]="trackPlayed.track.album.images[0].url"
+            [alt]="trackPlayed.track.name"
+            width="100%"
+          >
+          </p-image>
+        </div>
+        <div class="flex flex-column justify-content-start flex-1">
+          <div class="font-medium">
+            {{ trackPlayed.track.name }}
+          </div>
+          <div class="text-400 font-medium">
+            {{ trackPlayed.track.artists[0].name }}
+          </div>
+        </div>
+        <div class="font-bold text-600">
+          {{ timeFromNowUTC(trackPlayed.played_at, "en") }}
+        </div>
+      </div>
+    </div>
   </section>
 </div>
