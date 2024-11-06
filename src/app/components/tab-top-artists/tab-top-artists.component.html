@@ -20,7 +20,7 @@
     <div class="flex flex-wrap gap-3 justify-content-center">
       <!-- NO DATA -->
       <div
-        *ngIf="topArtists?.length === 0 && !isLoading"
+        *ngIf="topArtists?.length === 0 && !isLoading.artists"
         class="flex justify-content-center align h-24rem align-items-center"
       >
         <span class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl"
@@ -28,7 +28,7 @@
         >
       </div>
       <!-- SKELETON -->
-      <ng-container *ngIf="isLoading">
+      <ng-container *ngIf="isLoading.artists">
         <div
           *ngFor="let skeleton of skeletonElements"
           class="flex flex-column w-5rem md:w-8rem lg:w-10rem gap-2"
@@ -47,7 +47,7 @@
         </div>
       </ng-container>
       <!-- DATA -->
-      <ng-container *ngIf="!isLoading">
+      <ng-container *ngIf="!isLoading.artists">
         <p-card
           *ngFor="let artist of topArtists"
           class="cursor-pointer custom-card"

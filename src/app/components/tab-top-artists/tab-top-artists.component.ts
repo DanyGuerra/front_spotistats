@@ -5,7 +5,7 @@ import { ImageModule } from 'primeng/image';
 import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
-import { TopTimeRange } from 'src/constants/types';
+import { TopTimeRange, initialIsLoading } from 'src/constants/types';
 import { StatsService } from 'src/app/services/stats.service';
 import { Subscription } from 'rxjs';
 import { defaultTopRange } from 'src/constants/types';
@@ -13,6 +13,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { PaginatorModule } from 'primeng/paginator';
 import { IDataPagination } from 'src/app/interfaces/IDataPagination';
 import { skeletonCardNumber } from 'src/constants/types';
+import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 
 @Component({
   selector: 'app-tab-top-artists',
@@ -35,7 +36,7 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   topArtistSubject!: Subscription;
   timeRange: TopTimeRange = defaultTopRange;
   isLoadingSuscription!: Subscription;
-  isLoading: boolean = false;
+  isLoading: ILoadingSubject = initialIsLoading;
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
   dataPagination: IDataPagination = {
     first: 0,

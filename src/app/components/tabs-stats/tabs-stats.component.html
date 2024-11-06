@@ -17,7 +17,7 @@
 
     <p-dataView #dv [value]="topArtists" emptyMessage="No data found">
       <ng-template pTemplate="list" let-topArtists>
-        <div *ngIf="isLoading; else dataArtistsList">
+        <div *ngIf="isLoading.artists; else dataArtistsList">
           <div
             class="grid grid-nogutter pl-4"
             *ngFor="
@@ -48,7 +48,7 @@
                   class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
                 >
                   <p-skeleton
-                    [width]="generateRandomWidth(5, 80)"
+                    [width]="generateRandomWidth(15, 100)"
                     height="1rem"
                   ></p-skeleton>
                 </div>
@@ -113,7 +113,10 @@
     <p-dataView #dv [value]="topTracks" emptyMessage="No data found">
       <!-- SKELETON -->
       <ng-template pTemplate="list" let-topTracks>
-        <div class="grid grid-nogutter" *ngIf="isLoading; else dataTracksList">
+        <div
+          class="grid grid-nogutter"
+          *ngIf="isLoading.tracks; else dataTracksList"
+        >
           <div
             class="col-12"
             *ngFor="
@@ -223,7 +226,7 @@
       <ng-template pTemplate="list" let-trackPlayed>
         <div
           class="flex flex-column justify-content-start gap-3"
-          *ngIf="isLoading; else trackPlayedList"
+          *ngIf="isLoading.currentlyPlayed; else trackPlayedList"
         >
           <div
             *ngFor="

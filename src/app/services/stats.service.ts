@@ -12,6 +12,7 @@ import { IResponseTopArtists } from '../interfaces/IResponseTopArtists';
 import { IResponseTopTracks } from '../interfaces/IResponseTopTracks';
 import { LocalStorage } from 'src/constants/localStorage';
 import { IResponseCurrentlyPlayed } from '../interfaces/IResponseCurrentlyPlayed';
+import { ILoadingSubject } from '../interfaces/ILoadingSubject';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +20,18 @@ import { IResponseCurrentlyPlayed } from '../interfaces/IResponseCurrentlyPlayed
 export class StatsService {
   private hostApiSpox = environment.hostApiSpox;
   private hostApiSpoxContext = environment.hostApiSpoxContext;
+  private initialIsLoading: ILoadingSubject = {
+    tracks: false,
+    artists: false,
+    currentlyPlayed: false,
+  };
 
   private topTracksSubject: BehaviorSubject<IResponseTopTracks | undefined> =
     new BehaviorSubject<IResponseTopTracks | undefined>(undefined);
   private topArtistsSubject: BehaviorSubject<IResponseTopArtists | undefined> =
     new BehaviorSubject<IResponseTopArtists | undefined>(undefined);
-  private isDataLoadingSubject: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
+  private isDataLoadingSubject: BehaviorSubject<ILoadingSubject> =
+    new BehaviorSubject<ILoadingSubject>(this.initialIsLoading);
 
   constructor(private http: HttpClient) {}
 
@@ -40,7 +46,12 @@ export class StatsService {
     before: string = '',
     after: string = ''
   ): Observable<IResponseCurrentlyPlayed> {
-    this.setIsDataLoading(true);
+    const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
+    const newLoadingState: ILoadingSubject = {
+      ...currentState,
+      currentlyPlayed: true,
+    };
+    this.setIsDataLoading(newLoadingState);
     return this.http
       .get<IResponseCurrentlyPlayed>(
         `${this.hostApiSpox}${
@@ -51,7 +62,12 @@ export class StatsService {
       )
       .pipe(
         finalize(() => {
-          this.setIsDataLoading(false);
+          const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
+          const newLoadingState: ILoadingSubject = {
+            ...currentState,
+            currentlyPlayed: false,
+          };
+          this.setIsDataLoading(newLoadingState);
         })
       );
   }
@@ -61,7 +77,12 @@ export class StatsService {
     limit: TopInfoLimit = 20,
     offset: TopInfoLimit = 0
   ): Observable<IResponseTopArtists> {
-    this.setIsDataLoading(true);
+    const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
+    const newLoadingState: ILoadingSubject = {
+      ...currentState,
+      artists: true,
+    };
+    this.setIsDataLoading(newLoadingState);
     return this.http
       .get<IResponseTopArtists>(
         `${this.hostApiSpox}${
@@ -72,7 +93,12 @@ export class StatsService {
       )
       .pipe(
         finalize(() => {
-          this.setIsDataLoading(false);
+          const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
+          const newLoadingState: ILoadingSubject = {
+            ...currentState,
+            artists: false,
+          };
+          this.setIsDataLoading(newLoadingState);
         })
       );
   }
@@ -82,7 +108,12 @@ export class StatsService {
     limit: TopInfoLimit = 20,
     offset: TopInfoLimit = 0
   ): Observable<IResponseTopTracks> {
-    this.setIsDataLoading(true);
+    const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
+    const newLoadingState: ILoadingSubject = {
+      ...currentState,
+      tracks: true,
+    };
+    this.setIsDataLoading(newLoadingState);
     return this.http
       .get<IResponseTopTracks>(
         `${this.hostApiSpox}${
@@ -93,16 +124,21 @@ export class StatsService {
       )
       .pipe(
         finalize(() => {
-          this.setIsDataLoading(false);
+          const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
+          const newLoadingState: ILoadingSubject = {
+            ...currentState,
+            tracks: false,
+          };
+          this.setIsDataLoading(newLoadingState);
         })
       );
   }
 
-  setIsDataLoading(isLoading: boolean) {
+  setIsDataLoading(isLoading: ILoadingSubject) {
     this.isDataLoadingSubject.next(isLoading);
   }
 
-  isDataLoading(): Observable<boolean> {
+  isDataLoading(): Observable<ILoadingSubject> {
     return this.isDataLoadingSubject.asObservable();
   }
 

@@ -15,6 +15,7 @@ import {
   TopInfoLimit,
   TopTimeRange,
   defaultTopRange,
+  initialIsLoading,
   skeletonCardNumber,
 } from 'src/constants/types';
 import { StatsService } from 'src/app/services/stats.service';
@@ -24,6 +25,7 @@ import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
 import { DataViewModule } from 'primeng/dataview';
 import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import * as moment from 'moment';
+import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -54,7 +56,7 @@ export class TabsStatsComponent {
   topTracksSubject!: Subscription;
   timeRange: TopTimeRange = defaultTopRange;
   isLoadingSuscription!: Subscription;
-  isLoading: boolean = false;
+  isLoading: ILoadingSubject = initialIsLoading;
   tracksPlayed: TrackPlayed[] = [];
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
   topItemsToShow: TopInfoLimit = 5;

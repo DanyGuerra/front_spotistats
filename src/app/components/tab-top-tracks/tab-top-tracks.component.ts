@@ -6,7 +6,11 @@ import { AudioPlayerComponent } from '../common/audio-player/audio-player.compon
 import { CommonModule } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
-import { TopTimeRange, defaultTopRange } from 'src/constants/types';
+import {
+  TopTimeRange,
+  defaultTopRange,
+  initialIsLoading,
+} from 'src/constants/types';
 import { DropdownModule } from 'primeng/dropdown';
 import { StatsService } from 'src/app/services/stats.service';
 import { Subscription } from 'rxjs';
@@ -14,6 +18,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { PaginatorModule } from 'primeng/paginator';
 import { IDataPagination } from 'src/app/interfaces/IDataPagination';
 import { skeletonCardNumber } from 'src/constants/types';
+import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 
 @Component({
   selector: 'app-tab-top-tracks',
@@ -36,7 +41,7 @@ import { skeletonCardNumber } from 'src/constants/types';
 })
 export class TabTopTracksComponent implements OnInit, OnDestroy {
   topTracks!: TopTrackItem[] | undefined;
-  isLoading: boolean = false;
+  isLoading: ILoadingSubject = initialIsLoading;
   topTracksSuscription!: Subscription;
   isLoadingSuscription!: Subscription;
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];

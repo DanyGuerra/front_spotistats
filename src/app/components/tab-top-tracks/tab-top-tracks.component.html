@@ -19,7 +19,7 @@
   <div class="flex justify-content-center">
     <div class="flex flex-wrap gap-3 justify-content-center h-full">
       <div
-        *ngIf="topTracks?.length === 0 && !isLoading"
+        *ngIf="topTracks?.length === 0 && !isLoading.tracks"
         class="flex justify-content-center align h-24rem align-items-center"
       >
         <span class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl"
@@ -27,7 +27,7 @@
         >
       </div>
 
-      <ng-container *ngIf="isLoading">
+      <ng-container *ngIf="isLoading.tracks">
         <div
           *ngFor="let skeleton of skeletonElements"
           class="flex flex-column w-5rem md:w-8rem lg:w-10rem gap-2"
@@ -44,7 +44,7 @@
         </div>
       </ng-container>
 
-      <ng-container *ngIf="!isLoading">
+      <ng-container *ngIf="!isLoading.tracks">
         <p-card
           *ngFor="let track of topTracks"
           class="custom-card w-5rem md:w-8rem lg:w-10rem"

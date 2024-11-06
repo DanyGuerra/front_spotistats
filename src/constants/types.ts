@@ -1,3 +1,5 @@
+import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
+
 export type TopInfoLimit =
   | 0
   | 1
@@ -60,3 +62,9 @@ export enum TopTimeRange {
 export const defaultTopRange = TopTimeRange.ShortTerm;
 
 export const skeletonCardNumber: number = 20;
+
+export const initialIsLoading: ILoadingSubject = {
+  tracks: false,
+  artists: false,
+  currentlyPlayed: false,
+};
