@@ -10,9 +10,9 @@ import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
-import { ScrollerModule } from 'primeng/scroller';
 import { Subscription } from 'rxjs';
 import {
+  TopInfoLimit,
   TopTimeRange,
   defaultTopRange,
   skeletonCardNumber,
@@ -35,7 +35,6 @@ import * as moment from 'moment';
     AudioPlayerComponent,
     TabTopArtistsComponent,
     TabTopTracksComponent,
-    ScrollerModule,
     CarouselModule,
     RouterModule,
     ButtonModule,
@@ -58,10 +57,17 @@ export class TabsStatsComponent {
   isLoading: boolean = false;
   tracksPlayed: TrackPlayed[] = [];
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
+  topItemsToShow: TopInfoLimit = 5;
 
   constructor(private statsService: StatsService) {
-    this.statsService.setTopArtistsByRange(TopTimeRange.LongTerm, 10);
-    this.statsService.setTopTracksByTimerange(TopTimeRange.LongTerm, 10);
+    this.statsService.setTopArtistsByRange(
+      TopTimeRange.LongTerm,
+      this.topItemsToShow
+    );
+    this.statsService.setTopTracksByTimerange(
+      TopTimeRange.LongTerm,
+      this.topItemsToShow
+    );
   }
 
   ngOnInit(): void {
@@ -87,9 +93,11 @@ export class TabsStatsComponent {
         this.isLoading = isLoading;
       });
 
-    this.statsService.getTracksCurrentlyPlayed(10).subscribe((data) => {
-      this.tracksPlayed = data.data.items;
-    });
+    this.statsService
+      .getTracksCurrentlyPlayed(this.topItemsToShow)
+      .subscribe((data) => {
+        this.tracksPlayed = data.data.items;
+      });
   }
 
   ngOnDestroy(): void {
@@ -104,5 +112,18 @@ export class TabsStatsComponent {
   timeFromNowUTC(date: string, language: 'es' | 'en' = 'en'): string {
     moment.locale(language);
     return moment.utc(date).fromNow();
+  }
+
+  counterArray(n: number): any[] {
+    return Array(n);
+  }
+
+  generateRandomWidth(
+    minPercent: number = 5,
+    maxPercent: number = 100
+  ): string {
+    const randomWidth =
+      Math.floor(Math.random() * (maxPercent - minPercent + 1)) + minPercent;
+    return `${randomWidth}%`;
   }
 }

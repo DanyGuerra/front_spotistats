@@ -31,10 +31,19 @@
       <ng-container *ngIf="isLoading">
         <div
           *ngFor="let skeleton of skeletonElements"
-          class="flex flex-column custom-card gap-2"
+          class="flex flex-column w-5rem md:w-8rem lg:w-10rem gap-2"
         >
-          <p-skeleton width="100%" height="100%" class="image-container" />
-          <p-skeleton width="80%" height="1rem" />
+          <div class="w-full">
+            <div class="square">
+              <p-skeleton
+                width="100%"
+                height="100%"
+                class="border-circle"
+                shape="circle"
+              />
+            </div>
+          </div>
+          <p-skeleton width="100%" height="1rem" />
         </div>
       </ng-container>
       <!-- DATA -->

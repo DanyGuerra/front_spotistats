@@ -2,11 +2,11 @@
   <h1 class="m-0 text-primary">My top Stats</h1>
 </div>
 
-<div class="flex align-items-center justify-content-center flex-wrap">
+<div class="flex justify-content-center flex-wrap row-gap-6 column-gap-2">
   <!-- TOP ARTISTS -->
-  <section class="md:w-6 w-12">
+  <section class="xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
     <div class="flex align-items-center justify-content-center gap-4">
-      <h2 class="">Top Artists</h2>
+      <h2>Top Artists</h2>
       <p-button
         label="Show all"
         icon="pi pi-eye"
@@ -15,8 +15,50 @@
       />
     </div>
 
-    <p-dataView #dv [value]="topArtists">
+    <p-dataView #dv [value]="topArtists" emptyMessage="No data found">
       <ng-template pTemplate="list" let-topArtists>
+        <div *ngIf="isLoading; else dataArtistsList">
+          <div
+            class="grid grid-nogutter pl-4"
+            *ngFor="
+              let i of counterArray(topItemsToShow);
+              let first = first;
+              let index = index
+            "
+          >
+            <div class="col-12 cursor-pointer hover:shadow-8">
+              <div
+                class="flex justify-content-between gap-3 py-1"
+                [ngClass]="{ 'border-top-1 surface-border': !first }"
+              >
+                <div
+                  class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+                >
+                  #{{ index + 1 }}
+                </div>
+
+                <div class="w-5rem h-5rem pb-2">
+                  <p-skeleton
+                    width="100%"
+                    height="100%"
+                    shape="circle"
+                  ></p-skeleton>
+                </div>
+                <div
+                  class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
+                >
+                  <p-skeleton
+                    [width]="generateRandomWidth(5, 80)"
+                    height="1rem"
+                  ></p-skeleton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #dataArtistsList>
         <div class="grid grid-nogutter pl-4">
           <div
             class="col-12 cursor-pointer hover:shadow-8"
@@ -57,7 +99,7 @@
   </section>
 
   <!-- TOP TRACKS -->
-  <section class="md:w-6 w-12">
+  <section class="xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
     <div class="flex align-items-center justify-content-center gap-4">
       <h2>Top Tracks</h2>
       <p-button
@@ -68,10 +110,52 @@
       />
     </div>
 
-    <p-dataView #dv [value]="topTracks">
-      <ng-template pTemplate="list" let-topArtists>
+    <p-dataView #dv [value]="topTracks" emptyMessage="No data found">
+      <!-- SKELETON -->
+      <ng-template pTemplate="list" let-topTracks>
+        <div class="grid grid-nogutter" *ngIf="isLoading; else dataTracksList">
+          <div
+            class="col-12"
+            *ngFor="
+              let i of counterArray(topItemsToShow);
+              let first = first;
+              let index = index
+            "
+          >
+            <div
+              class="flex justify-content-between gap-3 py-1"
+              [ngClass]="{ 'border-top-1 surface-border': !first }"
+            >
+              <div class="flex flex-1 cursor-pointer gap-3">
+                <div
+                  class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+                >
+                  #{{ index + 1 }}
+                </div>
+                <p-skeleton width="5rem" height="5rem"></p-skeleton>
+
+                <div
+                  class="flex flex-column justify-content-center justify-content-center flex-1 gap-2"
+                >
+                  <p-skeleton width="80%" height="1rem"></p-skeleton>
+                  <p-skeleton width="50%" height="1rem"></p-skeleton>
+                </div>
+              </div>
+
+              <div class="flex align-items-center justify-content-center px-4">
+                <p-skeleton
+                  width="2.5rem"
+                  height="2.5rem"
+                  shape="circle"
+                ></p-skeleton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #dataTracksList>
         <div class="grid grid-nogutter">
-          <div></div>
           <div
             class="col-12 hover:shadow-8"
             *ngFor="let track of topTracks; let first = first"
@@ -122,9 +206,8 @@
     </p-dataView>
   </section>
 
-  <!-- TODO: change player button overlay -->
   <!-- RECENTLY PLAYED -->
-  <section class="md:w-8 w-11">
+  <section class="xl:w-8 lg:w-8 md:w-11 sm:w-11 w-11">
     <div class="flex align-items-center justify-content-center gap-4">
       <h2 class="">Recently played</h2>
       <p-button
@@ -134,37 +217,90 @@
         routerLink="./recently-played"
       />
     </div>
-    <div class="flex flex-column justify-content-start gap-3">
-      <div
-        *ngFor="let trackPlayed of tracksPlayed; let first = first"
-        class="flex justify-content-between align-items-center gap-3 hover"
-        [ngClass]="{ 'border-top-1 surface-border': !first }"
-      >
-        <div class="w-2rem h-2rem">
-          <app-audio-player
-            [urlPreview]="trackPlayed.track.preview_url"
-          ></app-audio-player>
-        </div>
-        <div class="w-3rem h-3rem overflow-hidden">
-          <p-image
-            [src]="trackPlayed.track.album.images[0].url"
-            [alt]="trackPlayed.track.name"
-            width="100%"
+
+    <p-dataView #dv [value]="tracksPlayed" emptyMessage="No data found">
+      <!-- SKELETON -->
+      <ng-template pTemplate="list" let-trackPlayed>
+        <div
+          class="flex flex-column justify-content-start gap-3"
+          *ngIf="isLoading; else trackPlayedList"
+        >
+          <div
+            *ngFor="
+              let i of counterArray(topItemsToShow);
+              let first = first;
+              let index = index
+            "
           >
-          </p-image>
-        </div>
-        <div class="flex flex-column justify-content-start flex-1">
-          <div class="font-medium">
-            {{ trackPlayed.track.name }}
+            <div
+              class="flex justify-content-between align-items-center gap-3 p-1 py-3"
+              [ngClass]="{ 'border-top-1 surface-border': !first }"
+            >
+              <p-skeleton
+                width="2rem"
+                height="2rem"
+                shape="circle"
+              ></p-skeleton>
+
+              <p-skeleton width="3rem" height="3rem"></p-skeleton>
+
+              <div class="flex flex-column justify-content-start flex-1 gap-1">
+                <p-skeleton
+                  [width]="generateRandomWidth(30, 80)"
+                  height="1rem"
+                ></p-skeleton>
+                <p-skeleton
+                  [width]="generateRandomWidth(30, 80)"
+                  height="1rem"
+                ></p-skeleton>
+              </div>
+
+              <div class="flex justify-content-end w-3">
+                <p-skeleton
+                  class="w-full flex justify-content-end"
+                  [width]="generateRandomWidth(50, 100)"
+                  height="1rem"
+                ></p-skeleton>
+              </div>
+            </div>
           </div>
-          <div class="text-400 font-medium">
-            {{ trackPlayed.track.artists[0].name }}
+        </div>
+      </ng-template>
+
+      <ng-template #trackPlayedList>
+        <div class="flex flex-column justify-content-start gap-3">
+          <div
+            *ngFor="let trackPlayed of tracksPlayed; let first = first"
+            class="flex justify-content-between align-items-center gap-3 hover p-1 pt-2"
+            [ngClass]="{ 'border-top-1 surface-border': !first }"
+          >
+            <div class="w-2rem h-2rem">
+              <app-audio-player
+                [urlPreview]="trackPlayed.track.preview_url"
+              ></app-audio-player>
+            </div>
+            <div class="w-3rem h-3rem overflow-hidden">
+              <p-image
+                [src]="trackPlayed.track.album.images[0].url"
+                [alt]="trackPlayed.track.name"
+                width="100%"
+              >
+              </p-image>
+            </div>
+            <div class="flex flex-column justify-content-start flex-1">
+              <div class="font-medium">
+                {{ trackPlayed.track.name }}
+              </div>
+              <div class="text-400 font-medium">
+                {{ trackPlayed.track.artists[0].name }}
+              </div>
+            </div>
+            <div class="font-bold text-600">
+              {{ timeFromNowUTC(trackPlayed.played_at, "en") }}
+            </div>
           </div>
         </div>
-        <div class="font-bold text-600">
-          {{ timeFromNowUTC(trackPlayed.played_at, "en") }}
-        </div>
-      </div>
-    </div>
+      </ng-template>
+    </p-dataView>
   </section>
 </div>

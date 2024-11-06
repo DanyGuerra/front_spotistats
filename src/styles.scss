@@ -14,3 +14,8 @@ body {
 }
 
 @import "./styles/dark/teal/theme.scss";
+
+.square {
+  width: 100%;
+  aspect-ratio: 1/1;
+}
