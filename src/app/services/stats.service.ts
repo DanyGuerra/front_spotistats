@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
+import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IResponseUserInfo } from '../interfaces/IResponseUserInfo';
 import {

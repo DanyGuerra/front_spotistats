@@ -50,14 +50,15 @@ import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
   encapsulation: ViewEncapsulation.None,
 })
 export class TabsStatsComponent {
-  topArtists: TopArtistItem[] = [];
-  topTracks: TopTrackItem[] = [];
+  topArtists!: TopArtistItem[];
+  topTracks!: TopTrackItem[];
   topArtistSubject!: Subscription;
   topTracksSubject!: Subscription;
+  currentlyPlayedSubject!: Subscription;
   timeRange: TopTimeRange = defaultTopRange;
   isLoadingSuscription!: Subscription;
   isLoading: ILoadingSubject = initialIsLoading;
-  tracksPlayed: TrackPlayed[] = [];
+  tracksPlayed!: TrackPlayed[];
   skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
   topItemsToShow: TopInfoLimit = 5;
 
@@ -95,7 +96,7 @@ export class TabsStatsComponent {
         this.isLoading = isLoading;
       });
 
-    this.statsService
+    this.currentlyPlayedSubject = this.statsService
       .getTracksCurrentlyPlayed(this.topItemsToShow)
       .subscribe((data) => {
         this.tracksPlayed = data.data.items;
@@ -104,6 +105,8 @@ export class TabsStatsComponent {
 
   ngOnDestroy(): void {
     this.topArtistSubject.unsubscribe();
+    this.topTracksSubject.unsubscribe();
+    this.currentlyPlayedSubject.unsubscribe();
     this.isLoadingSuscription.unsubscribe();
   }
 

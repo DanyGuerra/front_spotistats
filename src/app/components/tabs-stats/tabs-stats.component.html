@@ -3,7 +3,7 @@
 </div>
 
 <div class="flex justify-content-center flex-wrap row-gap-6 column-gap-2">
-  <!-- TOP ARTISTS -->
+  <!-- TOP ARTISTS DATA-->
   <section class="xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
     <div class="flex align-items-center justify-content-center gap-4">
       <h2>Top Artists</h2>
@@ -15,8 +15,61 @@
       />
     </div>
 
-    <p-dataView #dv [value]="topArtists" emptyMessage="No data found">
-      <ng-template pTemplate="list" let-topArtists>
+    <!-- SKELETON -->
+    <p-dataView
+      [value]="counterArray(topItemsToShow)"
+      *ngIf="isLoading.artists"
+    >
+      <ng-template pTemplate="list" let-topArtist>
+        <div
+          class="grid grid-nogutter pl-4"
+          *ngFor="
+            let i of counterArray(topItemsToShow);
+            let first = first;
+            let index = index
+          "
+        >
+          <div class="col-12 cursor-pointer hover:shadow-8">
+            <div
+              class="flex justify-content-between gap-3 py-1"
+              [ngClass]="{ 'border-top-1 surface-border': !first }"
+            >
+              <div
+                class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+              >
+                #{{ index + 1 }}
+              </div>
+
+              <div class="w-5rem h-5rem pb-2">
+                <p-skeleton
+                  width="100%"
+                  height="100%"
+                  shape="circle"
+                ></p-skeleton>
+              </div>
+              <div
+                class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
+              >
+                <p-skeleton
+                  [width]="generateRandomWidth(15, 100)"
+                  height="1rem"
+                ></p-skeleton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+
+    <!-- DATA -->
+    <p-dataView #dv [value]="topArtists" *ngIf="!isLoading.artists">
+      <ng-template pTemplate="empty">
+        <div class="flex align-items-center justify-content-center h-12rem">
+          <h3>No data</h3>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="list" let-topArtist>
         <div *ngIf="isLoading.artists; else dataArtistsList">
           <div
             class="grid grid-nogutter pl-4"
@@ -110,13 +163,10 @@
       />
     </div>
 
-    <p-dataView #dv [value]="topTracks" emptyMessage="No data found">
-      <!-- SKELETON -->
+    <!-- SKELETON -->
+    <p-dataView [value]="counterArray(topItemsToShow)" *ngIf="isLoading.tracks">
       <ng-template pTemplate="list" let-topTracks>
-        <div
-          class="grid grid-nogutter"
-          *ngIf="isLoading.tracks; else dataTracksList"
-        >
+        <div class="grid grid-nogutter" *ngIf="isLoading.tracks">
           <div
             class="col-12"
             *ngFor="
@@ -156,8 +206,17 @@
           </div>
         </div>
       </ng-template>
+    </p-dataView>
 
-      <ng-template #dataTracksList>
+    <!-- DATA -->
+    <p-dataView #dv [value]="topTracks" *ngIf="!isLoading.tracks">
+      <ng-template pTemplate="empty">
+        <div class="flex align-items-center justify-content-center h-12rem">
+          <h3>No data</h3>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="list" let-topTracks>
         <div class="grid grid-nogutter">
           <div
             class="col-12 hover:shadow-8"
@@ -221,13 +280,13 @@
       />
     </div>
 
-    <p-dataView #dv [value]="tracksPlayed" emptyMessage="No data found">
-      <!-- SKELETON -->
+    <!-- SKELETON -->
+    <p-dataView
+      [value]="counterArray(topItemsToShow)"
+      *ngIf="isLoading.currentlyPlayed"
+    >
       <ng-template pTemplate="list" let-trackPlayed>
-        <div
-          class="flex flex-column justify-content-start gap-3"
-          *ngIf="isLoading.currentlyPlayed; else trackPlayedList"
-        >
+        <div class="flex flex-column justify-content-start">
           <div
             *ngFor="
               let i of counterArray(topItemsToShow);
@@ -236,12 +295,12 @@
             "
           >
             <div
-              class="flex justify-content-between align-items-center gap-3 p-1 py-3"
+              class="flex justify-content-between align-items-center gap-3 p-1 pt-2 px-1 py-3"
               [ngClass]="{ 'border-top-1 surface-border': !first }"
             >
               <p-skeleton
-                width="2rem"
-                height="2rem"
+                width="2.5rem"
+                height="2.5rem"
                 shape="circle"
               ></p-skeleton>
 
@@ -269,12 +328,22 @@
           </div>
         </div>
       </ng-template>
+    </p-dataView>
 
-      <ng-template #trackPlayedList>
-        <div class="flex flex-column justify-content-start gap-3">
+    <!-- DATA -->
+    <p-dataView #dv [value]="tracksPlayed" *ngIf="!isLoading.currentlyPlayed">
+      <ng-template pTemplate="empty">
+        <div class="flex align-items-center justify-content-center h-12rem">
+          <h3>No data</h3>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="list">
+        <div class="flex flex-column justify-content-start">
           <div
+            (click)="handleClick(trackPlayed.track.external_urls.spotify)"
             *ngFor="let trackPlayed of tracksPlayed; let first = first"
-            class="flex justify-content-between align-items-center gap-3 hover p-1 pt-2"
+            class="flex justify-content-between align-items-center gap-3 cursor-pointer hover:shadow-8 px-1 py-3"
             [ngClass]="{ 'border-top-1 surface-border': !first }"
           >
             <div class="w-2rem h-2rem">
