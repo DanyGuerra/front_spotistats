@@ -59,9 +59,11 @@ export enum TopTimeRange {
   ShortTerm = 'short_term', // approximately last 4 weeks
 }
 
-export const defaultTopRange = TopTimeRange.ShortTerm;
+export const defaultTopRange: TopTimeRange = TopTimeRange.ShortTerm;
 
-export const skeletonCardNumber: number = 20;
+export const defaultCurrentlyPlayedItems: TopInfoLimit = 50;
+
+export const initialTopItems: TopInfoLimit = 20;
 
 export const itemsToShowSummary: TopInfoLimit = 5;
 

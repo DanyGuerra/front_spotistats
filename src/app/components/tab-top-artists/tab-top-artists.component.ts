@@ -5,14 +5,18 @@ import { ImageModule } from 'primeng/image';
 import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
-import { TopTimeRange, initialIsLoading } from 'src/constants/types';
+import {
+  TopInfoLimit,
+  TopTimeRange,
+  initialIsLoading,
+} from 'src/constants/types';
 import { StatsService } from 'src/app/services/stats.service';
 import { Subscription } from 'rxjs';
 import { defaultTopRange } from 'src/constants/types';
 import { SkeletonModule } from 'primeng/skeleton';
 import { PaginatorModule } from 'primeng/paginator';
 import { IDataPagination } from 'src/app/interfaces/IDataPagination';
-import { skeletonCardNumber } from 'src/constants/types';
+import { initialTopItems } from 'src/constants/types';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 
 @Component({
@@ -37,7 +41,8 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   timeRange: TopTimeRange = defaultTopRange;
   isLoadingSuscription!: Subscription;
   isLoading: ILoadingSubject = initialIsLoading;
-  skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
+  skeletonElements: number[] = Array(initialTopItems);
+  actualRows: TopInfoLimit = initialTopItems;
   dataPagination: IDataPagination = {
     first: 0,
     rows: 0,
@@ -91,6 +96,8 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: any) {
+    this.actualRows = event.rows;
+    this.skeletonElements = Array(event.rows);
     this.statsService.setTopArtistsByRange(
       this.timeRange,
       event.rows,

@@ -17,7 +17,7 @@
     <p-paginator
       (onPageChange)="onPageChange($event)"
       [first]="dataPagination.first"
-      [rows]="dataPagination.rows"
+      [rows]="actualRows"
       [totalRecords]="dataPagination.totalRecords"
       [rowsPerPageOptions]="dataPagination.rowsPerPageOptions"
     />

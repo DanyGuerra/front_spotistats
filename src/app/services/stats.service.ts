@@ -6,7 +6,9 @@ import { IResponseUserInfo } from '../interfaces/IResponseUserInfo';
 import {
   TopInfoLimit,
   TopTimeRange,
+  defaultCurrentlyPlayedItems,
   defaultTopRange,
+  initialTopItems,
 } from 'src/constants/types';
 import { IResponseTopArtists } from '../interfaces/IResponseTopArtists';
 import { IResponseTopTracks } from '../interfaces/IResponseTopTracks';
@@ -42,7 +44,7 @@ export class StatsService {
   }
 
   getTracksCurrentlyPlayed(
-    limit: TopInfoLimit = 50,
+    limit: TopInfoLimit = defaultCurrentlyPlayedItems,
     before: string = '',
     after: string = ''
   ): Observable<IResponseCurrentlyPlayed> {
@@ -74,7 +76,7 @@ export class StatsService {
 
   getTopArtists(
     timeRange: TopTimeRange = defaultTopRange,
-    limit: TopInfoLimit = 20,
+    limit: TopInfoLimit = initialTopItems,
     offset: TopInfoLimit = 0
   ): Observable<IResponseTopArtists> {
     const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
@@ -105,7 +107,7 @@ export class StatsService {
 
   getTopTracks(
     timeRange: TopTimeRange = defaultTopRange,
-    limit: TopInfoLimit = 20,
+    limit: TopInfoLimit = initialTopItems,
     offset: TopInfoLimit = 0
   ): Observable<IResponseTopTracks> {
     const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
@@ -148,7 +150,7 @@ export class StatsService {
 
   setTopTracksByTimerange(
     timeRange: TopTimeRange = TopTimeRange.LongTerm,
-    limit: TopInfoLimit = 20,
+    limit: TopInfoLimit = initialTopItems,
     offset: TopInfoLimit = 0
   ) {
     this.getTopTracks(timeRange, limit, offset).subscribe({
@@ -164,7 +166,7 @@ export class StatsService {
 
   setTopArtistsByRange(
     timeRange: TopTimeRange = TopTimeRange.LongTerm,
-    limit: TopInfoLimit = 20,
+    limit: TopInfoLimit = initialTopItems,
     offset: TopInfoLimit = 0
   ) {
     if (!timeRange || !limit) {

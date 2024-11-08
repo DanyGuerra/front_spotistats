@@ -10,6 +10,7 @@ import {
   TopTimeRange,
   defaultTopRange,
   initialIsLoading,
+  initialTopItems,
 } from 'src/constants/types';
 import { DropdownModule } from 'primeng/dropdown';
 import { StatsService } from 'src/app/services/stats.service';
@@ -17,7 +18,6 @@ import { Subscription } from 'rxjs';
 import { SkeletonModule } from 'primeng/skeleton';
 import { PaginatorModule } from 'primeng/paginator';
 import { IDataPagination } from 'src/app/interfaces/IDataPagination';
-import { skeletonCardNumber } from 'src/constants/types';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 
 @Component({
@@ -44,7 +44,8 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
   isLoading: ILoadingSubject = initialIsLoading;
   topTracksSuscription!: Subscription;
   isLoadingSuscription!: Subscription;
-  skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
+  skeletonElements: number[] = Array(initialTopItems);
+  actualRows: number = initialTopItems;
   dataPagination: IDataPagination = {
     first: 0,
     rows: 50,
@@ -99,6 +100,8 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: any) {
+    this.actualRows = event.rows;
+    this.skeletonElements = Array(event.rows);
     this.statsService.setTopTracksByTimerange(
       this.value,
       event.rows,
