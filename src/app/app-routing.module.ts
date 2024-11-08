@@ -37,6 +37,13 @@ const routes: Routes = [
             (m) => m.TabTopArtistsComponent
           ),
       },
+      {
+        path: 'recently-played',
+        loadComponent: () =>
+          import('./components/recently-played/recently-played.component').then(
+            (m) => m.RecentlyPlayedComponent
+          ),
+      },
     ],
   },
   { path: '**', component: PagenotfoundComponent },
