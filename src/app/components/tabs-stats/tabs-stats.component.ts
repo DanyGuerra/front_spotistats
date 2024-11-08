@@ -1,6 +1,7 @@
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 import { TabViewModule } from 'primeng/tabview';
 import { HeaderComponent } from '../common/header/header.component';
 import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
@@ -12,11 +13,10 @@ import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { Subscription } from 'rxjs';
 import {
-  TopInfoLimit,
   TopTimeRange,
   defaultTopRange,
   initialIsLoading,
-  skeletonCardNumber,
+  itemsToShowSummary,
 } from 'src/constants/types';
 import { StatsService } from 'src/app/services/stats.service';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -24,8 +24,8 @@ import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
 import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
 import { DataViewModule } from 'primeng/dataview';
 import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
-import * as moment from 'moment';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
+import { generateRandomWidth } from 'src/utils/general-utils';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -44,12 +44,13 @@ import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
     ImageModule,
     SkeletonModule,
     DataViewModule,
+    TimeFromNowPipe,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TabsStatsComponent {
+export class TabsStatsComponent implements OnInit {
   topArtists!: TopArtistItem[];
   topTracks!: TopTrackItem[];
   topArtistSubject!: Subscription;
@@ -59,17 +60,17 @@ export class TabsStatsComponent {
   isLoadingSuscription!: Subscription;
   isLoading: ILoadingSubject = initialIsLoading;
   tracksPlayed!: TrackPlayed[];
-  skeletonElements: number[] = [...Array(skeletonCardNumber).keys()];
-  topItemsToShow: TopInfoLimit = 5;
+  skeletonElements: number[] = Array(itemsToShowSummary);
+  generateRandomWidth = generateRandomWidth;
 
   constructor(private statsService: StatsService) {
     this.statsService.setTopArtistsByRange(
       TopTimeRange.LongTerm,
-      this.topItemsToShow
+      itemsToShowSummary
     );
     this.statsService.setTopTracksByTimerange(
       TopTimeRange.LongTerm,
-      this.topItemsToShow
+      itemsToShowSummary
     );
   }
 
@@ -97,7 +98,7 @@ export class TabsStatsComponent {
       });
 
     this.currentlyPlayedSubject = this.statsService
-      .getTracksCurrentlyPlayed(this.topItemsToShow)
+      .getTracksCurrentlyPlayed(itemsToShowSummary)
       .subscribe((data) => {
         this.tracksPlayed = data.data.items;
       });
@@ -112,23 +113,5 @@ export class TabsStatsComponent {
 
   handleClick(url: string) {
     window.open(url, '_blank');
-  }
-
-  timeFromNowUTC(date: string, language: 'es' | 'en' = 'en'): string {
-    moment.locale(language);
-    return moment.utc(date).fromNow();
-  }
-
-  counterArray(n: number): any[] {
-    return Array(n);
-  }
-
-  generateRandomWidth(
-    minPercent: number = 5,
-    maxPercent: number = 100
-  ): string {
-    const randomWidth =
-      Math.floor(Math.random() * (maxPercent - minPercent + 1)) + minPercent;
-    return `${randomWidth}%`;
   }
 }

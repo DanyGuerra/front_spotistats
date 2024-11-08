@@ -1,2 +1,15 @@
 <app-header></app-header>
+
+<div class="flex justify-content-center">
+  <div class="w-11">
+    <p-button
+      icon="pi pi-arrow-left"
+      [rounded]="true"
+      [text]="true"
+      label="Go back"
+      (click)="goBack()"
+    />
+  </div>
+</div>
+
 <router-outlet></router-outlet>

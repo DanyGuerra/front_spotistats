@@ -1,5 +1,7 @@
-<div class="flex align-items-center justify-content-center">
-  <h1 class="m-0 text-primary">My top Stats</h1>
+<div class="flex justify-content-center">
+  <div class="w-11 flex justify-content-center">
+    <h1 class="mt-0">My top Stats</h1>
+  </div>
 </div>
 
 <div class="flex justify-content-center flex-wrap row-gap-6 column-gap-2">
@@ -16,15 +18,12 @@
     </div>
 
     <!-- SKELETON -->
-    <p-dataView
-      [value]="counterArray(topItemsToShow)"
-      *ngIf="isLoading.artists"
-    >
+    <p-dataView [value]="skeletonElements" *ngIf="isLoading.artists">
       <ng-template pTemplate="list" let-topArtist>
         <div
           class="grid grid-nogutter pl-4"
           *ngFor="
-            let i of counterArray(topItemsToShow);
+            let i of skeletonElements;
             let first = first;
             let index = index
           "
@@ -74,7 +73,7 @@
           <div
             class="grid grid-nogutter pl-4"
             *ngFor="
-              let i of counterArray(topItemsToShow);
+              let i of skeletonElements;
               let first = first;
               let index = index
             "
@@ -164,13 +163,13 @@
     </div>
 
     <!-- SKELETON -->
-    <p-dataView [value]="counterArray(topItemsToShow)" *ngIf="isLoading.tracks">
+    <p-dataView [value]="skeletonElements" *ngIf="isLoading.tracks">
       <ng-template pTemplate="list" let-topTracks>
         <div class="grid grid-nogutter" *ngIf="isLoading.tracks">
           <div
             class="col-12"
             *ngFor="
-              let i of counterArray(topItemsToShow);
+              let i of skeletonElements;
               let first = first;
               let index = index
             "
@@ -281,15 +280,12 @@
     </div>
 
     <!-- SKELETON -->
-    <p-dataView
-      [value]="counterArray(topItemsToShow)"
-      *ngIf="isLoading.currentlyPlayed"
-    >
+    <p-dataView [value]="skeletonElements" *ngIf="isLoading.currentlyPlayed">
       <ng-template pTemplate="list" let-trackPlayed>
         <div class="flex flex-column justify-content-start">
           <div
             *ngFor="
-              let i of counterArray(topItemsToShow);
+              let i of skeletonElements;
               let first = first;
               let index = index
             "
@@ -341,9 +337,8 @@
       <ng-template pTemplate="list">
         <div class="flex flex-column justify-content-start">
           <div
-            (click)="handleClick(trackPlayed.track.external_urls.spotify)"
             *ngFor="let trackPlayed of tracksPlayed; let first = first"
-            class="flex justify-content-between align-items-center gap-3 cursor-pointer hover:shadow-8 px-1 py-3"
+            class="flex justify-content-between align-items-center gap-3 hover:shadow-8 px-1 py-3"
             [ngClass]="{ 'border-top-1 surface-border': !first }"
           >
             <div class="w-2rem h-2rem">
@@ -368,7 +363,7 @@
               </div>
             </div>
             <div class="font-bold text-600">
-              {{ timeFromNowUTC(trackPlayed.played_at, "en") }}
+              {{ trackPlayed.played_at | timeFromNow : "en" }}
             </div>
           </div>
         </div>
