@@ -55,11 +55,13 @@
         <ng-container *ngIf="!isLoading.artists">
           <p-card
             *ngFor="let artist of topArtists"
-            class="cursor-pointer custom-card"
+            class="cursor-pointer custom-card w-5rem md:w-8rem lg:w-10rem"
             (click)="handleImageClick(artist.external_urls.spotify)"
           >
             <ng-template pTemplate="header">
-              <div class="image-container p-0 border-circle">
+              <div
+                class="overflow-hidden h-5rem md:h-8rem lg:h-10rem p-0 border-circle"
+              >
                 <p-image
                   [src]="artist.images[0].url"
                   [alt]="artist.name"
