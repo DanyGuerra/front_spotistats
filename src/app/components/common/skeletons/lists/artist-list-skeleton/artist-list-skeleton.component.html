@@ -1,0 +1,24 @@
+<div class="w-full cursor-pointer hover:shadow-8">
+  <div
+    class="flex justify-content-between gap-3 py-1"
+    [ngClass]="{ 'border-top-1 surface-border': showBorder }"
+  >
+    <div
+      class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+    >
+      #{{ index + 1 }}
+    </div>
+
+    <div class="w-5rem h-5rem pb-2">
+      <p-skeleton width="100%" height="100%" shape="circle"></p-skeleton>
+    </div>
+    <div
+      class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
+    >
+      <p-skeleton
+        [width]="generateRandomWidth(15, 100)"
+        height="1rem"
+      ></p-skeleton>
+    </div>
+  </div>
+</div>

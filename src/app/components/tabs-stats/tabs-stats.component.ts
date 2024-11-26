@@ -24,6 +24,8 @@ import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 import { generateRandomWidth } from 'src/utils/general-utils';
 import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played-list-item/recently-played-list-item.component';
 import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/recently-played-list-skeleton/recently-played-list-skeleton.component';
+import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist-list-item.component';
+import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-list-skeleton/artist-list-skeleton.component';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -34,6 +36,8 @@ import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/r
     AudioPlayerComponent,
     RecentlyPlayedListItemComponent,
     RecentlyPlayedListSkeletonComponent,
+    ArtistListSkeletonComponent,
+    ArtistListItemComponent,
     CarouselModule,
     RouterModule,
     ButtonModule,
