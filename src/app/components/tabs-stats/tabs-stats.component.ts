@@ -23,6 +23,7 @@ import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 import { generateRandomWidth } from 'src/utils/general-utils';
 import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played-list-item/recently-played-list-item.component';
+import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/recently-played-list-skeleton/recently-played-list-skeleton.component';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -32,6 +33,7 @@ import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played
     CommonModule,
     AudioPlayerComponent,
     RecentlyPlayedListItemComponent,
+    RecentlyPlayedListSkeletonComponent,
     CarouselModule,
     RouterModule,
     ButtonModule,
@@ -55,6 +57,7 @@ export class TabsStatsComponent implements OnInit {
   isLoading: ILoadingSubject = initialIsLoading;
   tracksPlayed!: TrackPlayed[];
   skeletonElements: number[] = Array(itemsToShowSummary);
+  skeletonNumber: number = itemsToShowSummary;
   generateRandomWidth = generateRandomWidth;
 
   constructor(private statsService: StatsService) {

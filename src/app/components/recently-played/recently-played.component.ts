@@ -5,11 +5,15 @@ import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { SkeletonModule } from 'primeng/skeleton';
-import { initialIsLoading } from 'src/constants/types';
+import {
+  defaultCurrentlyPlayedItems,
+  initialIsLoading,
+} from 'src/constants/types';
 import { ImageModule } from 'primeng/image';
 import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played-list-item/recently-played-list-item.component';
+import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/recently-played-list-skeleton/recently-played-list-skeleton.component';
 
 @Component({
   selector: 'app-recently-played',
@@ -21,13 +25,15 @@ import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played
     SkeletonModule,
     ImageModule,
     RecentlyPlayedListItemComponent,
+    RecentlyPlayedListSkeletonComponent,
   ],
   templateUrl: './recently-played.component.html',
   styleUrls: ['./recently-played.component.less'],
 })
 export class RecentlyPlayedComponent implements OnInit {
   tracksPlayed!: TrackPlayed[];
-  skeletonElements: number[] = Array(50);
+  skeletonElements: number[] = Array(defaultCurrentlyPlayedItems);
+  skeletonNumber: number = defaultCurrentlyPlayedItems;
   generateRandomWidth = generateRandomWidth;
   isLoading: ILoadingSubject = initialIsLoading;
 

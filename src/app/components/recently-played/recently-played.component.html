@@ -9,45 +9,9 @@
     <p-dataView [value]="skeletonElements" *ngIf="isLoading.currentlyPlayed">
       <ng-template pTemplate="list" let-trackPlayed>
         <div class="flex flex-column justify-content-start">
-          <div
-            *ngFor="
-              let i of skeletonElements;
-              let first = first;
-              let index = index
-            "
-          >
-            <div
-              class="flex justify-content-between align-items-center gap-3 p-1 pt-2 px-1 py-3"
-              [ngClass]="{ 'border-top-1 surface-border': !first }"
-            >
-              <p-skeleton
-                width="2.5rem"
-                height="2.5rem"
-                shape="circle"
-              ></p-skeleton>
-
-              <p-skeleton width="3rem" height="3rem"></p-skeleton>
-
-              <div class="flex flex-column justify-content-start flex-1 gap-1">
-                <p-skeleton
-                  [width]="generateRandomWidth(30, 80)"
-                  height="1rem"
-                ></p-skeleton>
-                <p-skeleton
-                  [width]="generateRandomWidth(30, 80)"
-                  height="1rem"
-                ></p-skeleton>
-              </div>
-
-              <div class="flex justify-content-end w-3">
-                <p-skeleton
-                  class="w-full flex justify-content-end"
-                  [width]="generateRandomWidth(50, 100)"
-                  height="1rem"
-                ></p-skeleton>
-              </div>
-            </div>
-          </div>
+          <app-recently-played-list-skeleton
+            [totalSkeletonItems]="skeletonNumber"
+          ></app-recently-played-list-skeleton>
         </div>
       </ng-template>
     </p-dataView>
