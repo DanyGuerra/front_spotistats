@@ -10,7 +10,8 @@
       <ng-template pTemplate="list" let-trackPlayed>
         <div class="flex flex-column justify-content-start">
           <app-recently-played-list-skeleton
-            [totalSkeletonItems]="skeletonNumber"
+            *ngFor="let item of skeletonElements; let first = first"
+            [showBorder]="!first"
           ></app-recently-played-list-skeleton>
         </div>
       </ng-template>

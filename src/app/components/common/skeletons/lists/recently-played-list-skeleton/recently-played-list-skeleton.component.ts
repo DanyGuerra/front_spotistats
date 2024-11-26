@@ -11,10 +11,6 @@ import { SkeletonModule } from 'primeng/skeleton';
   styleUrls: ['./recently-played-list-skeleton.component.less'],
 })
 export class RecentlyPlayedListSkeletonComponent {
-  @Input() totalSkeletonItems: number = 0;
+  @Input() showBorder: boolean = false;
   generateRandomWidth = generateRandomWidth;
-
-  get iterationsArray(): number[] {
-    return Array(this.totalSkeletonItems).fill(0);
-  }
 }
