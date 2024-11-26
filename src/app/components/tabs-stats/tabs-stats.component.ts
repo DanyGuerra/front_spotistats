@@ -1,12 +1,8 @@
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 import { TabViewModule } from 'primeng/tabview';
-import { HeaderComponent } from '../common/header/header.component';
 import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
-import { TabTopArtistsComponent } from '../tab-top-artists/tab-top-artists.component';
-import { TabTopTracksComponent } from '../tab-top-tracks/tab-top-tracks.component';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -26,17 +22,16 @@ import { DataViewModule } from 'primeng/dataview';
 import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 import { generateRandomWidth } from 'src/utils/general-utils';
+import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played-list-item/recently-played-list-item.component';
 
 @Component({
   selector: 'app-tabs-stats',
   standalone: true,
   imports: [
     TabViewModule,
-    HeaderComponent,
     CommonModule,
     AudioPlayerComponent,
-    TabTopArtistsComponent,
-    TabTopTracksComponent,
+    RecentlyPlayedListItemComponent,
     CarouselModule,
     RouterModule,
     ButtonModule,
@@ -44,7 +39,6 @@ import { generateRandomWidth } from 'src/utils/general-utils';
     ImageModule,
     SkeletonModule,
     DataViewModule,
-    TimeFromNowPipe,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],

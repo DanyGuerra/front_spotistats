@@ -5,24 +5,22 @@ import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { SkeletonModule } from 'primeng/skeleton';
-import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 import { initialIsLoading } from 'src/constants/types';
-import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
 import { ImageModule } from 'primeng/image';
 import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
+import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played-list-item/recently-played-list-item.component';
 
 @Component({
   selector: 'app-recently-played',
   standalone: true,
   imports: [
     CommonModule,
-    TimeFromNowPipe,
     ButtonModule,
     DataViewModule,
     SkeletonModule,
     ImageModule,
-    AudioPlayerComponent,
+    RecentlyPlayedListItemComponent,
   ],
   templateUrl: './recently-played.component.html',
   styleUrls: ['./recently-played.component.less'],

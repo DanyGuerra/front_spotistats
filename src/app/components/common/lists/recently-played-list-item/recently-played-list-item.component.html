@@ -1,0 +1,29 @@
+<div
+  class="flex justify-content-between align-items-center gap-3 hover:shadow-8 px-1 py-3"
+  [ngClass]="{ 'border-top-1 surface-border': showBorder }"
+>
+  <div class="w-2rem h-2rem">
+    <app-audio-player
+      [urlPreview]="trackPlayed.track.preview_url"
+    ></app-audio-player>
+  </div>
+  <div class="w-3rem h-3rem overflow-hidden">
+    <p-image
+      [src]="trackPlayed.track.album.images[0].url"
+      [alt]="trackPlayed.track.name"
+      width="100%"
+    >
+    </p-image>
+  </div>
+  <div class="flex flex-column justify-content-start flex-1">
+    <div class="text-lg font-medium">
+      {{ trackPlayed.track.name }}
+    </div>
+    <div class="text-400 font-medium">
+      {{ trackPlayed.track.artists[0].name }}
+    </div>
+  </div>
+  <div class="font-bold text-600">
+    {{ trackPlayed.played_at | timeFromNow : "en" }}
+  </div>
+</div>
