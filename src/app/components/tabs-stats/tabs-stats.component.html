@@ -20,42 +20,16 @@
     <!-- SKELETON -->
     <p-dataView [value]="skeletonElements" *ngIf="isLoading.artists">
       <ng-template pTemplate="list" let-topArtist>
-        <div
-          class="grid grid-nogutter pl-4"
-          *ngFor="
-            let i of skeletonElements;
-            let first = first;
-            let index = index
-          "
-        >
-          <div class="col-12 cursor-pointer hover:shadow-8">
-            <div
-              class="flex justify-content-between gap-3 py-1"
-              [ngClass]="{ 'border-top-1 surface-border': !first }"
-            >
-              <div
-                class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
-              >
-                #{{ index + 1 }}
-              </div>
-
-              <div class="w-5rem h-5rem pb-2">
-                <p-skeleton
-                  width="100%"
-                  height="100%"
-                  shape="circle"
-                ></p-skeleton>
-              </div>
-              <div
-                class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
-              >
-                <p-skeleton
-                  [width]="generateRandomWidth(15, 100)"
-                  height="1rem"
-                ></p-skeleton>
-              </div>
-            </div>
-          </div>
+        <div class="flex flex-column pl-4">
+          <app-artist-list-skeleton
+            *ngFor="
+              let item of skeletonElements;
+              let first = first;
+              let index = index
+            "
+            [showBorder]="!first"
+            [index]="index"
+          ></app-artist-list-skeleton>
         </div>
       </ng-template>
     </p-dataView>
@@ -69,22 +43,6 @@
       </ng-template>
 
       <ng-template pTemplate="list" let-topArtist>
-        <div *ngIf="isLoading.artists; else dataArtistsList">
-          <div class="flex flex-column pl-4">
-            <app-artist-list-skeleton
-              *ngFor="
-                let i of skeletonElements;
-                let first = first;
-                let index = index
-              "
-              [showBorder]="first"
-              [index]="index"
-            ></app-artist-list-skeleton>
-          </div>
-        </div>
-      </ng-template>
-
-      <ng-template #dataArtistsList>
         <div class="flex flex-column pl-4">
           <app-artist-list-item
             *ngFor="let artist of topArtists; let first = first"
@@ -111,44 +69,16 @@
     <!-- SKELETON -->
     <p-dataView [value]="skeletonElements" *ngIf="isLoading.tracks">
       <ng-template pTemplate="list" let-topTracks>
-        <div class="grid grid-nogutter" *ngIf="isLoading.tracks">
-          <div
-            class="col-12"
+        <div class="flex flex-column" *ngIf="isLoading.tracks">
+          <app-track-list-skeleton
             *ngFor="
-              let i of skeletonElements;
-              let first = first;
-              let index = index
+              let item of skeletonElements;
+              let index = index;
+              let first = first
             "
-          >
-            <div
-              class="flex justify-content-between gap-3 py-1"
-              [ngClass]="{ 'border-top-1 surface-border': !first }"
-            >
-              <div class="flex flex-1 cursor-pointer gap-3">
-                <div
-                  class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
-                >
-                  #{{ index + 1 }}
-                </div>
-                <p-skeleton width="5rem" height="5rem"></p-skeleton>
-
-                <div
-                  class="flex flex-column justify-content-center justify-content-center flex-1 gap-2"
-                >
-                  <p-skeleton width="80%" height="1rem"></p-skeleton>
-                  <p-skeleton width="50%" height="1rem"></p-skeleton>
-                </div>
-              </div>
-
-              <div class="flex align-items-center justify-content-center px-4">
-                <p-skeleton
-                  width="2.5rem"
-                  height="2.5rem"
-                  shape="circle"
-                ></p-skeleton>
-              </div>
-            </div>
-          </div>
+            [index]="index"
+            [showBorder]="!first"
+          ></app-track-list-skeleton>
         </div>
       </ng-template>
     </p-dataView>
@@ -161,53 +91,14 @@
         </div>
       </ng-template>
 
-      <ng-template pTemplate="list" let-topTracks>
-        <div class="grid grid-nogutter">
-          <div
-            class="col-12 hover:shadow-8"
+      <ng-template pTemplate="list" let-topTrack>
+        <div class="flex flex-column">
+          <app-track-list-item
             *ngFor="let track of topTracks; let first = first"
+            [track]="track"
+            [showBorder]="!first"
           >
-            <div
-              class="flex justify-content-between gap-3 py-1"
-              [ngClass]="{ 'border-top-1 surface-border': !first }"
-            >
-              <div
-                class="flex flex-1 cursor-pointer gap-3"
-                (click)="handleClick(track.external_urls.spotify)"
-              >
-                <div
-                  class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
-                >
-                  #{{ track.rank_number }}
-                </div>
-                <div class="flex w-5rem h-5rem overflow-hidden pb-2">
-                  <p-image
-                    [src]="track.album.images[0].url"
-                    [alt]="track.name"
-                    width="100%"
-                  ></p-image>
-                </div>
-                <div
-                  class="flex flex-column justify-content-center justify-content-center flex-1"
-                >
-                  <div class="text-lg font-medium text-900">
-                    {{ track.name }}
-                  </div>
-                  <div class="text-base text-400 font-medium">
-                    {{ track.artists[0].name }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex align-items-center justify-content-center px-4">
-                <div class="w-2rem h-2rem">
-                  <app-audio-player
-                    [urlPreview]="track.preview_url"
-                  ></app-audio-player>
-                </div>
-              </div>
-            </div>
-          </div>
+          </app-track-list-item>
         </div>
       </ng-template>
     </p-dataView>

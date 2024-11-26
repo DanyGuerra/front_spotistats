@@ -1,1 +1,40 @@
-<p>track-list-item works!</p>
+<div class="w-full hover:shadow-8">
+  <div
+    class="flex justify-content-between gap-3 py-1"
+    [ngClass]="{ 'border-top-1 surface-border': showBorder }"
+  >
+    <div
+      class="flex flex-1 cursor-pointer gap-3"
+      (click)="handleClick(track.external_urls.spotify)"
+    >
+      <div
+        class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+      >
+        #{{ track.rank_number }}
+      </div>
+      <div class="flex w-5rem h-5rem overflow-hidden pb-2">
+        <p-image
+          [src]="track.album.images[0].url"
+          [alt]="track.name"
+          width="100%"
+        ></p-image>
+      </div>
+      <div
+        class="flex flex-column justify-content-center justify-content-center flex-1"
+      >
+        <div class="text-lg font-medium text-900">
+          {{ track.name }}
+        </div>
+        <div class="text-base text-400 font-medium">
+          {{ track.artists[0].name }}
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-items-center justify-content-center px-4">
+      <div class="w-2rem h-2rem">
+        <app-audio-player [urlPreview]="track.preview_url"></app-audio-player>
+      </div>
+    </div>
+  </div>
+</div>

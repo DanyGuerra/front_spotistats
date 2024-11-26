@@ -2,7 +2,6 @@ import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TabViewModule } from 'primeng/tabview';
-import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -26,6 +25,8 @@ import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played
 import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/recently-played-list-skeleton/recently-played-list-skeleton.component';
 import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist-list-item.component';
 import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-list-skeleton/artist-list-skeleton.component';
+import { TrackListItemComponent } from '../common/lists/track-list-item/track-list-item.component';
+import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list-skeleton/track-list-skeleton.component';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -33,7 +34,6 @@ import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-li
   imports: [
     TabViewModule,
     CommonModule,
-    AudioPlayerComponent,
     RecentlyPlayedListItemComponent,
     RecentlyPlayedListSkeletonComponent,
     ArtistListSkeletonComponent,
@@ -45,6 +45,8 @@ import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-li
     ImageModule,
     SkeletonModule,
     DataViewModule,
+    TrackListItemComponent,
+    TrackListSkeletonComponent,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],
@@ -110,9 +112,5 @@ export class TabsStatsComponent implements OnInit {
     this.topTracksSubject.unsubscribe();
     this.currentlyPlayedSubject.unsubscribe();
     this.isLoadingSuscription.unsubscribe();
-  }
-
-  handleClick(url: string) {
-    window.open(url, '_blank');
   }
 }
