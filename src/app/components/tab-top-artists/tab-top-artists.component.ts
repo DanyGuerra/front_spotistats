@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
@@ -18,6 +18,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { IDataPagination } from 'src/app/interfaces/IDataPagination';
 import { initialTopItems } from 'src/constants/types';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
+import { ArtistCardItemComponent } from '../common/cards/artist-card-item/artist-card-item.component';
+import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-card-skeleton/artist-card-skeleton.component';
 
 @Component({
   selector: 'app-tab-top-artists',
@@ -30,10 +32,11 @@ import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
     FormsModule,
     SkeletonModule,
     PaginatorModule,
+    ArtistCardItemComponent,
+    ArtistCardSkeletonComponent,
   ],
   templateUrl: './tab-top-artists.component.html',
   styleUrls: ['./tab-top-artists.component.less'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class TabTopArtistsComponent implements OnInit, OnDestroy {
   topArtists!: TopArtistItem[] | undefined;
