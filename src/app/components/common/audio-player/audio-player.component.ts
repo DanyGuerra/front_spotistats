@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { ClickOutsideDirective } from 'src/app/directives/click-outside.directive';
 import { IconPlayComponent } from '../icons/iconplay/icon-play.component';
 import { IconPauseComponent } from '../icons/iconpause/icon-pause.component';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-audio-player',
@@ -34,6 +35,8 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
 
   audioDuration: number = 0;
   currentTime: number = 0;
+
+  constructor(private toastService: ToastService) {}
 
   private loadedMetadataListener = () => {
     this.audioDuration = this.audioRef.nativeElement.duration;
@@ -75,19 +78,30 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   }
 
   playAudio() {
-    this.audioRef.nativeElement.play();
-    this.isPlaying = true;
+    if (this.urlPreview) {
+      this.audioRef.nativeElement.play();
+      this.isPlaying = true;
+    } else {
+      this.toastService.showError(
+        'Something went wrong',
+        'The audio is not available, try later'
+      );
+    }
   }
 
   pauseAudio() {
-    this.audioRef.nativeElement.pause();
-    this.isPlaying = false;
+    if (this.urlPreview) {
+      this.audioRef.nativeElement.pause();
+      this.isPlaying = false;
+    }
   }
 
   stopAudio() {
-    this.audioRef.nativeElement.pause();
-    this.audioRef.nativeElement.currentTime = 0;
-    this.isPlaying = false;
+    if (this.urlPreview) {
+      this.audioRef.nativeElement.pause();
+      this.audioRef.nativeElement.currentTime = 0;
+      this.isPlaying = false;
+    }
   }
 
   onClickedOutside() {
