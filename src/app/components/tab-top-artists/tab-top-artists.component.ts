@@ -95,7 +95,7 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   }
 
   onOptionChange(event: any) {
-    this.statsService.setTopArtistsByRange(event.value);
+    this.statsService.setTopArtistsByRange(event.value, this.actualRows);
   }
 
   onPageChange(event: any) {
