@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import {
+  TopInfoLimit,
   TopTimeRange,
   defaultTopRange,
   initialIsLoading,
@@ -45,7 +46,7 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
   topTracksSuscription!: Subscription;
   isLoadingSuscription!: Subscription;
   skeletonElements: number[] = Array(initialTopItems);
-  actualRows: number = initialTopItems;
+  actualRows: TopInfoLimit = initialTopItems;
   dataPagination: IDataPagination = {
     first: 0,
     rows: 50,
@@ -96,7 +97,7 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
   }
 
   onChangeHandle(event: any) {
-    this.statsService.setTopTracksByTimerange(event.value);
+    this.statsService.setTopTracksByTimerange(event.value, this.actualRows);
   }
 
   onPageChange(event: any) {
