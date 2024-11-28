@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
-import { AudioPlayerComponent } from '../common/audio-player/audio-player.component';
 import { CommonModule } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +19,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { PaginatorModule } from 'primeng/paginator';
 import { IDataPagination } from 'src/app/interfaces/IDataPagination';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
+import { TrackCardItemComponent } from '../common/cards/track-card-item/track-card-item.component';
+import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
 
 @Component({
   selector: 'app-tab-top-tracks',
@@ -28,17 +29,17 @@ import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
   imports: [
     CardModule,
     ImageModule,
-    AudioPlayerComponent,
     CommonModule,
     SelectButtonModule,
     FormsModule,
     DropdownModule,
     SkeletonModule,
     PaginatorModule,
+    TrackCardItemComponent,
+    TrackCardSkeletonComponent,
   ],
   templateUrl: './tab-top-tracks.component.html',
   styleUrls: ['./tab-top-tracks.component.less'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class TabTopTracksComponent implements OnInit, OnDestroy {
   topTracks!: TopTrackItem[] | undefined;

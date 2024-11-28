@@ -69,7 +69,7 @@
     <!-- SKELETON -->
     <p-dataView [value]="skeletonElements" *ngIf="isLoading.tracks">
       <ng-template pTemplate="list" let-topTracks>
-        <div class="flex flex-column" *ngIf="isLoading.tracks">
+        <div class="flex flex-column">
           <app-track-list-skeleton
             *ngFor="
               let item of skeletonElements;
