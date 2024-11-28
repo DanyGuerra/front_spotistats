@@ -34,7 +34,7 @@
         </div>
         <!-- SKELETON -->
         <ng-container *ngIf="isLoading.artists">
-          <div class="flex flex-wrap gap-2 justify-content-center">
+          <div class="flex flex-wrap gap-3 justify-content-center">
             <app-artist-card-skeleton
               *ngFor="let skeleton of skeletonElements"
               class="w-5rem md:w-8rem lg:w-10rem"
@@ -43,7 +43,7 @@
         </ng-container>
         <!-- DATA -->
         <ng-container *ngIf="!isLoading.artists">
-          <div class="flex flex-wrap gap-2 justify-content-center">
+          <div class="flex flex-wrap gap-3 justify-content-center">
             <app-artist-card-item
               *ngFor="let artist of topArtists"
               [artist]="artist"
