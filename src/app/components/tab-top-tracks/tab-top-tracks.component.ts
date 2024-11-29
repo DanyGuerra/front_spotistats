@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
-import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
+import { Track } from 'src/app/interfaces/IResponseTopTracks';
 import { CommonModule } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,8 @@ import { IDataPagination } from 'src/app/interfaces/IDataPagination';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 import { TrackCardItemComponent } from '../common/cards/track-card-item/track-card-item.component';
 import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
+import { DataViewModule } from 'primeng/dataview';
+import { TrackListItemComponent } from '../common/lists/track-list-item/track-list-item.component';
 
 @Component({
   selector: 'app-tab-top-tracks',
@@ -37,12 +39,14 @@ import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card
     PaginatorModule,
     TrackCardItemComponent,
     TrackCardSkeletonComponent,
+    DataViewModule,
+    TrackListItemComponent,
   ],
   templateUrl: './tab-top-tracks.component.html',
   styleUrls: ['./tab-top-tracks.component.less'],
 })
 export class TabTopTracksComponent implements OnInit, OnDestroy {
-  topTracks!: TopTrackItem[] | undefined;
+  topTracks!: Track[] | undefined;
   isLoading: ILoadingSubject = initialIsLoading;
   topTracksSuscription!: Subscription;
   isLoadingSuscription!: Subscription;

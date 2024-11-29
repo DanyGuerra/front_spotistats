@@ -18,7 +18,18 @@
     </p-dataView>
 
     <!-- DATA -->
-    <p-dataView #dv [value]="tracksPlayed" *ngIf="!isLoading.currentlyPlayed">
+    <p-dataView
+      #dv
+      [value]="tracksPlayed"
+      *ngIf="!isLoading.currentlyPlayed"
+      [layout]="'list'"
+    >
+      <ng-template pTemplate="header">
+        <div class="flex justify-content-end">
+          <p-dataViewLayoutOptions />
+        </div>
+      </ng-template>
+
       <ng-template pTemplate="empty">
         <div class="flex align-items-center justify-content-center h-12rem">
           <h3>No data</h3>
@@ -32,6 +43,17 @@
             [trackPlayed]="trackPlayed"
             [showBorder]="!first"
           ></app-recently-played-list-item>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="grid">
+        <div class="flex flex-wrap gap-3 justify-content-center">
+          <app-track-card-item
+            *ngFor="let track of tracksPlayed"
+            [trackItem]="track.track"
+            [playedAt]="track.played_at | timeFromNow : 'en'"
+            class="w-5rem md:w-8rem lg:w-10rem"
+          ></app-track-card-item>
         </div>
       </ng-template>
     </p-dataView>

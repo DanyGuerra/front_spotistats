@@ -21,36 +21,66 @@
       [totalRecords]="dataPagination.totalRecords"
       [rowsPerPageOptions]="dataPagination.rowsPerPageOptions"
     />
-    <div class="flex justify-content-center">
-      <div class="flex flex-wrap gap-3 justify-content-center">
-        <!-- NO DATA -->
-        <div
-          *ngIf="topArtists?.length === 0 && !isLoading.artists"
-          class="flex justify-content-center align h-24rem align-items-center"
-        >
-          <span class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl"
-            >No data</span
-          >
-        </div>
+
+    <div class="flex justify-content-center w-full">
+      <div class="flex flex-wrap gap-3 justify-content-center w-full">
         <!-- SKELETON -->
-        <ng-container *ngIf="isLoading.artists">
-          <div class="flex flex-wrap gap-3 justify-content-center">
-            <app-artist-card-skeleton
-              *ngFor="let skeleton of skeletonElements"
-              class="w-5rem md:w-8rem lg:w-10rem"
-            ></app-artist-card-skeleton>
-          </div>
-        </ng-container>
+        <p-dataView [value]="skeletonElements" *ngIf="isLoading.artists">
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
+          <ng-template pTemplate="list" let-trackPlayed>
+            <div class="flex flex-wrap gap-2 justify-content-center">
+              <app-artist-card-skeleton
+                *ngFor="let skeleton of skeletonElements"
+                class="w-5rem md:w-8rem lg:w-10rem"
+              ></app-artist-card-skeleton>
+            </div>
+          </ng-template>
+        </p-dataView>
+
         <!-- DATA -->
-        <ng-container *ngIf="!isLoading.artists">
-          <div class="flex flex-wrap gap-3 justify-content-center">
-            <app-artist-card-item
-              *ngFor="let artist of topArtists"
-              [artist]="artist"
-              class="w-5rem md:w-8rem lg:w-10rem"
-            ></app-artist-card-item>
-          </div>
-        </ng-container>
+        <p-dataView
+          #dv
+          [value]="topArtists"
+          *ngIf="!isLoading.currentlyPlayed"
+          [layout]="'list'"
+          class="w-full"
+        >
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end w-full">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="empty">
+            <div class="flex align-items-center justify-content-center h-12rem">
+              <h3>No data</h3>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="list">
+            <div class="flex flex-column justify-content-start">
+              <app-artist-list-item
+                *ngFor="let artist of topArtists; let first = first"
+                [artist]="artist"
+                [showBorder]="!first"
+              ></app-artist-list-item>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="grid">
+            <div class="flex flex-wrap gap-2 justify-content-center">
+              <app-artist-card-item
+                *ngFor="let artist of topArtists"
+                [artist]="artist"
+                class="w-5rem md:w-8rem lg:w-10rem"
+              ></app-artist-card-item>
+            </div>
+          </ng-template>
+        </p-dataView>
       </div>
     </div>
   </div>

@@ -16,7 +16,7 @@ import {
 import { StatsService } from 'src/app/services/stats.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
-import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
+import { Track } from 'src/app/interfaces/IResponseTopTracks';
 import { DataViewModule } from 'primeng/dataview';
 import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
@@ -27,6 +27,9 @@ import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist
 import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-list-skeleton/artist-list-skeleton.component';
 import { TrackListItemComponent } from '../common/lists/track-list-item/track-list-item.component';
 import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list-skeleton/track-list-skeleton.component';
+import { ArtistCardItemComponent } from '../common/cards/artist-card-item/artist-card-item.component';
+import { TrackCardItemComponent } from '../common/cards/track-card-item/track-card-item.component';
+import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -47,6 +50,9 @@ import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list
     DataViewModule,
     TrackListItemComponent,
     TrackListSkeletonComponent,
+    ArtistCardItemComponent,
+    TrackCardItemComponent,
+    TimeFromNowPipe,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],
@@ -54,7 +60,7 @@ import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list
 })
 export class TabsStatsComponent implements OnInit {
   topArtists!: TopArtistItem[];
-  topTracks!: TopTrackItem[];
+  topTracks!: Track[];
   topArtistSubject!: Subscription;
   topTracksSubject!: Subscription;
   currentlyPlayedSubject!: Subscription;

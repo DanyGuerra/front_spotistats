@@ -20,6 +20,8 @@ import { initialTopItems } from 'src/constants/types';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 import { ArtistCardItemComponent } from '../common/cards/artist-card-item/artist-card-item.component';
 import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-card-skeleton/artist-card-skeleton.component';
+import { DataViewModule } from 'primeng/dataview';
+import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist-list-item.component';
 
 @Component({
   selector: 'app-tab-top-artists',
@@ -29,11 +31,13 @@ import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-ca
     ImageModule,
     CommonModule,
     SelectButtonModule,
+    DataViewModule,
     FormsModule,
     SkeletonModule,
     PaginatorModule,
     ArtistCardItemComponent,
     ArtistCardSkeletonComponent,
+    ArtistListItemComponent,
   ],
   templateUrl: './tab-top-artists.component.html',
   styleUrls: ['./tab-top-artists.component.less'],
