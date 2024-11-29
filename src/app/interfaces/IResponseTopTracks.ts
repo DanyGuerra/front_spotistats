@@ -5,7 +5,7 @@ export interface IResponseTopTracks {
 }
 
 export interface Data {
-  items: TopTrackItem[];
+  items: Track[];
   total: number;
   limit: number;
   offset: number;
@@ -14,7 +14,7 @@ export interface Data {
   previous: string | null;
 }
 
-export interface TopTrackItem {
+export interface Track {
   album: Album;
   artists: Artist[];
   available_markets: string[];

@@ -1,37 +1,42 @@
 <p-card class="custom-card">
   <ng-template pTemplate="header">
     <div class="relative">
-      <p-image
-        [src]="track.album.images[0].url"
-        [alt]="track.name"
-        width="100%"
-        class="cursor-pointer"
-        (click)="handleImageClick(track.external_urls.spotify)"
-      ></p-image>
+      <div class="image-wrapper">
+        <p-image
+          [src]="trackItem.album.images[0].url"
+          [alt]="trackItem.name"
+          width="100%"
+          class="cursor-pointer"
+          (click)="handleImageClick(trackItem.external_urls.spotify)"
+        ></p-image>
+      </div>
 
       <app-audio-player
         class="absolute bottom-0 left-0 w-2rem h-2rem sm:w-2rem sm:h-2rem md:w-3rem md:h-3rem"
-        [urlPreview]="track.preview_url"
+        [urlPreview]="trackItem.preview_url"
       ></app-audio-player>
     </div>
   </ng-template>
 
   <div class="flex gap-2">
     <div class="flex flex-column gap-1">
+      <p class="font-bold text-primary text-xs sm:text-sm m-0 p-0 w-full">
+        {{ playedAt }}
+      </p>
       <p
         class="font-bold text-primary text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0"
       >
-        #{{ track.rank_number }}
+        {{ trackItem.rank_number ? "# " + trackItem.rank_number : "" }}
       </p>
       <p
         class="flex font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0 flex-1"
       >
-        {{ track.name }}
+        {{ trackItem.name }}
       </p>
       <p
         class="font-bold text-300 text-xs sm:text-xs md:text-base lg:text-base m-0 p-0 w-full"
       >
-        {{ track.artists[0].name }}
+        {{ trackItem.artists[0].name }}
       </p>
     </div>
   </div>

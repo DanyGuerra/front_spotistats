@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { AudioPlayerComponent } from '../../audio-player/audio-player.component';
-import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
+import { Track } from 'src/app/interfaces/IResponseTopTracks';
 
 @Component({
   selector: 'app-track-card-item',
@@ -14,7 +14,8 @@ import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
   encapsulation: ViewEncapsulation.None,
 })
 export class TrackCardItemComponent {
-  @Input() track!: TopTrackItem;
+  @Input() trackItem!: Track;
+  @Input() playedAt: string = '';
 
   handleImageClick(url: string) {
     window.open(url, '_blank');
