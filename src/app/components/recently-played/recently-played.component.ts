@@ -14,6 +14,8 @@ import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
 import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played-list-item/recently-played-list-item.component';
 import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/recently-played-list-skeleton/recently-played-list-skeleton.component';
+import { TrackCardItemComponent } from '../common/cards/track-card-item/track-card-item.component';
+import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 
 @Component({
   selector: 'app-recently-played',
@@ -26,6 +28,8 @@ import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/r
     ImageModule,
     RecentlyPlayedListItemComponent,
     RecentlyPlayedListSkeletonComponent,
+    TrackCardItemComponent,
+    TimeFromNowPipe,
   ],
   templateUrl: './recently-played.component.html',
   styleUrls: ['./recently-played.component.less'],

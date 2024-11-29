@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TopTrackItem } from 'src/app/interfaces/IResponseTopTracks';
+import { Track } from 'src/app/interfaces/IResponseTopTracks';
 import { ImageModule } from 'primeng/image';
 import { AudioPlayerComponent } from '../../audio-player/audio-player.component';
 
@@ -12,7 +12,7 @@ import { AudioPlayerComponent } from '../../audio-player/audio-player.component'
   styleUrls: ['./track-list-item.component.less'],
 })
 export class TrackListItemComponent {
-  @Input() track!: TopTrackItem;
+  @Input() track!: Track;
   @Input() showBorder: boolean = false;
 
   handleClick(url: string) {
