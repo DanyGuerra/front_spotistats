@@ -22,6 +22,7 @@ import { ArtistCardItemComponent } from '../common/cards/artist-card-item/artist
 import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-card-skeleton/artist-card-skeleton.component';
 import { DataViewModule } from 'primeng/dataview';
 import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist-list-item.component';
+import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-list-skeleton/artist-list-skeleton.component';
 
 @Component({
   selector: 'app-tab-top-artists',
@@ -38,6 +39,7 @@ import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist
     ArtistCardItemComponent,
     ArtistCardSkeletonComponent,
     ArtistListItemComponent,
+    ArtistListSkeletonComponent,
   ],
   templateUrl: './tab-top-artists.component.html',
   styleUrls: ['./tab-top-artists.component.less'],
@@ -50,6 +52,7 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   isLoading: ILoadingSubject = initialIsLoading;
   skeletonElements: number[] = Array(initialTopItems);
   actualRows: TopInfoLimit = initialTopItems;
+  layout: 'list' | 'grid' = 'list';
   dataPagination: IDataPagination = {
     first: 0,
     rows: 0,
@@ -110,5 +113,9 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
       event.rows,
       event.first
     );
+  }
+
+  handleLayout(event: any) {
+    this.layout = event.layout;
   }
 }

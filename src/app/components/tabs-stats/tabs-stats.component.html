@@ -17,13 +17,19 @@
       />
     </div>
 
-    <!-- SKELETON LIST -->
-    <p-dataView [value]="skeletonElements" *ngIf="isLoading.artists">
+    <!-- SKELETON -->
+    <p-dataView
+      [value]="skeletonElements"
+      *ngIf="isLoading.artists"
+      [layout]="layout"
+    >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
           <p-dataViewLayoutOptions />
         </div>
       </ng-template>
+
+      <!-- SKELETON LIST -->
       <ng-template pTemplate="list" let-topArtist>
         <div class="flex flex-column pl-4">
           <app-artist-list-skeleton
@@ -37,10 +43,25 @@
           ></app-artist-list-skeleton>
         </div>
       </ng-template>
+
+      <!-- SKELETON GRID -->
+      <ng-template pTemplate="grid" let-topArtist>
+        <div class="flex flex-wrap gap-2 justify-content-center">
+          <app-artist-card-skeleton
+            *ngFor="let skeleton of skeletonElements"
+            class="w-5rem md:w-8rem lg:w-10rem"
+          ></app-artist-card-skeleton>
+        </div>
+      </ng-template>
     </p-dataView>
 
     <!-- DATA-->
-    <p-dataView #dv [value]="topArtists" *ngIf="!isLoading.artists">
+    <p-dataView
+      #dv
+      [value]="topArtists"
+      *ngIf="!isLoading.artists"
+      [layout]="layout"
+    >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
           <p-dataViewLayoutOptions />
@@ -89,13 +110,18 @@
       />
     </div>
 
-    <!-- SKELETON LIST-->
-    <p-dataView [value]="skeletonElements" *ngIf="isLoading.tracks">
+    <!-- SKELETON-->
+    <p-dataView
+      [value]="skeletonElements"
+      *ngIf="isLoading.tracks"
+      [layout]="layout"
+    >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
           <p-dataViewLayoutOptions />
         </div>
       </ng-template>
+      <!-- SKELETON LIST -->
       <ng-template pTemplate="list" let-topTracks>
         <div class="flex flex-column">
           <app-track-list-skeleton
@@ -109,10 +135,25 @@
           ></app-track-list-skeleton>
         </div>
       </ng-template>
+
+      <!-- SKELETON GRID -->
+      <ng-template pTemplate="grid" let-topTracks>
+        <div class="flex flex-wrap gap-2 justify-content-center md:min-h-full">
+          <app-track-card-skeleton
+            *ngFor="let item of skeletonElements"
+            class="w-8rem md:w-9rem lg:w-10rem"
+          ></app-track-card-skeleton>
+        </div>
+      </ng-template>
     </p-dataView>
 
     <!-- DATA -->
-    <p-dataView #dv [value]="topTracks" *ngIf="!isLoading.tracks">
+    <p-dataView
+      #dv
+      [value]="topTracks"
+      *ngIf="!isLoading.tracks"
+      [layout]="layout"
+    >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
           <p-dataViewLayoutOptions />
@@ -142,7 +183,6 @@
           <app-track-card-item
             *ngFor="let track of topTracks"
             [trackItem]="track"
-            [title]="'# ' + track.rank_number"
             class="w-8rem md:w-9rem lg:w-10rem"
           ></app-track-card-item>
         </div>
@@ -162,13 +202,19 @@
       />
     </div>
 
-    <!-- SKELETON -->
-    <p-dataView [value]="skeletonElements" *ngIf="isLoading.currentlyPlayed">
+    <!-- SKELETON-->
+    <p-dataView
+      [value]="skeletonElements"
+      *ngIf="isLoading.recentlyPlayed"
+      [layout]="layout"
+    >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
           <p-dataViewLayoutOptions />
         </div>
       </ng-template>
+
+      <!-- SKELETON LIST -->
       <ng-template pTemplate="list" let-trackPlayed>
         <div class="flex flex-column justify-content-start">
           <app-recently-played-list-skeleton
@@ -177,10 +223,25 @@
           ></app-recently-played-list-skeleton>
         </div>
       </ng-template>
+
+      <!-- SKELETON GRID-->
+      <ng-template pTemplate="grid" let-trackPlayed>
+        <div class="flex flex-wrap gap-2 justify-content-center">
+          <app-track-card-skeleton
+            *ngFor="let item of skeletonElements"
+            class="w-8rem md:w-9rem lg:w-10rem"
+          ></app-track-card-skeleton>
+        </div>
+      </ng-template>
     </p-dataView>
 
     <!-- DATA -->
-    <p-dataView #dv [value]="tracksPlayed" *ngIf="!isLoading.currentlyPlayed">
+    <p-dataView
+      #dv
+      [value]="tracksPlayed"
+      *ngIf="!isLoading.recentlyPlayed"
+      [layout]="layout"
+    >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
           <p-dataViewLayoutOptions />

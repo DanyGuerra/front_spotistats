@@ -25,13 +25,34 @@
     <div class="flex justify-content-center w-full">
       <div class="flex flex-wrap gap-3 justify-content-center w-full">
         <!-- SKELETON -->
-        <p-dataView [value]="skeletonElements" *ngIf="isLoading.artists">
+        <p-dataView
+          [value]="skeletonElements"
+          *ngIf="isLoading.artists"
+          [layout]="layout"
+          class="w-full"
+        >
           <ng-template pTemplate="header">
             <div class="flex justify-content-end">
               <p-dataViewLayoutOptions />
             </div>
           </ng-template>
+
+          <!-- SKELETON LIST -->
           <ng-template pTemplate="list" let-trackPlayed>
+            <div class="flex flex-column justify-content-start">
+              <app-artist-list-skeleton
+                *ngFor="
+                  let skeleton of skeletonElements;
+                  let index = index;
+                  let first = first
+                "
+                [showBorder]="!first"
+              ></app-artist-list-skeleton>
+            </div>
+          </ng-template>
+
+          <!-- SKELETON GRID -->
+          <ng-template pTemplate="grid" let-trackPlayed>
             <div class="flex flex-wrap gap-2 justify-content-center">
               <app-artist-card-skeleton
                 *ngFor="let skeleton of skeletonElements"
@@ -46,8 +67,9 @@
           #dv
           [value]="topArtists"
           *ngIf="!isLoading.recentlyPlayed"
-          [layout]="'list'"
+          [layout]="layout"
           class="w-full"
+          (onChangeLayout)="handleLayout($event)"
         >
           <ng-template pTemplate="header">
             <div class="flex justify-content-end w-full">

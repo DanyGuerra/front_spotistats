@@ -23,11 +23,11 @@ import { TrackCardItemComponent } from '../common/cards/track-card-item/track-ca
 import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
 import { DataViewModule } from 'primeng/dataview';
 import { TrackListItemComponent } from '../common/lists/track-list-item/track-list-item.component';
+import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list-skeleton/track-list-skeleton.component';
 
 @Component({
   selector: 'app-tab-top-tracks',
   standalone: true,
-
   imports: [
     CardModule,
     ImageModule,
@@ -41,6 +41,7 @@ import { TrackListItemComponent } from '../common/lists/track-list-item/track-li
     TrackCardSkeletonComponent,
     DataViewModule,
     TrackListItemComponent,
+    TrackListSkeletonComponent,
   ],
   templateUrl: './tab-top-tracks.component.html',
   styleUrls: ['./tab-top-tracks.component.less'],
@@ -52,6 +53,7 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
   isLoadingSuscription!: Subscription;
   skeletonElements: number[] = Array(initialTopItems);
   actualRows: TopInfoLimit = initialTopItems;
+  layout: 'grid' | 'list' = 'list';
   dataPagination: IDataPagination = {
     first: 0,
     rows: 50,
@@ -113,5 +115,9 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
       event.rows,
       event.first
     );
+  }
+
+  handleLayout(event: any) {
+    this.layout = event.layout;
   }
 }

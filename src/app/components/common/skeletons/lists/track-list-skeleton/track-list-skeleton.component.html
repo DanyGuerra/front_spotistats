@@ -6,8 +6,15 @@
     <div class="flex flex-1 cursor-pointer gap-3">
       <div
         class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+        *ngIf="index !== null"
       >
         #{{ index + 1 }}
+      </div>
+      <div
+        class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+        *ngIf="index === null"
+      >
+        -
       </div>
       <p-skeleton width="5rem" height="5rem"></p-skeleton>
 

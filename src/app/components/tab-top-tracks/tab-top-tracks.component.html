@@ -24,14 +24,35 @@
     <div class="flex justify-content-center w-full">
       <div class="flex flex-wrap gap-3 justify-content-center w-full">
         <!-- SKELETON -->
-        <p-dataView [value]="skeletonElements" *ngIf="isLoading.tracks">
+        <p-dataView
+          [value]="skeletonElements"
+          *ngIf="isLoading.tracks"
+          [layout]="layout"
+          class="w-full"
+        >
           <ng-template pTemplate="header">
             <div class="flex justify-content-end">
               <p-dataViewLayoutOptions />
             </div>
           </ng-template>
+
+          <!-- SKELETON LIST-->
           <ng-template pTemplate="list" let-trackPlayed>
-            <div class="flex flex-wrap gap-3 justify-content-center">
+            <div class="flex flex-column justify-content-center">
+              <app-track-list-skeleton
+                *ngFor="
+                  let item of skeletonElements;
+                  let index = index;
+                  let first = first
+                "
+                [showBorder]="!first"
+              ></app-track-list-skeleton>
+            </div>
+          </ng-template>
+
+          <!-- SKELETON GRID-->
+          <ng-template pTemplate="grid" let-trackPlayed>
+            <div class="flex flex-wrap gap-2 justify-content-center">
               <app-track-card-skeleton
                 *ngFor="let item of skeletonElements"
                 class="w-5rem md:w-8rem lg:w-10rem"
@@ -45,7 +66,8 @@
           #dv
           [value]="topTracks"
           *ngIf="!isLoading.recentlyPlayed"
-          [layout]="'list'"
+          [layout]="layout"
+          (onChangeLayout)="handleLayout($event)"
           class="w-full"
         >
           <ng-template pTemplate="header">
@@ -60,6 +82,7 @@
             </div>
           </ng-template>
 
+          <!-- DATA LIST -->
           <ng-template pTemplate="list">
             <div class="flex flex-column justify-content-start w-full">
               <app-track-list-item
@@ -70,6 +93,7 @@
             </div>
           </ng-template>
 
+          <!-- DATA GRID -->
           <ng-template pTemplate="grid">
             <div class="flex flex-wrap gap-2 justify-content-center">
               <app-track-card-item

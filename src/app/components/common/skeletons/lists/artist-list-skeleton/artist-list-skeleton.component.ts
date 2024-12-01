@@ -12,7 +12,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class ArtistListSkeletonComponent {
   @Input() showBorder: boolean = false;
-  @Input() index!: number;
+  @Input() index: number | null = null;
 
   generateRandomWidth = generateRandomWidth;
 }
