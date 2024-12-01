@@ -70,5 +70,5 @@ export const itemsToShowSummary: TopInfoLimit = 5;
 export const initialIsLoading: ILoadingSubject = {
   tracks: false,
   artists: false,
-  currentlyPlayed: false,
+  recentlyPlayed: false,
 };

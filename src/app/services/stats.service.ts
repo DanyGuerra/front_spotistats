@@ -25,7 +25,7 @@ export class StatsService {
   private initialIsLoading: ILoadingSubject = {
     tracks: false,
     artists: false,
-    currentlyPlayed: false,
+    recentlyPlayed: false,
   };
 
   private topTracksSubject: BehaviorSubject<IResponseTopTracks | undefined> =
@@ -43,7 +43,7 @@ export class StatsService {
     );
   }
 
-  getTracksCurrentlyPlayed(
+  getRecentlyPlayedTracks(
     limit: TopInfoLimit = defaultCurrentlyPlayedItems,
     before: string = '',
     after: string = ''
@@ -51,7 +51,7 @@ export class StatsService {
     const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
     const newLoadingState: ILoadingSubject = {
       ...currentState,
-      currentlyPlayed: true,
+      recentlyPlayed: true,
     };
     this.setIsDataLoading(newLoadingState);
     return this.http
@@ -67,7 +67,7 @@ export class StatsService {
           const currentState: ILoadingSubject = this.isDataLoadingSubject.value;
           const newLoadingState: ILoadingSubject = {
             ...currentState,
-            currentlyPlayed: false,
+            recentlyPlayed: false,
           };
           this.setIsDataLoading(newLoadingState);
         })

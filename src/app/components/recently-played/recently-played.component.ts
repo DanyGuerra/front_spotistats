@@ -16,6 +16,7 @@ import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played
 import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/recently-played-list-skeleton/recently-played-list-skeleton.component';
 import { TrackCardItemComponent } from '../common/cards/track-card-item/track-card-item.component';
 import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
+import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
 
 @Component({
   selector: 'app-recently-played',
@@ -30,6 +31,7 @@ import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
     RecentlyPlayedListSkeletonComponent,
     TrackCardItemComponent,
     TimeFromNowPipe,
+    TrackCardSkeletonComponent,
   ],
   templateUrl: './recently-played.component.html',
   styleUrls: ['./recently-played.component.less'],
@@ -40,11 +42,12 @@ export class RecentlyPlayedComponent implements OnInit {
   skeletonNumber: number = defaultCurrentlyPlayedItems;
   generateRandomWidth = generateRandomWidth;
   isLoading: ILoadingSubject = initialIsLoading;
+  layout: 'list' | 'grid' = 'list';
 
   constructor(private statsService: StatsService) {}
 
   ngOnInit() {
-    this.statsService.getTracksCurrentlyPlayed().subscribe({
+    this.statsService.getRecentlyPlayedTracks().subscribe({
       next: ({ data }) => {
         this.tracksPlayed = data.items;
       },

@@ -30,6 +30,8 @@ import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list
 import { ArtistCardItemComponent } from '../common/cards/artist-card-item/artist-card-item.component';
 import { TrackCardItemComponent } from '../common/cards/track-card-item/track-card-item.component';
 import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
+import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-card-skeleton/artist-card-skeleton.component';
+import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -53,6 +55,8 @@ import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
     ArtistCardItemComponent,
     TrackCardItemComponent,
     TimeFromNowPipe,
+    ArtistCardSkeletonComponent,
+    TrackCardSkeletonComponent,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],
@@ -71,6 +75,7 @@ export class TabsStatsComponent implements OnInit {
   skeletonElements: number[] = Array(itemsToShowSummary);
   skeletonNumber: number = itemsToShowSummary;
   generateRandomWidth = generateRandomWidth;
+  layout: 'list' | 'grid' = 'list';
 
   constructor(private statsService: StatsService) {
     this.statsService.setTopArtistsByRange(
@@ -107,7 +112,7 @@ export class TabsStatsComponent implements OnInit {
       });
 
     this.currentlyPlayedSubject = this.statsService
-      .getTracksCurrentlyPlayed(itemsToShowSummary)
+      .getRecentlyPlayedTracks(itemsToShowSummary)
       .subscribe((data) => {
         this.tracksPlayed = data.data.items;
       });
