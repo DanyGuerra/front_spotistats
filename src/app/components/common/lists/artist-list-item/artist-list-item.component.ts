@@ -12,7 +12,6 @@ import { ImageModule } from 'primeng/image';
 })
 export class ArtistListItemComponent {
   @Input() artist!: TopArtistItem;
-  @Input() showBorder: boolean = false;
 
   handleClick(url: string) {
     window.open(url, '_blank');

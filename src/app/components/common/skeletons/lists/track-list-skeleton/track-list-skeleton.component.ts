@@ -10,6 +10,5 @@ import { SkeletonModule } from 'primeng/skeleton';
   styleUrls: ['./track-list-skeleton.component.less'],
 })
 export class TrackListSkeletonComponent {
-  @Input() showBorder: boolean = false;
   @Input() index: number | null = null;
 }

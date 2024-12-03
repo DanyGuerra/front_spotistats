@@ -21,8 +21,7 @@
       <ng-template pTemplate="list" let-trackPlayed>
         <div class="flex flex-column justify-content-start">
           <app-recently-played-list-skeleton
-            *ngFor="let item of skeletonElements; let first = first"
-            [showBorder]="!first"
+            *ngFor="let item of skeletonElements"
           ></app-recently-played-list-skeleton>
         </div>
       </ng-template>
@@ -61,9 +60,8 @@
       <ng-template pTemplate="list">
         <div class="flex flex-column justify-content-start">
           <app-recently-played-list-item
-            *ngFor="let trackPlayed of tracksPlayed; let first = first"
+            *ngFor="let trackPlayed of tracksPlayed"
             [trackPlayed]="trackPlayed"
-            [showBorder]="!first"
           ></app-recently-played-list-item>
         </div>
       </ng-template>

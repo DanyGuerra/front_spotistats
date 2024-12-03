@@ -11,7 +11,6 @@ import { SkeletonModule } from 'primeng/skeleton';
   styleUrls: ['./artist-list-skeleton.component.less'],
 })
 export class ArtistListSkeletonComponent implements OnInit {
-  @Input() showBorder: boolean = false;
   @Input() index: number | null = null;
   skeletonWidths: string[] = [];
   generateRandomWidth = generateRandomWidth;

@@ -13,7 +13,6 @@ import { AudioPlayerComponent } from '../../audio-player/audio-player.component'
 })
 export class TrackListItemComponent {
   @Input() track!: Track;
-  @Input() showBorder: boolean = false;
 
   handleClick(url: string) {
     window.open(url, '_blank');

@@ -11,7 +11,6 @@ import { SkeletonModule } from 'primeng/skeleton';
   styleUrls: ['./recently-played-list-skeleton.component.less'],
 })
 export class RecentlyPlayedListSkeletonComponent implements OnInit {
-  @Input() showBorder: boolean = false;
   skeletonWidths: string[] = [];
   generateRandomWidth = generateRandomWidth;
 

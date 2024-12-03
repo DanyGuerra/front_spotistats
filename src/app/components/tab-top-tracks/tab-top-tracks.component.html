@@ -40,12 +40,7 @@
           <ng-template pTemplate="list" let-trackPlayed>
             <div class="flex flex-column justify-content-center">
               <app-track-list-skeleton
-                *ngFor="
-                  let item of skeletonElements;
-                  let index = index;
-                  let first = first
-                "
-                [showBorder]="!first"
+                *ngFor="let item of skeletonElements"
               ></app-track-list-skeleton>
             </div>
           </ng-template>
@@ -86,9 +81,8 @@
           <ng-template pTemplate="list">
             <div class="flex flex-column justify-content-start w-full">
               <app-track-list-item
-                *ngFor="let track of topTracks; let first = first"
+                *ngFor="let track of topTracks"
                 [track]="track"
-                [showBorder]="!first"
               ></app-track-list-item>
             </div>
           </ng-template>

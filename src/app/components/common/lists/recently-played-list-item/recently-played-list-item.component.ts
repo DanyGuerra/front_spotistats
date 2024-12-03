@@ -14,5 +14,4 @@ import { ImageModule } from 'primeng/image';
 })
 export class RecentlyPlayedListItemComponent {
   @Input() trackPlayed!: TrackPlayed;
-  @Input() showBorder: boolean = false;
 }
