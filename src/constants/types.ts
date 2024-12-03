@@ -59,7 +59,11 @@ export enum TopTimeRange {
   ShortTerm = 'short_term', // approximately last 4 weeks
 }
 
+export type LayoutDataview = 'list' | 'grid';
+
 export const defaultTopRange: TopTimeRange = TopTimeRange.ShortTerm;
+
+export const defaultLayout: LayoutDataview = 'grid';
 
 export const defaultCurrentlyPlayedItems: TopInfoLimit = 50;
 

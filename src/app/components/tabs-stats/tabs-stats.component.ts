@@ -8,7 +8,9 @@ import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { Subscription } from 'rxjs';
 import {
+  LayoutDataview,
   TopTimeRange,
+  defaultLayout,
   defaultTopRange,
   initialIsLoading,
   itemsToShowSummary,
@@ -73,7 +75,7 @@ export class TabsStatsComponent implements OnInit {
   tracksPlayed!: TrackPlayed[];
   skeletonElements: number[] = Array(itemsToShowSummary);
   skeletonNumber: number = itemsToShowSummary;
-  layout: 'list' | 'grid' = 'list';
+  layout: LayoutDataview = defaultLayout;
 
   constructor(private statsService: StatsService) {
     this.statsService.setTopArtistsByRange(

@@ -5,7 +5,9 @@ import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { SkeletonModule } from 'primeng/skeleton';
 import {
+  LayoutDataview,
   defaultCurrentlyPlayedItems,
+  defaultLayout,
   initialIsLoading,
 } from 'src/constants/types';
 import { ImageModule } from 'primeng/image';
@@ -40,7 +42,7 @@ export class RecentlyPlayedComponent implements OnInit {
   skeletonElements: number[] = Array(defaultCurrentlyPlayedItems);
   skeletonNumber: number = defaultCurrentlyPlayedItems;
   isLoading: ILoadingSubject = initialIsLoading;
-  layout: 'list' | 'grid' = 'list';
+  layout: LayoutDataview = defaultLayout;
 
   constructor(private statsService: StatsService) {}
 

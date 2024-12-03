@@ -6,8 +6,10 @@ import { TopArtistItem } from 'src/app/interfaces/IResponseTopArtists';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import {
+  LayoutDataview,
   TopInfoLimit,
   TopTimeRange,
+  defaultLayout,
   initialIsLoading,
 } from 'src/constants/types';
 import { StatsService } from 'src/app/services/stats.service';
@@ -52,7 +54,7 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
   isLoading: ILoadingSubject = initialIsLoading;
   skeletonElements: number[] = Array(initialTopItems);
   actualRows: TopInfoLimit = initialTopItems;
-  layout: 'list' | 'grid' = 'list';
+  layout: LayoutDataview = defaultLayout;
   dataPagination: IDataPagination = {
     first: 0,
     rows: 0,

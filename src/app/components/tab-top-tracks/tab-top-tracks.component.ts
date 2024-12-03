@@ -6,8 +6,10 @@ import { CommonModule } from '@angular/common';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import {
+  LayoutDataview,
   TopInfoLimit,
   TopTimeRange,
+  defaultLayout,
   defaultTopRange,
   initialIsLoading,
   initialTopItems,
@@ -53,7 +55,7 @@ export class TabTopTracksComponent implements OnInit, OnDestroy {
   isLoadingSuscription!: Subscription;
   skeletonElements: number[] = Array(initialTopItems);
   actualRows: TopInfoLimit = initialTopItems;
-  layout: 'grid' | 'list' = 'list';
+  layout: LayoutDataview = defaultLayout;
   dataPagination: IDataPagination = {
     first: 0,
     rows: 50,
