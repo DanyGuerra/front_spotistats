@@ -46,7 +46,7 @@
 
       <!-- SKELETON GRID -->
       <ng-template pTemplate="grid" let-topArtist>
-        <div class="flex flex-wrap gap-2 justify-content-center">
+        <div class="flex flex-wrap gap-2 justify-content-center pt-3">
           <app-artist-card-skeleton
             *ngFor="let skeleton of skeletonElements"
             class="w-5rem md:w-8rem lg:w-10rem"
@@ -87,7 +87,7 @@
 
       <!-- DATA GRID-->
       <ng-template pTemplate="grid" let-topArtist>
-        <div class="flex flex-wrap gap-2 justify-content-center">
+        <div class="flex flex-wrap gap-2 justify-content-center pt-3">
           <app-artist-card-item
             *ngFor="let artist of topArtists"
             [artist]="artist"
@@ -138,7 +138,7 @@
 
       <!-- SKELETON GRID -->
       <ng-template pTemplate="grid" let-topTracks>
-        <div class="flex flex-wrap gap-2 justify-content-center md:min-h-full">
+        <div class="flex flex-wrap gap-2 justify-content-center pt-3">
           <app-track-card-skeleton
             *ngFor="let item of skeletonElements"
             class="w-8rem md:w-9rem lg:w-10rem"
@@ -179,7 +179,7 @@
 
       <!-- DATA GRID-->
       <ng-template pTemplate="grid" let-topArtist>
-        <div class="flex flex-wrap gap-2 justify-content-center md:min-h-full">
+        <div class="flex flex-wrap gap-2 justify-content-center pt-3">
           <app-track-card-item
             *ngFor="let track of topTracks"
             [trackItem]="track"
@@ -226,7 +226,7 @@
 
       <!-- SKELETON GRID-->
       <ng-template pTemplate="grid" let-trackPlayed>
-        <div class="flex flex-wrap gap-2 justify-content-center">
+        <div class="flex flex-wrap gap-2 justify-content-center pt-3">
           <app-track-card-skeleton
             *ngFor="let item of skeletonElements"
             class="w-8rem md:w-9rem lg:w-10rem"
@@ -266,7 +266,7 @@
 
       <!-- DATA GRID -->
       <ng-template pTemplate="grid">
-        <div class="flex flex-wrap gap-2 justify-content-center">
+        <div class="flex flex-wrap gap-2 justify-content-center pt-3">
           <app-track-card-item
             *ngFor="let track of tracksPlayed"
             [trackItem]="track.track"

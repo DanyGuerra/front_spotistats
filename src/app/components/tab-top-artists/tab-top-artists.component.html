@@ -53,7 +53,7 @@
 
           <!-- SKELETON GRID -->
           <ng-template pTemplate="grid" let-trackPlayed>
-            <div class="flex flex-wrap gap-2 justify-content-center">
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
               <app-artist-card-skeleton
                 *ngFor="let skeleton of skeletonElements"
                 class="w-5rem md:w-8rem lg:w-10rem"
@@ -83,6 +83,7 @@
             </div>
           </ng-template>
 
+          <!-- DATA LIST -->
           <ng-template pTemplate="list">
             <div class="flex flex-column justify-content-start">
               <app-artist-list-item
@@ -93,8 +94,9 @@
             </div>
           </ng-template>
 
+          <!-- DATA GRID -->
           <ng-template pTemplate="grid">
-            <div class="flex flex-wrap gap-2 justify-content-center">
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
               <app-artist-card-item
                 *ngFor="let artist of topArtists"
                 [artist]="artist"
