@@ -4,9 +4,11 @@
   </div>
 </div>
 
-<div class="flex justify-content-center flex-wrap row-gap-6 column-gap-2">
+<div
+  class="flex justify-content-center align-items-stretch flex-wrap row-gap-6 column-gap-2"
+>
   <!-- TOP ARTISTS DATA-->
-  <section class="xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
+  <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
     <div class="flex align-items-center justify-content-center gap-4">
       <h2>Top Artists</h2>
       <p-button
@@ -33,12 +35,7 @@
       <ng-template pTemplate="list" let-topArtist>
         <div class="flex flex-column pl-4">
           <app-artist-list-skeleton
-            *ngFor="
-              let item of skeletonElements;
-              let first = first;
-              let index = index
-            "
-            [showBorder]="!first"
+            *ngFor="let item of skeletonElements; let index = index"
             [index]="index"
           ></app-artist-list-skeleton>
         </div>
@@ -61,6 +58,7 @@
       [value]="topArtists"
       *ngIf="!isLoading.artists"
       [layout]="layout"
+      class="flex flex-column flex-grow-1 surface-0"
     >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
@@ -78,9 +76,8 @@
       <ng-template pTemplate="list" let-topArtist>
         <div class="flex flex-column pl-4">
           <app-artist-list-item
-            *ngFor="let artist of topArtists; let first = first"
+            *ngFor="let artist of topArtists"
             [artist]="artist"
-            [showBorder]="!first"
           ></app-artist-list-item>
         </div>
       </ng-template>
@@ -99,7 +96,7 @@
   </section>
 
   <!-- TOP TRACKS -->
-  <section class="xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
+  <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
     <div class="flex align-items-center justify-content-center gap-4">
       <h2>Top Tracks</h2>
       <p-button
@@ -125,13 +122,8 @@
       <ng-template pTemplate="list" let-topTracks>
         <div class="flex flex-column">
           <app-track-list-skeleton
-            *ngFor="
-              let item of skeletonElements;
-              let index = index;
-              let first = first
-            "
+            *ngFor="let item of skeletonElements; let index = index"
             [index]="index"
-            [showBorder]="!first"
           ></app-track-list-skeleton>
         </div>
       </ng-template>
@@ -153,6 +145,7 @@
       [value]="topTracks"
       *ngIf="!isLoading.tracks"
       [layout]="layout"
+      class="flex flex-column flex-grow-1 surface-0"
     >
       <ng-template pTemplate="header">
         <div class="flex justify-content-end">
@@ -168,11 +161,7 @@
       <!-- DATA LIST-->
       <ng-template pTemplate="list" let-topTrack>
         <div class="flex flex-column">
-          <app-track-list-item
-            *ngFor="let track of topTracks; let first = first"
-            [track]="track"
-            [showBorder]="!first"
-          >
+          <app-track-list-item *ngFor="let track of topTracks" [track]="track">
           </app-track-list-item>
         </div>
       </ng-template>
@@ -218,8 +207,7 @@
       <ng-template pTemplate="list" let-trackPlayed>
         <div class="flex flex-column justify-content-start">
           <app-recently-played-list-skeleton
-            *ngFor="let item of skeletonElements; let first = first"
-            [showBorder]="!first"
+            *ngFor="let item of skeletonElements"
           ></app-recently-played-list-skeleton>
         </div>
       </ng-template>
@@ -257,9 +245,8 @@
       <ng-template pTemplate="list">
         <div class="flex flex-column justify-content-start">
           <app-recently-played-list-item
-            *ngFor="let trackPlayed of tracksPlayed; let first = first"
+            *ngFor="let trackPlayed of tracksPlayed"
             [trackPlayed]="trackPlayed"
-            [showBorder]="!first"
           ></app-recently-played-list-item>
         </div>
       </ng-template>
