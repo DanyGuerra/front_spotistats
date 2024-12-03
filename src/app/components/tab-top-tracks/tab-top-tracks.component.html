@@ -60,7 +60,7 @@
         <p-dataView
           #dv
           [value]="topTracks"
-          *ngIf="!isLoading.recentlyPlayed"
+          *ngIf="!isLoading.tracks"
           [layout]="layout"
           (onChangeLayout)="handleLayout($event)"
           class="w-full"
