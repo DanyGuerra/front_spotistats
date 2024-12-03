@@ -1,5 +1,4 @@
 import { StatsService } from 'src/app/services/stats.service';
-import { generateRandomWidth } from './../../../utils/general-utils';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
@@ -40,7 +39,6 @@ export class RecentlyPlayedComponent implements OnInit {
   tracksPlayed!: TrackPlayed[];
   skeletonElements: number[] = Array(defaultCurrentlyPlayedItems);
   skeletonNumber: number = defaultCurrentlyPlayedItems;
-  generateRandomWidth = generateRandomWidth;
   isLoading: ILoadingSubject = initialIsLoading;
   layout: 'list' | 'grid' = 'list';
 

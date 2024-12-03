@@ -1,5 +1,5 @@
 import { generateRandomWidth } from './../../../../../../utils/general-utils';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
 
@@ -10,9 +10,13 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './artist-list-skeleton.component.html',
   styleUrls: ['./artist-list-skeleton.component.less'],
 })
-export class ArtistListSkeletonComponent {
+export class ArtistListSkeletonComponent implements OnInit {
   @Input() showBorder: boolean = false;
   @Input() index: number | null = null;
-
+  skeletonWidths: string[] = [];
   generateRandomWidth = generateRandomWidth;
+
+  ngOnInit(): void {
+    this.skeletonWidths = [this.generateRandomWidth(15, 100)];
+  }
 }

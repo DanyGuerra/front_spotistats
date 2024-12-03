@@ -20,7 +20,6 @@ import { Track } from 'src/app/interfaces/IResponseTopTracks';
 import { DataViewModule } from 'primeng/dataview';
 import { TrackPlayed } from 'src/app/interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from 'src/app/interfaces/ILoadingSubject';
-import { generateRandomWidth } from 'src/utils/general-utils';
 import { RecentlyPlayedListItemComponent } from '../common/lists/recently-played-list-item/recently-played-list-item.component';
 import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/recently-played-list-skeleton/recently-played-list-skeleton.component';
 import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist-list-item.component';
@@ -74,7 +73,6 @@ export class TabsStatsComponent implements OnInit {
   tracksPlayed!: TrackPlayed[];
   skeletonElements: number[] = Array(itemsToShowSummary);
   skeletonNumber: number = itemsToShowSummary;
-  generateRandomWidth = generateRandomWidth;
   layout: 'list' | 'grid' = 'list';
 
   constructor(private statsService: StatsService) {
