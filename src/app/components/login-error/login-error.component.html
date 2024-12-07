@@ -1,2 +1,15 @@
-<app-header></app-header>
-<p>login-error works!</p>
+<div class="w-full h-30rem flex justify-content-center align-items-center">
+  <div class="flex flex-column justify-content-center align-items-center">
+    <div class="font-bold text-4xl text-primary">
+      <span class="text-200">400</span> Bad Request
+    </div>
+    <div class="text-400 text-xl font-bold">Access denied</div>
+    <p-button
+      severity="secondary"
+      class="mt-3"
+      label="Go home"
+      routerLink="/"
+    ></p-button>
+    <p-button class="mt-3" label="Retry login" (onClick)="login()"></p-button>
+  </div>
+</div>
