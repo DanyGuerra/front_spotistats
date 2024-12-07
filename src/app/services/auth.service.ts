@@ -5,6 +5,7 @@ import { IResponseAuthLog } from '../interfaces/IResponseAuthLog.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,11 @@ export class AuthService {
   private isAuthenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   login(): Observable<IResponseLogin> {
     return this.http.get<IResponseLogin>(
@@ -26,10 +31,25 @@ export class AuthService {
     );
   }
 
-  logout() {
-    localStorage.clear();
-    this.isAuthenticatedSubject.next(false);
-    this.router.navigate(['/']);
+  logout(logId: string | undefined) {
+    this.http
+      .delete<IResponseAuthLog>(
+        `${this.hostApiSpox}${this.hostApiSpoxContext}auth/logout?id=${logId}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .subscribe({
+        next: () => {
+          localStorage.clear();
+          this.isAuthenticatedSubject.next(false);
+          this.router.navigate(['/']);
+        },
+        error: (err) => {
+          this.toastService.showError('Something went wrong', 'Try later');
+          console.error('Error durante el logout:', err);
+        },
+      });
   }
 
   isAuthenticated(): Observable<boolean> {
