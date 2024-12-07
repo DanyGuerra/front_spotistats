@@ -23,6 +23,7 @@
         </ng-template>
         <ng-template pTemplate="end">
           <div
+            pRipple
             class="relative overflow-hidden w-full flex align-items-center p-2 pl-3 text-color border-noround"
           >
             <p-avatar
@@ -42,7 +43,12 @@
           </div>
         </ng-template>
       </p-menu>
-      <p-button (onClick)="menu.toggle($event)" icon="pi pi-bars" />
+
+      <p-button
+        (onClick)="menu.toggle($event)"
+        [rounded]="true"
+        icon="pi pi-user"
+      ></p-button>
     </div>
 
     <ng-template #loginButton>
