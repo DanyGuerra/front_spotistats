@@ -15,6 +15,7 @@ import { IResponseTopTracks } from '../interfaces/IResponseTopTracks';
 import { LocalStorage } from 'src/constants/localStorage';
 import { IResponseCurrentlyPlayed } from '../interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from '../interfaces/ILoadingSubject';
+import { IUserInfoStored } from '../interfaces/IUserInfoStored';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,15 @@ export class StatsService {
 
   constructor(private http: HttpClient) {}
 
+  private getUserLogId(): string | null {
+    const storedUser = localStorage.getItem(LocalStorage.UserInfo);
+    if (!storedUser) {
+      return null;
+    }
+    const userInfo: IUserInfoStored = JSON.parse(storedUser);
+    return userInfo.logId;
+  }
+
   getUserInfo(logId: string | null): Observable<IResponseUserInfo> {
     return this.http.get<IResponseUserInfo>(
       `${this.hostApiSpox}${this.hostApiSpoxContext}stats/me?id=${logId}`
@@ -54,13 +64,12 @@ export class StatsService {
       recentlyPlayed: true,
     };
     this.setIsDataLoading(newLoadingState);
+
     return this.http
       .get<IResponseCurrentlyPlayed>(
         `${this.hostApiSpox}${
           this.hostApiSpoxContext
-        }stats/recently-played?id=${localStorage.getItem(
-          LocalStorage.LogId
-        )}&limit=${limit}&before=${before}&after=${after}`
+        }stats/recently-played?id=${this.getUserLogId()}&limit=${limit}&before=${before}&after=${after}`
       )
       .pipe(
         finalize(() => {
@@ -89,9 +98,7 @@ export class StatsService {
       .get<IResponseTopArtists>(
         `${this.hostApiSpox}${
           this.hostApiSpoxContext
-        }stats/top-artists?id=${localStorage.getItem(
-          LocalStorage.LogId
-        )}&limit=${limit}&time_range=${timeRange}&offset=${offset}`
+        }stats/top-artists?id=${this.getUserLogId()}&limit=${limit}&time_range=${timeRange}&offset=${offset}`
       )
       .pipe(
         finalize(() => {
@@ -120,9 +127,7 @@ export class StatsService {
       .get<IResponseTopTracks>(
         `${this.hostApiSpox}${
           this.hostApiSpoxContext
-        }stats/top-tracks?id=${localStorage.getItem(
-          LocalStorage.LogId
-        )}&limit=${limit}&time_range=${timeRange}&offset=${offset}`
+        }stats/top-tracks?id=${this.getUserLogId()}&limit=${limit}&time_range=${timeRange}&offset=${offset}`
       )
       .pipe(
         finalize(() => {

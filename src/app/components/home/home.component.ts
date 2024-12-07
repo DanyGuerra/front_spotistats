@@ -12,10 +12,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private authSuscription: Subscription | null = null;
   isAuthenticated: boolean = false;
 
-  constructor(
-    private authService: AuthService,
-    private toastService: ToastService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.authSuscription = this.authService
@@ -27,23 +24,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.authSuscription?.unsubscribe;
-  }
-
-  login() {
-    this.authService.login().subscribe({
-      next: (response) => {
-        const {
-          data: { url },
-        } = response;
-        window.location.href = url;
-      },
-      error: (error) => {
-        this.toastService.showError('Error', error.message);
-      },
-    });
-  }
-
-  logout() {
-    this.authService.logout();
   }
 }

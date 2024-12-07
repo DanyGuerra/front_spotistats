@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { LocalStorage } from 'src/constants/localStorage';
+import { IUserInfoStored } from './interfaces/IUserInfoStored';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    const idLog = localStorage.getItem(LocalStorage.LogId);
+    const storedUser = localStorage.getItem(LocalStorage.UserInfo);
+    const userInfo: IUserInfoStored = JSON.parse(storedUser!!);
+    const idLog = userInfo?.logId;
 
     if (idLog) {
       this.authService.getAuthLog(idLog).subscribe({
@@ -20,7 +23,7 @@ export class AppComponent implements OnInit {
         },
         error: () => {
           this.authService.setAuthenticated(false);
-          localStorage.removeItem(LocalStorage.LogId);
+          localStorage.removeItem(LocalStorage.UserInfo);
         },
       });
     }

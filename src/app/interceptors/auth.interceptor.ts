@@ -10,6 +10,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { LocalStorage } from 'src/constants/localStorage';
+import { IUserInfoStored } from '../interfaces/IUserInfoStored';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -36,13 +37,16 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          const logId = localStorage.getItem(LocalStorage.LogId);
+          const storedUser = localStorage.getItem(LocalStorage.UserInfo);
+          const userInfo: IUserInfoStored = JSON.parse(storedUser!!);
+          const logId = userInfo.logId;
+
           return this.authService.logRefresh(logId).pipe(
             switchMap(() => {
               return next.handle(req);
             }),
             catchError((refreshError) => {
-              this.authService.logout();
+              this.authService.logout(logId);
               return throwError(() => refreshError);
             })
           );
