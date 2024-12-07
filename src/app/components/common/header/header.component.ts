@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { ButtonModule } from 'primeng/button';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { LocalStorage } from 'src/constants/localStorage';
 import { Subscription } from 'rxjs';
 import { IconlogoComponent } from '../icons/iconlogo/iconlogo.component';
@@ -30,6 +30,7 @@ import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private authSuscription: Subscription | null = null;
+  private routerSubscription: Subscription | null = null;
   isAuthenticated: boolean = false;
   items: MenuItem[] | undefined;
   userData!: IUserInfoStored | null;
@@ -40,12 +41,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private toastService: ToastService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.updateUserData();
+        this.setupMenu();
+      }
+    });
+
+    this.authSuscription = this.authService
+      .isAuthenticated()
+      .subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated));
+  }
+
+  private updateUserData(): void {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
-    const userInfo: IUserInfoStored | null = JSON.parse(storedUser!!);
+    try {
+      this.userData = storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+      this.userData = null;
+    }
+    this.authService.setAuthenticated(!!this.userData);
+  }
 
-    this.userData = userInfo;
-
+  private setupMenu(): void {
+    const userId = this.userData?.userId;
     this.items = [
       {
         label: 'My stats',
@@ -53,18 +73,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
           {
             label: 'Top artists',
             icon: 'pi pi-users',
-            command: () => this.navigateTo(`${userInfo?.userId}/top-artists`),
+            command: () => this.navigateTo(`${userId}/top-artists`),
           },
           {
             label: 'Top tracks',
             icon: 'pi pi-play-circle',
-            command: () => this.navigateTo(`${userInfo?.userId}/top-tracks`),
+            command: () => this.navigateTo(`${userId}/top-tracks`),
           },
           {
             label: 'Recently played',
             icon: 'pi pi-headphones',
-            command: () =>
-              this.navigateTo(`${userInfo?.userId}/recently-played`),
+            command: () => this.navigateTo(`${userId}/recently-played`),
           },
         ],
       },
@@ -74,7 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           {
             label: 'My profile',
             icon: 'pi pi-user',
-            command: () => this.navigateTo(`${userInfo?.userId}`),
+            command: () => this.navigateTo(`${userId}`),
           },
           {
             label: 'Logout',
@@ -83,24 +102,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
           },
         ],
       },
-      {
-        separator: true,
-      },
+      { separator: true },
     ];
-
-    if (userInfo) {
-      this.authService.setAuthenticated(true);
-    } else {
-      this.authService.setAuthenticated(false);
-    }
-
-    this.authSuscription = this.authService
-      .isAuthenticated()
-      .subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated));
   }
 
   ngOnDestroy(): void {
     this.authSuscription?.unsubscribe();
+    this.routerSubscription?.unsubscribe();
   }
 
   login() {
