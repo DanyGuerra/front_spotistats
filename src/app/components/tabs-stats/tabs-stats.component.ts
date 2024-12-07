@@ -33,6 +33,7 @@ import { TrackCardItemComponent } from '../common/cards/track-card-item/track-ca
 import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-card-skeleton/artist-card-skeleton.component';
 import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
+import { CardUserDataComponent } from '../common/card-user-data/card-user-data.component';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -58,6 +59,7 @@ import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card
     TimeFromNowPipe,
     ArtistCardSkeletonComponent,
     TrackCardSkeletonComponent,
+    CardUserDataComponent,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],

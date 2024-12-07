@@ -1,0 +1,41 @@
+<div
+  class="flex flex-column md:flex-row gap-3 w-full surface-card px-3 py-4 border-round-2xl"
+>
+  <div
+    class="overflow-hidden border-circle image-wrapper w-8rem md:w-11rem lg:w-13rem"
+    *ngIf="userInfo?.profileImage; else avatarDefault"
+  >
+    <p-image
+      [src]="userInfo?.profileImage?.[0]?.url"
+      alt="Image profile"
+      width="100%"
+    />
+  </div>
+
+  <ng-template #avatarDefault>
+    <div
+      class="surface-50 overflow-hidden border-circle image-wrapper w-8rem md:w-11rem lg:w-13rem"
+    >
+      <div
+        class="flex align-items-center justify-content-center w-full h-8rem md:h-11rem lg:h-13rem"
+      >
+        <span class="pi pi-user" style="font-size: 3rem"></span>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="flex flex-column gap-2 justify-content-center">
+    <span class="font-bold text-3xl text-primary">
+      {{ userInfo?.displayName }}
+    </span>
+    <div class="flex flex-column gap-1">
+      <span class="text-400">
+        {{ userInfo?.email }}
+      </span>
+      <div class="text-400">
+        <span class="">Followers </span>
+        <span class="">{{ userInfo?.followers?.total }}</span>
+      </div>
+    </div>
+  </div>
+</div>

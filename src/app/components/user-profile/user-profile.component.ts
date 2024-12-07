@@ -17,7 +17,6 @@ import { ButtonModule } from 'primeng/button';
     ImageModule,
     HeaderComponent,
     CommonModule,
-    TabsStatsComponent,
     RouterModule,
     ButtonModule,
   ],
