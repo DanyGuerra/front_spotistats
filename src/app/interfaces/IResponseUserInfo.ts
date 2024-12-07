@@ -14,7 +14,7 @@ export interface Data {
   uri: string;
   followers: Followers;
   country: string;
-  product: string;
+  product: 'premium' | 'free';
   explicit_content: ExplicitContent;
   email: string;
 }

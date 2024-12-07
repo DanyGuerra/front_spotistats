@@ -5,6 +5,7 @@ export interface IUserInfoStored {
   email: string;
   profileImage: ProfileImageItem[] | null;
   followers: FollowersItem;
+  product: 'free' | 'premium';
 }
 
 export interface ProfileImageItem {

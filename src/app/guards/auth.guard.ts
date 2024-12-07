@@ -29,6 +29,7 @@ export const authGuard: CanActivateFn = async (
       profileImage:
         userData.data.images.length > 0 ? userData.data.images : null,
       followers: userData.data.followers,
+      product: userData.data.product,
     };
 
     if (response.statusCode === 200) {
