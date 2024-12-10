@@ -16,6 +16,7 @@ import { Track } from 'src/app/interfaces/IResponseTopTracks';
 export class TrackCardItemComponent {
   @Input() trackItem!: Track;
   @Input() playedAt: string = '';
+  @Input() showRank: boolean = true;
 
   handleImageClick(url: string) {
     window.open(url, '_blank');

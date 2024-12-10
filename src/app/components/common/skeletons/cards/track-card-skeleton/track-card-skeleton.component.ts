@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
 
@@ -9,4 +9,6 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './track-card-skeleton.component.html',
   styleUrls: ['./track-card-skeleton.component.less'],
 })
-export class TrackCardSkeletonComponent {}
+export class TrackCardSkeletonComponent {
+  @Input() showRank: boolean = true;
+}

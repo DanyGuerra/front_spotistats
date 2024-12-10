@@ -4,9 +4,20 @@
       <p-skeleton width="100%" height="100%" class="square" />
     </div>
   </div>
-  <div class="flex flex-column gap-1 w-full">
+  <div class="flex flex-column gap-1 w-full" *ngIf="showRank">
     <p-skeleton width="15%" height="1rem" />
     <p-skeleton width="80%" height="1rem" />
     <p-skeleton width="40%" height="1rem" />
+  </div>
+  <div
+    class="flex flex-column gap-2 w-full align-items-center"
+    *ngIf="!showRank"
+  >
+    <div class="w-3">
+      <p-skeleton width="100%" height="1rem" />
+    </div>
+    <div class="w-6">
+      <p-skeleton width="100%" height="1rem" />
+    </div>
   </div>
 </div>

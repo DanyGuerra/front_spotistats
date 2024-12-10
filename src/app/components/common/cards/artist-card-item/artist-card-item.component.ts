@@ -14,6 +14,7 @@ import { ImageModule } from 'primeng/image';
 })
 export class ArtistCardItemComponent {
   @Input() artist!: TopArtistItem;
+  @Input() showRank: boolean = true;
 
   handleImageClick(url: string) {
     window.open(url, '_blank');

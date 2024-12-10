@@ -1,7 +1,7 @@
 <p-card class="custom-card">
   <ng-template pTemplate="header">
-    <div class="relative">
-      <div class="image-wrapper">
+    <div class="pb-0 relative">
+      <div class="overflow-hidden image-wrapper">
         <p-image
           [src]="trackItem.album.images[0].url"
           [alt]="trackItem.name"
@@ -18,13 +18,17 @@
     </div>
   </ng-template>
 
-  <div class="flex gap-2">
-    <div class="flex flex-column gap-1">
+  <div class="flex gap-2" [ngClass]="{ 'justify-content-center': !showRank }">
+    <div
+      class="flex flex-column gap-1"
+      [ngClass]="{ 'align-items-center': !showRank }"
+    >
       <p class="font-bold text-primary text-xs sm:text-sm m-0 p-0 w-full">
         {{ playedAt }}
       </p>
       <p
         class="font-bold text-primary text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0"
+        *ngIf="showRank"
       >
         {{ trackItem.rank_number ? "# " + trackItem.rank_number : "" }}
       </p>

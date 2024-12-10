@@ -28,4 +28,45 @@
       <span class="">{{ userInfo?.followers?.total }}</span>
     </div>
   </div>
+
+  <div class="flex justify-content-evenly w-full gap-1">
+    <div class="flex align-items-center flex-column w-4 gap-2">
+      <!-- DATA TOP ARTST -->
+      <ng-container
+        *ngIf="topArtist && !isLoading.artists; else skeletonArtist"
+      >
+        <div class="font-bold text-primary">Top artist</div>
+        <app-artist-card-item
+          [artist]="topArtist"
+          class="w-full"
+          [showRank]="false"
+        ></app-artist-card-item>
+      </ng-container>
+
+      <!-- SKELETON TOP ARTIST -->
+      <ng-template #skeletonArtist>
+        <div class="font-bold text-primary">Top artist</div>
+        <app-artist-card-skeleton class="w-full"></app-artist-card-skeleton>
+      </ng-template>
+    </div>
+
+    <!-- DATA TOP TRACK -->
+    <div class="flex align-items-center flex-column w-4 gap-2">
+      <ng-container *ngIf="topTrack && !isLoading.tracks; else skeletonTrack">
+        <div class="font-bold text-primary">Top track</div>
+        <app-track-card-item
+          [trackItem]="topTrack"
+          class="w-full"
+          [showRank]="false"
+        ></app-track-card-item>
+      </ng-container>
+      <ng-template #skeletonTrack>
+        <div class="font-bold text-primary">Top track</div>
+        <app-track-card-skeleton
+          [showRank]="false"
+          class="w-full"
+        ></app-track-card-skeleton>
+      </ng-template>
+    </div>
+  </div>
 </div>
