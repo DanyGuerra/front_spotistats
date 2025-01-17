@@ -7,11 +7,11 @@
       (click)="handleClick(track.external_urls.spotify)"
     >
       <div
-        class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+        class="flex justify-content-end align-items-center text-xl sm:text-2xl font-bold text-primary w-2"
       >
         #{{ track.rank_number }}
       </div>
-      <div class="flex w-5rem h-5rem overflow-hidden pb-2">
+      <div class="flex w-4rem h-4rem overflow-hidden pb-2">
         <p-image
           [src]="track.album.images[0].url"
           [alt]="track.name"
@@ -30,7 +30,10 @@
       </div>
     </div>
 
-    <div class="flex align-items-center justify-content-center px-4">
+    <div
+      class="flex align-items-center justify-content-center px-4"
+      *ngIf="track.preview_url"
+    >
       <div class="w-2rem h-2rem">
         <app-audio-player [urlPreview]="track.preview_url"></app-audio-player>
       </div>

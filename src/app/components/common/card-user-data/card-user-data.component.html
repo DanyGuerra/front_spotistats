@@ -30,43 +30,55 @@
   </div>
 
   <div class="flex justify-content-evenly w-full gap-1">
-    <div class="flex align-items-center flex-column w-4 gap-2">
-      <!-- DATA TOP ARTST -->
-      <ng-container
-        *ngIf="topArtist && !isLoading.artists; else skeletonArtist"
+    <div class="flex align-items-center flex-column w-3 gap-2">
+      <div
+        class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl"
       >
-        <div class="font-bold text-primary">Top artist</div>
-        <app-artist-card-item
-          [artist]="topArtist"
-          class="w-full"
-          [showRank]="false"
-        ></app-artist-card-item>
-      </ng-container>
+        Top artist
+      </div>
+      <!-- DATA TOP ARTST -->
+
+      <app-artist-card-item
+        [artist]="topArtist"
+        class="w-full"
+        [showRank]="false"
+        *ngIf="topArtist && !isLoading.artists"
+      ></app-artist-card-item>
 
       <!-- SKELETON TOP ARTIST -->
-      <ng-template #skeletonArtist>
-        <div class="font-bold text-primary">Top artist</div>
-        <app-artist-card-skeleton class="w-full"></app-artist-card-skeleton>
-      </ng-template>
+
+      <app-artist-card-skeleton
+        *ngIf="!topArtist && isLoading.artists"
+        class="w-full"
+      ></app-artist-card-skeleton>
+
+      <!-- NO DATA -->
+      <h1 *ngIf="!topArtist && !isLoading.artists">No data</h1>
     </div>
 
     <!-- DATA TOP TRACK -->
-    <div class="flex align-items-center flex-column w-4 gap-2">
-      <ng-container *ngIf="topTrack && !isLoading.tracks; else skeletonTrack">
-        <div class="font-bold text-primary">Top track</div>
-        <app-track-card-item
-          [trackItem]="topTrack"
-          class="w-full"
-          [showRank]="false"
-        ></app-track-card-item>
-      </ng-container>
-      <ng-template #skeletonTrack>
-        <div class="font-bold text-primary">Top track</div>
-        <app-track-card-skeleton
-          [showRank]="false"
-          class="w-full"
-        ></app-track-card-skeleton>
-      </ng-template>
+    <div class="flex align-items-center flex-column w-3 gap-2">
+      <div
+        class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl"
+      >
+        Top track
+      </div>
+
+      <app-track-card-item
+        *ngIf="topTrack && !isLoading.tracks"
+        [trackItem]="topTrack"
+        class="w-full"
+        [showRank]="false"
+      ></app-track-card-item>
+
+      <app-track-card-skeleton
+        *ngIf="!topTrack && isLoading.tracks"
+        [showRank]="false"
+        class="w-full"
+      ></app-track-card-skeleton>
+
+      <!-- NO DATA -->
+      <h1 *ngIf="!topTrack && !isLoading.tracks">No data</h1>
     </div>
   </div>
 </div>

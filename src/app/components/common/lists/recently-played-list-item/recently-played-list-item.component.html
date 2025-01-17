@@ -1,7 +1,7 @@
 <div
-  class="flex justify-content-between align-items-center gap-3 hover:shadow-8 px-1 py-3 border-bottom-1 surface-border"
+  class="flex justify-content-between align-items-center gap-3 hover:shadow-8 px-3 py-3 border-bottom-1 surface-border"
 >
-  <div class="w-2rem h-2rem">
+  <div class="w-2rem h-2rem" *ngIf="trackPlayed.track.preview_url">
     <app-audio-player
       [urlPreview]="trackPlayed.track.preview_url"
     ></app-audio-player>
@@ -15,7 +15,7 @@
     </p-image>
   </div>
   <div class="flex flex-column justify-content-start flex-1">
-    <div class="text-lg font-medium">
+    <div class="font-medium">
       {{ trackPlayed.track.name }}
     </div>
     <div class="text-400 font-medium">

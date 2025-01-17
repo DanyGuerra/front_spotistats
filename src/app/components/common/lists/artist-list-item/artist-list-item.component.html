@@ -3,21 +3,22 @@
   (click)="handleClick(artist.external_urls.spotify)"
 >
   <div
-    class="flex justify-content-between gap-3 py-1 border-bottom-1 surface-border"
+    class="flex justify-content-center gap-3 py-1 border-bottom-1 surface-border"
   >
     <div
-      class="flex justify-content-center align-items-center text-4xl font-bold text-primary w-2"
+      class="flex justify-content-end align-items-center text-xl sm:text-2xl font-bold text-primary w-2"
     >
       #{{ artist.rank_number }}
     </div>
 
-    <div class="flex w-5rem h-5rem overflow-hidden pb-2 border-circle">
+    <div class="flex w-4rem h-4rem overflow-hidden pb-2 border-circle">
       <p-image
         [src]="artist.images[0].url"
         [alt]="artist.name"
         width="100%"
       ></p-image>
     </div>
+
     <div
       class="flex flex-column justify-content-center justify-content-center flex-1 gap-4"
     >

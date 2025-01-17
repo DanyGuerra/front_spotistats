@@ -3,7 +3,7 @@
   (click)="handleImageClick(artist.external_urls.spotify)"
 >
   <ng-template pTemplate="header">
-    <div class="p-1 pb-0">
+    <div>
       <div class="overflow-hidden border-circle image-wrapper">
         <p-image
           [src]="artist.images[0].url"
@@ -16,13 +16,13 @@
 
   <div class="flex flex-column gap-1 justify-content-center align-items-center">
     <p
-      class="font-bold text-center text-primary text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0"
+      class="font-bold text-center text-primary text-sm sm:text-sm md:text-base lg:text-lg m-0 p-0"
       *ngIf="showRank"
     >
       # {{ artist.rank_number }}
     </p>
     <p
-      class="flex text-center font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0"
+      class="flex text-center font-bold text-sm sm:text-sm md:text-base lg:text-lg m-0 p-0"
     >
       {{ artist.name }}
     </p>

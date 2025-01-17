@@ -27,18 +27,18 @@
         {{ playedAt }}
       </p>
       <p
-        class="font-bold text-primary text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0"
+        class="font-bold text-primary text-sm sm:text-sm md:text-base lg:text-lg m-0 p-0"
         *ngIf="showRank"
       >
         {{ trackItem.rank_number ? "# " + trackItem.rank_number : "" }}
       </p>
       <p
-        class="flex font-bold text-xs sm:text-xs md:text-base lg:text-lg m-0 p-0 flex-1"
+        class="flex font-bold text-sm sm:text-sm md:text-base lg:text-lg m-0 p-0 flex-1"
       >
         {{ trackItem.name }}
       </p>
       <p
-        class="font-bold text-300 text-xs sm:text-xs md:text-base lg:text-base m-0 p-0 w-full"
+        class="font-bold text-300 text-sm sm:text-sm md:text-base lg:text-base m-0 p-0 w-full"
       >
         {{ trackItem.artists[0].name }}
       </p>
