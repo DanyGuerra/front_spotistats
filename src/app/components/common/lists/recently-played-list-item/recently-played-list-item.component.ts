@@ -14,4 +14,8 @@ import { ImageModule } from 'primeng/image';
 })
 export class RecentlyPlayedListItemComponent {
   @Input() trackPlayed!: TrackPlayed;
+
+  handleClick(url: string) {
+    window.open(url, '_blank');
+  }
 }
