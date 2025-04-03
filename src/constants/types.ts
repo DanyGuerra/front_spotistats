@@ -76,3 +76,7 @@ export const initialIsLoading: ILoadingSubject = {
   artists: false,
   recentlyPlayed: false,
 };
+
+export type Language = 'es' | 'en';
+
+export const Defaultlanguage: Language = 'en';

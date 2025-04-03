@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { LocalStorage } from 'src/constants/localStorage';
 import { IUserInfoStored } from './interfaces/IUserInfoStored';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,13 @@ import { IUserInfoStored } from './interfaces/IUserInfoStored';
   styleUrls: ['./app.component.less'],
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private translateService: TranslateService
+  ) {
+    this.translateService.setDefaultLang('es'); // default language
+    this.translateService.use('es'); // initial language
+  }
 
   ngOnInit(): void {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
@@ -27,5 +34,9 @@ export class AppComponent implements OnInit {
         },
       });
     }
+  }
+
+  changeLanguage(lang: string) {
+    this.translateService.use(lang); // Cambia de idioma dinámicamente
   }
 }
