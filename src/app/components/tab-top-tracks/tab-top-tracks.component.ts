@@ -26,6 +26,7 @@ import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card
 import { DataViewModule } from 'primeng/dataview';
 import { TrackListItemComponent } from '../common/lists/track-list-item/track-list-item.component';
 import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list-skeleton/track-list-skeleton.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab-top-tracks',
@@ -44,6 +45,7 @@ import { TrackListSkeletonComponent } from '../common/skeletons/lists/track-list
     DataViewModule,
     TrackListItemComponent,
     TrackListSkeletonComponent,
+    TranslateModule,
   ],
   templateUrl: './tab-top-tracks.component.html',
   styleUrls: ['./tab-top-tracks.component.less'],

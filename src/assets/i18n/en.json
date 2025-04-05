@@ -1,4 +1,32 @@
 {
   "LANGUAGE": "English",
-  "GREETING": "Hello, welcome to our application"
+  "STATS": {
+    "MY_STATS": "My statistics",
+    "ARTISTS": "Artists",
+    "TRACKS": "Tracks",
+    "TOP_ARTISTS": "Top Artists",
+    "TOP_TRACKS": "Top Tracks",
+    "TOP_ARTIST": "Top Artist",
+    "TOP_TRACK": "Top Track",
+    "RECENTLY_PLAYED": "Recently played"
+  },
+  "USER": {
+    "PROFILE": "Profile",
+    "MY_PROFILE": "My profile",
+    "LOGOUT": "Logout",
+    "FOLLOWERS": "Followers"
+  },
+  "BUTTONS": {
+    "GO_BACK": "Go back",
+    "SHOW_ALL": "Show all",
+    "LOGIN": "Login",
+    "GO_HOME": "Go home",
+    "RETRY_LOGIN": "Retry login"
+  },
+  "SERVER_MESSAGES": {
+    "BAD_REQUEST": "Bad Request",
+    "ACCESS_DENIED": "Access denied",
+    "SORRY": "Sorry!",
+    "PAGE_NOT_FOUND": "We couldn'n find your page"
+  }
 }

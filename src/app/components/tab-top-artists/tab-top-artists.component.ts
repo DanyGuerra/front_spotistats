@@ -25,6 +25,7 @@ import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-ca
 import { DataViewModule } from 'primeng/dataview';
 import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist-list-item.component';
 import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-list-skeleton/artist-list-skeleton.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab-top-artists',
@@ -42,6 +43,7 @@ import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-li
     ArtistCardSkeletonComponent,
     ArtistListItemComponent,
     ArtistListSkeletonComponent,
+    TranslateModule,
   ],
   templateUrl: './tab-top-artists.component.html',
   styleUrls: ['./tab-top-artists.component.less'],

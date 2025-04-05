@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { initialIsLoading } from './../../../../constants/types';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,6 +26,7 @@ import { TrackCardSkeletonComponent } from '../skeletons/cards/track-card-skelet
     TrackCardItemComponent,
     ArtistCardSkeletonComponent,
     TrackCardSkeletonComponent,
+    TranslateModule,
   ],
   templateUrl: './card-user-data.component.html',
   styleUrls: ['./card-user-data.component.less'],

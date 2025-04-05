@@ -79,4 +79,4 @@ export const initialIsLoading: ILoadingSubject = {
 
 export type Language = 'es' | 'en';
 
-export const Defaultlanguage: Language = 'en';
+export const DefaultLanguage: Language = 'en';

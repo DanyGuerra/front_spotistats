@@ -1,7 +1,7 @@
 <div
   class="flex flex-column justify-content-center align-items-center w-full h-30rem"
 >
-  <h1 class="m-0">Sorry!</h1>
-  <h2 class="text-400">We couldn'n find your page</h2>
-  <p-button label="Go home" routerLink="/"></p-button>
+  <h1 class="m-0">{{ "SERVER_MESSAGES.SORRY" | translate }}</h1>
+  <h2 class="text-400">{{ "SERVER_MESSAGES.PAGE_NOT_FOUND" | translate }}</h2>
+  <p-button [label]="'BUTTONS.GO_HOME' | translate" routerLink="/"></p-button>
 </div>

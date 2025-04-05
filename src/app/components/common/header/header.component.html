@@ -53,7 +53,7 @@
 
     <ng-template #loginButton>
       <p-button *ngIf="!isAuthenticated" size="small" (click)="login()">
-        Login
+        {{ "BUTTONS.LOGIN" | translate }}
       </p-button>
     </ng-template>
   </div>
