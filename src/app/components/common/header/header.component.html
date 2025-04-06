@@ -7,6 +7,7 @@
       </span>
     </span>
   </div>
+
   <div class="col-4 flex justify-content-end p-3">
     <div
       class="card flex justify-content-center"
@@ -22,6 +23,43 @@
           <span class="text-primary font-bold">{{ item.label }}</span>
         </ng-template>
         <ng-template pTemplate="end">
+          <div class="flex flex-column gap-2 px-2 py-2">
+            <div class="text-primary font-bold">
+              {{ "LANGUAGE" | translate }}
+            </div>
+            <p-dropdown
+              [options]="languages"
+              [(ngModel)]="selectedLanguage"
+              optionLabel="name"
+              placeholder=""
+              (onChange)="dropdownChange($event)"
+            >
+              <ng-template pTemplate="selectedItem">
+                <div
+                  class="flex align-items-center gap-2"
+                  *ngIf="selectedLanguage"
+                >
+                  <img
+                    src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                    [class]="'fi fi-' + selectedLanguage.code.toLowerCase()"
+                    style="width: 18px"
+                  />
+                  <div>{{ selectedLanguage.name }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-language pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                  <img
+                    src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                    [class]="'fi fi-' + language.code.toLowerCase()"
+                    style="width: 18px"
+                  />
+                  <div>{{ language.name }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+
           <div
             pRipple
             class="relative overflow-hidden w-full flex align-items-center p-2 pl-3 text-color border-noround"

@@ -25,7 +25,8 @@ import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-ca
 import { DataViewModule } from 'primeng/dataview';
 import { ArtistListItemComponent } from '../common/lists/artist-list-item/artist-list-item.component';
 import { ArtistListSkeletonComponent } from '../common/skeletons/lists/artist-list-skeleton/artist-list-skeleton.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TimeRangeTranslation } from 'src/app/interfaces/ILanguageTranslation';
 
 @Component({
   selector: 'app-tab-top-artists',
@@ -64,13 +65,14 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
     rowsPerPageOptions: [10, 20, 30, 40, 50],
   };
 
-  stateOptions: any[] = [
-    { label: '4 weeks', value: TopTimeRange.ShortTerm },
-    { label: '6 months', value: TopTimeRange.MediumTerm },
-    { label: 'lifetime', value: TopTimeRange.LongTerm },
-  ];
+  timeRangeTranslations!: TimeRangeTranslation;
 
-  constructor(private statsService: StatsService) {
+  stateOptions: any[] = [];
+
+  constructor(
+    private statsService: StatsService,
+    private translateService: TranslateService
+  ) {
     this.statsService.setTopArtistsByRange(TopTimeRange.ShortTerm);
   }
 
@@ -94,11 +96,44 @@ export class TabTopArtistsComponent implements OnInit, OnDestroy {
       .subscribe((isLoading) => {
         this.isLoading = isLoading;
       });
+
+    this.translateService
+      .get('TIME_RANGE')
+      .subscribe((value: TimeRangeTranslation) => {
+        this.timeRangeTranslations = value;
+        this.setStateOptions(value);
+      });
+
+    this.translateService.onLangChange.subscribe(() => {
+      this.translateService
+        .get('TIME_RANGE')
+        .subscribe((value: TimeRangeTranslation) => {
+          this.timeRangeTranslations = value;
+          this.setStateOptions(value);
+        });
+    });
   }
 
   ngOnDestroy(): void {
     this.topArtistSubject.unsubscribe();
     this.isLoadingSuscription.unsubscribe();
+  }
+
+  private setStateOptions(value: TimeRangeTranslation) {
+    this.stateOptions = [
+      {
+        label: value.SHORT_TERM,
+        value: TopTimeRange.ShortTerm,
+      },
+      {
+        label: value.MEDIUM_TERM,
+        value: TopTimeRange.MediumTerm,
+      },
+      {
+        label: value.LONG_TERM,
+        value: TopTimeRange.LongTerm,
+      },
+    ];
   }
 
   handleImageClick(url: string) {

@@ -1,5 +1,10 @@
 {
-  "LANGUAGE": "Español",
+  "ACUTAL_LANGUAGE": "Español",
+  "LANGUAGE": "Idioma",
+  "LANGUAGES": {
+    "EN": "Inglés",
+    "ES": "Español"
+  },
   "STATS": {
     "MY_STATS": "Mis estadísticas",
     "ARTISTS": "Artistas",
@@ -29,5 +34,10 @@
     "ACCESS_DENIED": "Acceso denegado",
     "SORRY": "Lo sentimos!",
     "PAGE_NOT_FOUND": "No pudimos encontrar tu página"
+  },
+  "TIME_RANGE": {
+    "SHORT_TERM": "4 semanas",
+    "MEDIUM_TERM": "6 meses",
+    "LONG_TERM": "desde el principio"
   }
 }

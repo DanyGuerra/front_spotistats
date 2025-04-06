@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private translateService: TranslateService
   ) {
-    this.translateService.setDefaultLang('en'); // default language
-    this.translateService.use('en'); // initial language
+    this.translateService.setDefaultLang('en');
+    this.translateService.use('en');
   }
 
   ngOnInit(): void {
@@ -34,9 +34,11 @@ export class AppComponent implements OnInit {
         },
       });
     }
-  }
 
-  changeLanguage(lang: string) {
-    this.translateService.use(lang); // Cambia de idioma dinámicamente
+    const storedLang = localStorage.getItem(LocalStorage.Language);
+    if (storedLang) {
+      const lang = JSON.parse(storedLang);
+      this.translateService.use(lang.language);
+    }
   }
 }
