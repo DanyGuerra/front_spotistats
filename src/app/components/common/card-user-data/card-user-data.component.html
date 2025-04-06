@@ -24,7 +24,7 @@
       {{ userInfo?.displayName }}
     </span>
     <div class="font-bold">
-      <span class="">Followers </span>
+      <span class=""> {{ "USER.FOLLOWERS" | translate }} </span>
       <span class="">{{ userInfo?.followers?.total }}</span>
     </div>
   </div>
@@ -32,9 +32,9 @@
   <div class="flex justify-content-evenly w-full gap-1">
     <div class="flex align-items-center flex-column w-3 gap-2">
       <div
-        class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl"
+        class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl text-center"
       >
-        Top artist
+        {{ "STATS.TOP_ARTIST" | translate }}
       </div>
       <!-- DATA TOP ARTST -->
 
@@ -59,9 +59,9 @@
     <!-- DATA TOP TRACK -->
     <div class="flex align-items-center flex-column w-3 gap-2">
       <div
-        class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl"
+        class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl text-center"
       >
-        Top track
+        {{ "STATS.TOP_TRACK" | translate }}
       </div>
 
       <app-track-card-item

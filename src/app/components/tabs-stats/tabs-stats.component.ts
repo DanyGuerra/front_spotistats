@@ -34,6 +34,7 @@ import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 import { ArtistCardSkeletonComponent } from '../common/skeletons/cards/artist-card-skeleton/artist-card-skeleton.component';
 import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
 import { CardUserDataComponent } from '../common/card-user-data/card-user-data.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tabs-stats',
@@ -60,6 +61,7 @@ import { CardUserDataComponent } from '../common/card-user-data/card-user-data.c
     ArtistCardSkeletonComponent,
     TrackCardSkeletonComponent,
     CardUserDataComponent,
+    TranslateModule,
   ],
   templateUrl: './tabs-stats.component.html',
   styleUrls: ['./tabs-stats.component.less'],

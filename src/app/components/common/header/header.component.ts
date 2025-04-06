@@ -12,6 +12,11 @@ import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
 import { AvatarModule } from 'primeng/avatar';
 import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {
+  UserTranslation,
+  StatsTranslation,
+} from 'src/app/interfaces/ILanguageTranslation';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +29,7 @@ import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
     MenuModule,
     AvatarModule,
     RippleModule,
+    TranslateModule,
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
@@ -34,11 +40,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   items: MenuItem[] | undefined;
   userData!: IUserInfoStored | null;
+  userTranslations!: UserTranslation;
+  statsTranslations!: StatsTranslation;
+  langChangeSubscription: Subscription | null = null;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -48,6 +58,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.setupMenu();
       }
     });
+
+    this.langChangeSubscription = this.translateService.onLangChange.subscribe(
+      () => {
+        this.translateService
+          .get('USER')
+          .subscribe((userTrans: UserTranslation) => {
+            this.userTranslations = userTrans;
+          });
+
+        this.translateService
+          .get('STATS')
+          .subscribe((statsTrans: StatsTranslation) => {
+            this.statsTranslations = statsTrans;
+          });
+
+        this.setupMenu();
+      }
+    );
 
     this.authSuscription = this.authService
       .isAuthenticated()
@@ -68,35 +96,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const userId = this.userData?.userId;
     this.items = [
       {
-        label: 'My stats',
+        label: this.statsTranslations.MY_STATS,
         items: [
           {
-            label: 'Top artists',
+            label: this.statsTranslations.TOP_ARTISTS,
             icon: 'pi pi-users',
             command: () => this.navigateTo(`${userId}/top-artists`),
           },
           {
-            label: 'Top tracks',
+            label: this.statsTranslations.TOP_TRACKS,
             icon: 'pi pi-play-circle',
             command: () => this.navigateTo(`${userId}/top-tracks`),
           },
           {
-            label: 'Recently played',
+            label: this.statsTranslations.RECENTLY_PLAYED,
             icon: 'pi pi-headphones',
             command: () => this.navigateTo(`${userId}/recently-played`),
           },
         ],
       },
       {
-        label: 'Profile',
+        label: this.userTranslations.PROFILE,
         items: [
           {
-            label: 'My profile',
+            label: this.userTranslations.MY_PROFILE,
             icon: 'pi pi-user',
             command: () => this.navigateTo(`${userId}`),
           },
           {
-            label: 'Logout',
+            label: this.userTranslations.LOGOUT,
             icon: 'pi pi-sign-out',
             command: () => this.logout(),
           },
@@ -109,6 +137,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.authSuscription?.unsubscribe();
     this.routerSubscription?.unsubscribe();
+    this.langChangeSubscription?.unsubscribe();
   }
 
   login() {

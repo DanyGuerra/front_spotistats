@@ -1,15 +1,22 @@
 <div class="w-full h-30rem flex justify-content-center align-items-center">
   <div class="flex flex-column justify-content-center align-items-center">
     <div class="font-bold text-4xl text-primary">
-      <span class="text-200">400</span> Bad Request
+      <span class="text-200">400 </span
+      >{{ "SERVER_MESSAGES.BAD_REQUEST" | translate }}
     </div>
-    <div class="text-400 text-xl font-bold">Access denied</div>
+    <div class="text-400 text-xl font-bold">
+      {{ "SERVER_MESSAGES.ACCESS_DENIED" | translate }}
+    </div>
     <p-button
       severity="secondary"
       class="mt-3"
-      label="Go home"
+      [label]="'BUTTONS.GO_HOME' | translate"
       routerLink="/"
     ></p-button>
-    <p-button class="mt-3" label="Retry login" (onClick)="login()"></p-button>
+    <p-button
+      class="mt-3"
+      [label]="'BUTTONS.RETRY_LOGIN' | translate"
+      (onClick)="login()"
+    ></p-button>
   </div>
 </div>

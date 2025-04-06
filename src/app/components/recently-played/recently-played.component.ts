@@ -18,6 +18,7 @@ import { RecentlyPlayedListSkeletonComponent } from '../common/skeletons/lists/r
 import { TrackCardItemComponent } from '../common/cards/track-card-item/track-card-item.component';
 import { TimeFromNowPipe } from 'src/app/pipes/time-from-now.pipe';
 import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card-skeleton/track-card-skeleton.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recently-played',
@@ -33,6 +34,7 @@ import { TrackCardSkeletonComponent } from '../common/skeletons/cards/track-card
     TrackCardItemComponent,
     TimeFromNowPipe,
     TrackCardSkeletonComponent,
+    TranslateModule,
   ],
   templateUrl: './recently-played.component.html',
   styleUrls: ['./recently-played.component.less'],

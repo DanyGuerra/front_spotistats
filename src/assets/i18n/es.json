@@ -1,4 +1,33 @@
 {
   "LANGUAGE": "Español",
-  "GREETING": "Hola, bienvenido a nuestra aplicación"
+  "STATS": {
+    "MY_STATS": "Mis estadísticas",
+    "ARTISTS": "Artistas",
+    "TRACKS": "Canciones",
+    "TOP_ARTISTS": "Artistas más escuchados",
+    "TOP_TRACKS": "Canciones más escuchadas",
+    "TOP_ARTIST": "Artista más escuchado",
+    "TOP_TRACK": "Canción más escuchada",
+    "RECENTLY_PLAYED": "Escuchados recientemente"
+  },
+  "USER": {
+    "PROFILE": "Perfil",
+    "MY_PROFILE": "Mi perfil",
+    "LOGOUT": "Cerrar sesión",
+    "LOGIN": "Iniciar sesión",
+    "FOLLOWERS": "Seguidores"
+  },
+  "BUTTONS": {
+    "GO_BACK": "Regresar",
+    "SHOW_ALL": "Ver todo",
+    "LOGIN": "Iniciar sesión",
+    "GO_HOME": "Ir a inicio",
+    "RETRY_LOGIN": "Reintentar inicio sesión"
+  },
+  "SERVER_MESSAGES": {
+    "BAD_REQUEST": "Solicitud incorrecta",
+    "ACCESS_DENIED": "Acceso denegado",
+    "SORRY": "Lo sentimos!",
+    "PAGE_NOT_FOUND": "No pudimos encontrar tu página"
+  }
 }

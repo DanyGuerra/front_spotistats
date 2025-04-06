@@ -12,9 +12,9 @@
     <!-- TOP ARTISTS DATA-->
     <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
       <div class="flex align-items-center justify-content-center gap-4">
-        <h2>Top Artists</h2>
+        <h2>{{ "STATS.TOP_ARTISTS" | translate }}</h2>
         <p-button
-          label="Show all"
+          [label]="'BUTTONS.SHOW_ALL' | translate"
           icon="pi pi-eye"
           size="small"
           routerLink="./top-artists"
@@ -100,9 +100,9 @@
     <!-- TOP TRACKS -->
     <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
       <div class="flex align-items-center justify-content-center gap-4">
-        <h2>Top Tracks</h2>
+        <h2>{{ "STATS.TOP_TRACKS" | translate }}</h2>
         <p-button
-          label="Show all"
+          [label]="'BUTTONS.SHOW_ALL' | translate"
           icon="pi pi-eye"
           size="small"
           routerLink="./top-tracks"
@@ -187,9 +187,9 @@
     <!-- RECENTLY PLAYED -->
     <section class="xl:w-8 lg:w-8 md:w-11 sm:w-11 w-11">
       <div class="flex align-items-center justify-content-center gap-4">
-        <h2 class="">Recently played</h2>
+        <h2 class="">{{ "STATS.RECENTLY_PLAYED" | translate }}</h2>
         <p-button
-          label="Show all"
+          [label]="'BUTTONS.SHOW_ALL' | translate"
           icon="pi pi-eye"
           size="small"
           routerLink="./recently-played"
