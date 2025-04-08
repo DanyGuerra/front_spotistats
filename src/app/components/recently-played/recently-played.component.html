@@ -74,7 +74,7 @@
           <app-track-card-item
             *ngFor="let track of tracksPlayed"
             [trackItem]="track.track"
-            [playedAt]="track.played_at | timeFromNow : 'en'"
+            [playedAt]="track.played_at | timeFromNow"
             class="w-5rem md:w-8rem lg:w-10rem"
           ></app-track-card-item>
         </div>
