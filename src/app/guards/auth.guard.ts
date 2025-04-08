@@ -37,7 +37,7 @@ export const authGuard: CanActivateFn = async (
       authService.setAuthenticated(true);
       return true;
     } else {
-      localStorage.clear();
+      localStorage.removeItem(LocalStorage.UserInfo);
       authService.setAuthenticated(false);
       router.navigate(['/']);
       return false;

@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
+import { LocalStorage } from 'src/constants/localStorage';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +42,7 @@ export class AuthService {
       )
       .subscribe({
         next: () => {
-          localStorage.clear();
+          localStorage.removeItem(LocalStorage.UserInfo);
           this.isAuthenticatedSubject.next(false);
           this.router.navigate(['/']);
         },
