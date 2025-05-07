@@ -123,12 +123,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private updateUserData(): void {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
+
     try {
       this.userData = storedUser ? JSON.parse(storedUser) : null;
     } catch (error) {
       this.userData = null;
     }
     this.authService.setAuthenticated(!!this.userData);
+
+    if (this.userData) {
+      this.setupMenu();
+    }
   }
 
   private setupMenu(): void {
