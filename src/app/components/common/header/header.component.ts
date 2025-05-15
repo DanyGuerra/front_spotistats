@@ -140,35 +140,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const userId = this.userData?.userId;
     this.items = [
       {
-        label: this.statsTranslations.MY_STATS,
+        label: this.statsTranslations?.MY_STATS,
         items: [
           {
-            label: this.statsTranslations.TOP_ARTISTS,
+            label: this.statsTranslations?.TOP_ARTISTS,
             icon: 'pi pi-users',
             command: () => this.navigateTo(`${userId}/top-artists`),
           },
           {
-            label: this.statsTranslations.TOP_TRACKS,
+            label: this.statsTranslations?.TOP_TRACKS,
             icon: 'pi pi-play-circle',
             command: () => this.navigateTo(`${userId}/top-tracks`),
           },
           {
-            label: this.statsTranslations.RECENTLY_PLAYED,
+            label: this.statsTranslations?.RECENTLY_PLAYED,
             icon: 'pi pi-headphones',
             command: () => this.navigateTo(`${userId}/recently-played`),
           },
         ],
       },
       {
-        label: this.userTranslations.PROFILE,
+        label: this.userTranslations?.PROFILE,
         items: [
           {
-            label: this.userTranslations.MY_PROFILE,
+            label: this.userTranslations?.MY_PROFILE,
             icon: 'pi pi-user',
             command: () => this.navigateTo(`${userId}`),
           },
           {
-            label: this.userTranslations.LOGOUT,
+            label: this.userTranslations?.LOGOUT,
             icon: 'pi pi-sign-out',
             command: () => this.logout(),
           },
