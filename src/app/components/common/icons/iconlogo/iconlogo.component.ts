@@ -57,12 +57,16 @@ export class IconlogoComponent implements AfterViewInit {
       arrows,
     } = this.svgElements;
 
+    const timeline = gsap.timeline({
+      onComplete: () => this.isAnimated.set(false),
+    });
+
     const animations = [
-      () => this.verticalAnimation(firstLetter, firstArrow),
-      () => this.verticalAnimation(secondLetter, secondArrow),
-      () => this.verticalAnimation(thirdLetter, thirdArrow),
-      () => this.beatAnimation(oSecondLetter, heart),
-      () => this.verticalAnimation(tLetters, arrows),
+      () => this.verticalAnimation(timeline, firstLetter, firstArrow),
+      () => this.verticalAnimation(timeline, secondLetter, secondArrow),
+      () => this.verticalAnimation(timeline, thirdLetter, thirdArrow),
+      () => this.beatAnimation(timeline, oSecondLetter, heart),
+      () => this.verticalAnimation(timeline, tLetters, arrows),
     ];
 
     const randomIndex = Math.floor(Math.random() * animations.length);
@@ -76,17 +80,28 @@ export class IconlogoComponent implements AfterViewInit {
     gsap.set(letters, { y: -50 });
     gsap.set(arrows, { y: 50 });
     gsap.set(arrowsTogether, { autoAlpha: 1 });
+    gsap.set(heart, { autoAlpha: 1, scale: 0, transformOrigin: '50% 50%' });
   }
 
   private initalAnimation() {
-    const timeline = gsap.timeline();
     this.isAnimated.set(true);
 
-    const { letters, firstLetter, firstArrow } = this.svgElements;
+    const timeline = gsap.timeline({
+      onComplete: () => {
+        this.isAnimated.set(false);
+      },
+    });
 
-    letters.forEach((letter, index) => {
+    const { letters, oSecondLetter, heart } = this.svgElements;
+
+    this.bounceAnimation(timeline, letters);
+    this.beatAnimation(timeline, oSecondLetter, heart);
+  }
+
+  private bounceAnimation(timeline: gsap.core.Timeline, elements: NodeList) {
+    elements.forEach((element, index) => {
       timeline.to(
-        letter,
+        element,
         {
           y: 0,
           duration: 1,
@@ -95,45 +110,14 @@ export class IconlogoComponent implements AfterViewInit {
         index * 0.05
       );
     });
-
-    timeline.to(firstLetter, {
-      y: 50,
-      ease: 'elastic.in',
-      duration: 1,
-    });
-
-    timeline.to(firstArrow, {
-      y: 0,
-      duration: 0.5,
-      ease: 'elastic.out',
-    });
-
-    timeline.to(
-      firstArrow,
-      {
-        y: 50,
-        duration: 0.5,
-        ease: 'elastic.in',
-      },
-      '+=1'
-    );
-
-    timeline.to(firstLetter, {
-      y: 0,
-      duration: 0.5,
-      ease: 'elastic.out',
-      onComplete: () => {
-        this.isAnimated.set(false);
-      },
-    });
   }
 
   private verticalAnimation(
+    timeline: gsap.core.Timeline,
     initialElement: SVGPathElement | NodeList,
     finalElement: SVGPathElement | NodeList
   ) {
-    gsap
-      .timeline()
+    timeline
       .to(initialElement, {
         duration: 0.25,
         y: -50,
@@ -153,37 +137,35 @@ export class IconlogoComponent implements AfterViewInit {
         duration: 0.25,
         y: 0,
         ease: 'elastic.out',
-        onComplete: () => {
-          this.isAnimated.set(false);
-        },
       });
   }
 
   private beatAnimation(
+    timeline: gsap.core.Timeline,
     initialElement: SVGPathElement | NodeList,
     finalElement: SVGPathElement | NodeList
   ) {
-    gsap.set(initialElement, { autoAlpha: 1, transformOrigin: '50% 50%' });
-    gsap.set(finalElement, {
-      autoAlpha: 1,
-      scale: 0.1,
-      transformOrigin: '50% 50%',
-    });
-
-    gsap
-      .timeline()
-      .to(initialElement, {
-        duration: 0.25,
-        scale: 0.1,
-        autoAlpha: 0,
-        ease: 'elastic.in',
-      })
-      .to(finalElement, {
-        duration: 1,
-        autoAlpha: 1,
-        scale: 1.1,
-        ease: 'elastic.out',
-      })
+    timeline
+      .fromTo(
+        initialElement,
+        { scale: 1, autoAlpha: 1, transformOrigin: '50% 50%' },
+        {
+          duration: 0.25,
+          scale: 0.1,
+          autoAlpha: 0,
+          ease: 'elastic.in',
+        }
+      )
+      .fromTo(
+        finalElement,
+        { scale: 0, autoAlpha: 0, transformOrigin: '50% 50%' },
+        {
+          duration: 1,
+          autoAlpha: 1,
+          scale: 1.1,
+          ease: 'elastic.out',
+        }
+      )
       .to(finalElement, {
         duration: 0.5,
         scale: 0.5,
@@ -196,7 +178,7 @@ export class IconlogoComponent implements AfterViewInit {
       })
       .to(finalElement, {
         duration: 1,
-        scale: 0.1,
+        scale: 0,
         autoAlpha: 0,
         ease: 'elastic.in',
       })
@@ -205,9 +187,6 @@ export class IconlogoComponent implements AfterViewInit {
         autoAlpha: 1,
         scale: 1,
         ease: 'elastic.out',
-        onComplete: () => {
-          this.isAnimated.set(false);
-        },
       });
   }
 }
