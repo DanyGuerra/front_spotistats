@@ -27,6 +27,8 @@ export class IconlogoComponent implements AfterViewInit {
       secondArrow: svg?.querySelector<SVGPathElement>('#secondArrow')!,
       thirdArrow: svg?.querySelector<SVGPathElement>('#thirdArrow')!,
       oSecondLetter: svg?.querySelector<SVGPathElement>('#oSecondLetter')!,
+      aSixthLetter: svg?.querySelector<SVGPathElement>('#aSixthLetter')!,
+      asterik: svg?.querySelector<SVGPathElement>('#asterik')!,
       heart: svg?.querySelector<SVGPathElement>('#heart')!,
       arrowsTogether: svg?.querySelector<SVGPathElement>('#arrows')!,
       letters: svg?.querySelectorAll<SVGPathElement>('#words path') ?? [],
@@ -55,6 +57,8 @@ export class IconlogoComponent implements AfterViewInit {
       oSecondLetter,
       tLetters,
       arrows,
+      aSixthLetter,
+      asterik,
     } = this.svgElements;
 
     const timeline = gsap.timeline({
@@ -67,6 +71,7 @@ export class IconlogoComponent implements AfterViewInit {
       () => this.verticalAnimation(timeline, thirdLetter, thirdArrow),
       () => this.beatAnimation(timeline, oSecondLetter, heart),
       () => this.verticalAnimation(timeline, tLetters, arrows),
+      () => this.spinAnimation(timeline, aSixthLetter, asterik),
     ];
 
     const randomIndex = Math.floor(Math.random() * animations.length);
@@ -184,6 +189,50 @@ export class IconlogoComponent implements AfterViewInit {
       })
       .to(initialElement, {
         duration: 0.25,
+        autoAlpha: 1,
+        scale: 1,
+        ease: 'elastic.out',
+      });
+  }
+
+  private spinAnimation(
+    timeline: gsap.core.Timeline,
+    initialElement: SVGPathElement,
+    finalElement: SVGPathElement
+  ) {
+    timeline
+      .fromTo(
+        initialElement,
+        { autoAlpha: 1, transformOrigin: '50% 50%' },
+        {
+          rotate: 360,
+          duration: 0.5,
+          scale: 0,
+          autoAlpha: 0,
+          ease: 'elastic.in',
+        }
+      )
+      .fromTo(
+        finalElement,
+        { autoAlpha: 0, transformOrigin: '50% 50%' },
+        {
+          rotate: 360,
+          duration: 2,
+          autoAlpha: 1,
+          scale: 1.2,
+          ease: 'elastic.out',
+        }
+      )
+      .to(finalElement, {
+        rotate: -360,
+        duration: 2,
+        scale: 0,
+        autoAlpha: 0,
+        ease: 'elastic.in',
+      })
+      .to(initialElement, {
+        rotate: -360,
+        duration: 2,
         autoAlpha: 1,
         scale: 1,
         ease: 'elastic.out',
