@@ -198,6 +198,38 @@ export function verticalAnimation(
   fadeIn(timeline, initialElement);
 }
 
+export function animateVerticalShift(
+  timeline: gsap.core.Timeline,
+  initialElement: HTMLElement | SVGPathElement | NodeList,
+  finalElement: HTMLElement | SVGPathElement | NodeList,
+  postition: gsap.Position = '>'
+) {
+  timeline
+    .to(
+      initialElement,
+      {
+        y: 50,
+        duration: 0.3,
+        autoAlpha: 0,
+        ease: 'power1.out',
+      },
+      postition
+    )
+    .fromTo(
+      finalElement,
+      { y: -50, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.3,
+        ease: 'power1.out',
+      },
+      '-=0.3'
+    )
+    .to(initialElement, { y: 0, autoAlpha: 1, duration: 0.3 }, 10)
+    .to(finalElement, { y: -50, autoAlpha: 0, duration: 0.3 }, '-=0.3');
+}
+
 export function musicWaveAnimation(
   timeline: gsap.core.Timeline,
   elements: NodeList,

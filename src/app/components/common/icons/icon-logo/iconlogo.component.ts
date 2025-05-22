@@ -113,17 +113,17 @@ export class IconlogoComponent implements AfterViewInit {
       },
     });
 
-    const { oSecondLetter, heart } = this.svgElements;
-
     this.musicWavesAnimation(timeline);
-    beatAnimation(timeline, oSecondLetter, heart);
   }
 
-  private musicWavesAnimation(timeline: gsap.core.Timeline) {
+  private musicWavesAnimation(
+    timeline: gsap.core.Timeline,
+    position: gsap.Position = '>'
+  ) {
     const { letters, musicWaves } = this.svgElements;
     this.isAnimated.set(true);
 
-    fadeOut(timeline, letters);
+    fadeOut(timeline, letters, position);
     musicWaveAnimation(timeline, musicWaves);
     fadeIn(timeline, letters);
   }

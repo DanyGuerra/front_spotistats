@@ -5,11 +5,9 @@ import { IconArrowComponent } from '../icons/icon-arrow/icon-arrow.component';
 import { IconAsteriskComponent } from '../icons/icon-asterisk/icon-asterisk.component';
 import { IconHeartComponent } from '../icons/icon-heart/icon-heart.component';
 import {
+  animateVerticalShift,
   beatAnimation,
-  fadeIn,
-  fadeOut,
   flipAnimation,
-  spinAnimation,
   verticalAnimation,
 } from 'src/utils/animations-utils';
 
@@ -42,6 +40,8 @@ export class HomeAnimationComponent {
       iconHeart: headerText?.querySelector('.iconHeart')!,
       backAsterisk: headerText?.querySelector('.backAsterisk')!,
       iconAsterisk: headerText?.querySelector('#iconAsterisk')!,
+      backSpotify: headerText?.querySelector('.backSpotify')!,
+      spotifyIcon: headerText?.querySelector('.spotifyIcon')!,
     };
   }
 
@@ -51,13 +51,15 @@ export class HomeAnimationComponent {
 
   private initialAnimation() {
     const {
-      chars,
+      words,
       iconArrow,
       arrowT,
       oHeart,
       iconHeart,
       backAsterisk,
       iconAsterisk,
+      backSpotify,
+      spotifyIcon,
     } = this.domElements;
     const timeLine = gsap.timeline();
     const infiniteTimeLine = gsap.timeline({
@@ -65,29 +67,27 @@ export class HomeAnimationComponent {
       delay: 2,
       repeatDelay: 2,
     });
+    const timeLine1 = gsap.timeline();
     const timeLine2 = gsap.timeline();
     const timeLine3 = gsap.timeline();
+    const timeLine4 = gsap.timeline();
 
-    console.log(backAsterisk);
-
-    this.fadeInChars(timeLine, chars);
-    flipAnimation(infiniteTimeLine, arrowT, iconArrow);
-    beatAnimation(timeLine2, oHeart, iconHeart, '3');
+    this.fadeInChars(timeLine, words);
+    flipAnimation(timeLine1, arrowT, iconArrow);
+    flipAnimation(timeLine1, arrowT, iconArrow);
     beatAnimation(timeLine2, oHeart, iconHeart);
     beatAnimation(timeLine2, oHeart, iconHeart);
     verticalAnimation(timeLine3, backAsterisk, iconAsterisk);
+    verticalAnimation(timeLine3, backAsterisk, iconAsterisk);
+    animateVerticalShift(timeLine4, backSpotify, spotifyIcon, '0.5');
   }
 
   private fadeInChars(timeLine: gsap.core.Timeline, elements: NodeList) {
     timeLine.from(elements, {
-      yPercent: 'random([-100,100])',
-      rotation: 'random(-30,30)',
+      x: 100,
       duration: 1,
       autoAlpha: 0,
-      stagger: {
-        amount: 1,
-        from: 'random',
-      },
+      stagger: 0.1,
     });
   }
 }
