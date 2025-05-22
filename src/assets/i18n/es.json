@@ -39,5 +39,8 @@
     "SHORT_TERM": "4 semanas",
     "MEDIUM_TERM": "6 meses",
     "LONG_TERM": "desde el principio"
+  },
+  "HOME": {
+    "HEADER": "Más escuchados en Spotify"
   }
 }

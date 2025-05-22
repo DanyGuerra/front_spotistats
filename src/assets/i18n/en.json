@@ -38,5 +38,8 @@
     "SHORT_TERM": "4 weeks",
     "MEDIUM_TERM": "6 months",
     "LONG_TERM": "lifetime"
+  },
+  "HOME": {
+    "HEADER": "Your top stats for Spotify"
   }
 }

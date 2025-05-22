@@ -18,6 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { HomeAnimationComponent } from './components/common/home-animation/home-animation.component';
 
 // jsons for ngx-translate
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,12 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    PagenotfoundComponent,
-    LoginErrorComponent,
-  ],
+  declarations: [AppComponent, PagenotfoundComponent, LoginErrorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    HomeAnimationComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

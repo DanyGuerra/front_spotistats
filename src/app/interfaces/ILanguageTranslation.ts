@@ -7,6 +7,7 @@ export interface ILanguageTranslation {
   BUTTONS: ButtonsTranslation;
   SERVER_MESSAGES: ServerMessagesTranslation;
   TIME_RANGE: TimeRangeTranslation;
+  HOME: HomeTranslations;
 }
 
 export interface StatsTranslation {
@@ -51,4 +52,7 @@ export interface TimeRangeTranslation {
 export interface LanguagesTranslation {
   EN: string;
   ES: string;
+}
+export interface HomeTranslations {
+  HEADER: string;
 }
