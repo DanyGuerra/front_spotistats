@@ -10,8 +10,8 @@ import {
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ClickOutsideDirective } from 'src/app/directives/click-outside.directive';
-import { IconPlayComponent } from '../icons/iconplay/icon-play.component';
-import { IconPauseComponent } from '../icons/iconpause/icon-pause.component';
+import { IconPlayComponent } from '../icons/icon-play/icon-play.component';
+import { IconPauseComponent } from '../icons/icon-pause/icon-pause.component';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({

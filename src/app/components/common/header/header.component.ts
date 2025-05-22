@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { LocalStorage } from 'src/constants/localStorage';
 import { Subscription } from 'rxjs';
-import { IconlogoComponent } from '../icons/iconlogo/iconlogo.component';
+import { IconlogoComponent } from '../icons/icon-logo/iconlogo.component';
 import { ToastService } from 'src/app/services/toast.service';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
