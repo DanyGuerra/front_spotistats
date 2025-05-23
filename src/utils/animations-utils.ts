@@ -140,6 +140,24 @@ export function spinAnimation(
     });
 }
 
+export function spinSlow(
+  timeline: gsap.core.Timeline,
+  element: SVGPathElement,
+  position: gsap.Position = '>'
+) {
+  timeline.to(
+    element,
+    {
+      repeatDelay: 1,
+      repeat: 4,
+      rotate: 90,
+      duration: 1,
+      ease: 'power4.out',
+    },
+    position
+  );
+}
+
 export function fadeOut(
   timeline: gsap.core.Timeline,
   element: HTMLElement | SVGPathElement | NodeList,
@@ -261,4 +279,29 @@ export function musicWaveAnimation(
       scaleY: 0,
       autoAlpha: 0,
     });
+}
+
+export function wavesStagger(
+  timeline: gsap.core.Timeline,
+  elements: NodeList,
+  position: gsap.Position = '>'
+) {
+  timeline.set(elements, { transformOrigin: 'center bottom' });
+  timeline.fromTo(
+    elements,
+    { scaleY: 0.2, transformOrigin: 'center bottom' },
+    {
+      scaleY: 1,
+      repeat: 2,
+      yoyo: true,
+      duration: 0.25,
+      stagger: {
+        each: 0.05,
+        repeat: 2,
+        yoyo: true,
+      },
+      ease: 'sine.inOut',
+    },
+    position
+  );
 }

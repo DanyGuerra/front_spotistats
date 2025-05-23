@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SpotifyIconComponent } from '../icons/icon-spotify/icon-spotify.component';
 import { IconArrowComponent } from '../icons/icon-arrow/icon-arrow.component';
@@ -7,27 +7,40 @@ import { IconHeartComponent } from '../icons/icon-heart/icon-heart.component';
 import {
   animateVerticalShift,
   beatAnimation,
+  fadeIn,
+  fadeOut,
   flipAnimation,
-  verticalAnimation,
+  spinSlow,
+  wavesStagger,
 } from 'src/utils/animations-utils';
 
 import gsap from 'gsap';
+import { CommonModule } from '@angular/common';
+import { IconMusicWavesComponent } from '../icons/icon-music-waves/icon-music-waves.component';
 
 @Component({
   selector: 'app-home-animation',
   standalone: true,
   imports: [
+    CommonModule,
     SpotifyIconComponent,
     TranslateModule,
     IconArrowComponent,
     IconAsteriskComponent,
     IconHeartComponent,
+    IconMusicWavesComponent,
   ],
   templateUrl: './home-animation.component.html',
   styleUrl: './home-animation.component.less',
 })
 export class HomeAnimationComponent {
-  @ViewChild('homeHeaderText', { static: false }) homeHeaderText!: ElementRef;
+  @ViewChild('homeHeaderText', { static: true }) homeHeaderText!: ElementRef;
+
+  @ViewChild('waveSvg') waveSvg!: ElementRef<HTMLElement>;
+  waveRects: SVGRectElement[] = [];
+  waveNodeList!: NodeList;
+
+  isAnimated = signal(false);
 
   get domElements() {
     const headerText = this.homeHeaderText?.nativeElement;
@@ -46,7 +59,38 @@ export class HomeAnimationComponent {
   }
 
   ngAfterViewInit() {
+    const rects = this.waveSvg.nativeElement.querySelectorAll('rect');
+    this.waveNodeList = rects;
+    this.waveRects = Array.from(rects) as SVGRectElement[];
+
     this.initialAnimation();
+  }
+
+  onMouseMove(event: MouseEvent): void {
+    if (this.isAnimated()) return;
+
+    const svgRect = this.waveSvg.nativeElement.getBoundingClientRect();
+    const mouseX = event.clientX - svgRect.left;
+    const mouseY = event.clientY - svgRect.top;
+    const width = svgRect.width;
+    const height = svgRect.height;
+
+    this.waveRects.forEach((rect) => {
+      const rectX = rect.x.baseVal.value * 2.0045;
+      const distance = Math.abs(rectX - mouseX);
+
+      const horizontalFactor = Math.max(0, 1.1 - distance / width);
+      const verticalFactor = 1 - mouseY / height;
+
+      const scale = horizontalFactor * (0.5 + verticalFactor);
+
+      gsap.to(rect, {
+        duration: 0.25,
+        scaleY: scale,
+        transformOrigin: 'center bottom',
+        ease: 'sin.inOut',
+      });
+    });
   }
 
   private initialAnimation() {
@@ -56,29 +100,32 @@ export class HomeAnimationComponent {
       arrowT,
       oHeart,
       iconHeart,
-      backAsterisk,
-      iconAsterisk,
       backSpotify,
       spotifyIcon,
     } = this.domElements;
+    this.isAnimated.set(true);
+
     const timeLine = gsap.timeline();
-    const infiniteTimeLine = gsap.timeline({
-      repeat: -1,
-      delay: 2,
-      repeatDelay: 2,
+
+    const timelineWaves = gsap.timeline({
+      onComplete: () => {
+        this.isAnimated.set(false);
+      },
     });
-    const timeLine1 = gsap.timeline();
-    const timeLine2 = gsap.timeline();
-    const timeLine3 = gsap.timeline();
-    const timeLine4 = gsap.timeline();
+    wavesStagger(timelineWaves, this.waveNodeList);
+
+    const timeLine1 = gsap.timeline({ repeat: 4 });
+    const timeLine2 = gsap.timeline({ repeat: 5 });
+    const timeLine3 = gsap.timeline({ repeat: 5 });
+    const timeLine4 = gsap.timeline({ repeat: 3, repeatDelay: 2 });
 
     this.fadeInChars(timeLine, words);
     flipAnimation(timeLine1, arrowT, iconArrow);
     flipAnimation(timeLine1, arrowT, iconArrow);
+    this.asteriskAnimation(timeLine3);
     beatAnimation(timeLine2, oHeart, iconHeart);
     beatAnimation(timeLine2, oHeart, iconHeart);
-    verticalAnimation(timeLine3, backAsterisk, iconAsterisk);
-    verticalAnimation(timeLine3, backAsterisk, iconAsterisk);
+
     animateVerticalShift(timeLine4, backSpotify, spotifyIcon, '0.5');
   }
 
@@ -89,5 +136,15 @@ export class HomeAnimationComponent {
       autoAlpha: 0,
       stagger: 0.1,
     });
+  }
+
+  private asteriskAnimation(timeline: gsap.core.Timeline) {
+    const { backAsterisk, iconAsterisk } = this.domElements;
+
+    fadeOut(timeline, backAsterisk);
+    fadeIn(timeline, iconAsterisk);
+    spinSlow(timeline, iconAsterisk);
+    fadeOut(timeline, iconAsterisk);
+    fadeIn(timeline, backAsterisk);
   }
 }
