@@ -305,3 +305,16 @@ export function wavesStagger(
     position
   );
 }
+
+export function floatAnimation(element: SVGElement) {
+  gsap.to(element, {
+    duration: 4,
+    x: () => Math.random() * 20 - 10,
+    y: () => Math.random() * 20 - 10,
+    rotation: () => Math.random() * 4 - 2,
+    ease: 'sine.inOut',
+    repeat: -1,
+    yoyo: true,
+    repeatRefresh: true,
+  });
+}

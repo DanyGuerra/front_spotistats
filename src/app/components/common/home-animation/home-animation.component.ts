@@ -19,6 +19,10 @@ import { CommonModule } from '@angular/common';
 import { IconMusicWavesComponent } from '../icons/icon-music-waves/icon-music-waves.component';
 import { GraphSvgComponent } from '../icons/graph-svg/graph-svg.component';
 
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+
+gsap.registerPlugin(DrawSVGPlugin);
+
 @Component({
   selector: 'app-home-animation',
   standalone: true,
@@ -37,6 +41,7 @@ import { GraphSvgComponent } from '../icons/graph-svg/graph-svg.component';
 })
 export class HomeAnimationComponent {
   @ViewChild('homeHeaderText', { static: true }) homeHeaderText!: ElementRef;
+  @ViewChild('graphPath', { static: true }) graphPath!: ElementRef;
 
   @ViewChild('waveSvg') waveSvg!: ElementRef<HTMLElement>;
   waveRects: SVGRectElement[] = [];
@@ -46,9 +51,11 @@ export class HomeAnimationComponent {
 
   get domElements() {
     const headerText = this.homeHeaderText?.nativeElement;
+    const svgGraphElement = this.graphPath.nativeElement;
     return {
       words: headerText?.querySelectorAll('.word') ?? [],
       chars: headerText?.querySelectorAll('.char') ?? [],
+      nodesGraph: svgGraphElement?.querySelectorAll('.node') ?? [],
       iconArrow: headerText?.querySelector('.iconArrow')!,
       arrowT: headerText?.querySelector('.arrowT')!,
       oHeart: headerText?.querySelector('.oHeart')!,
@@ -57,11 +64,13 @@ export class HomeAnimationComponent {
       iconAsterisk: headerText?.querySelector('#iconAsterisk')!,
       backSpotify: headerText?.querySelector('.backSpotify')!,
       spotifyIcon: headerText?.querySelector('.spotifyIcon')!,
+      graphPath: svgGraphElement.querySelector('#graphSvg #allPath'),
     };
   }
 
   ngAfterViewInit() {
     const rects = this.waveSvg.nativeElement.querySelectorAll('rect');
+    const { graphPath } = this.domElements;
     this.waveNodeList = rects;
     this.waveRects = Array.from(rects) as SVGRectElement[];
 
@@ -129,6 +138,8 @@ export class HomeAnimationComponent {
     beatAnimation(timeLine2, oHeart, iconHeart);
 
     animateVerticalShift(timeLine4, backSpotify, spotifyIcon, '0.5');
+
+    this.pathDraw();
   }
 
   private fadeInChars(timeLine: gsap.core.Timeline, elements: NodeList) {
@@ -148,5 +159,45 @@ export class HomeAnimationComponent {
     spinSlow(timeline, iconAsterisk);
     fadeOut(timeline, iconAsterisk);
     fadeIn(timeline, backAsterisk);
+  }
+
+  private pathDraw() {
+    const { graphPath, nodesGraph } = this.domElements;
+
+    const totalLength = (graphPath as SVGPathElement).getTotalLength();
+    const nodeEls = Array.from(nodesGraph) as SVGPathElement[];
+
+    nodeEls.forEach((el) => {
+      gsap.set(el, {
+        scale: 0,
+        autoAlpha: 0,
+        transformOrigin: 'center center',
+      });
+    });
+
+    const tl = gsap.timeline();
+
+    tl.from(graphPath, {
+      duration: 3,
+      drawSVG: '0%',
+      ease: 'power1.inOut',
+    });
+
+    const step = totalLength / nodeEls.length;
+    nodeEls.forEach((el, index) => {
+      const lengthAtNode = step * index;
+      const time = (lengthAtNode / totalLength) * 3;
+
+      tl.to(
+        el,
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.3,
+          ease: 'eslastic.out',
+        },
+        time
+      );
+    });
   }
 }
