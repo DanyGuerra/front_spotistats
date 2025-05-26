@@ -1,167 +1,180 @@
-<div class="flex w-full px-2 h-screen pt-3 sm:pt-7 md:pt-7 lg:pt-7">
+<div class="flex w-full px-2 h-auto pt-3 sm:pt-7 md:pt-7 lg:pt-7">
   <h1 class="visibilityHidden">{{ "HOME.HEADER" | translate }}</h1>
   <div
     #homeHeaderText
-    class="homeHeader flex flex-column text-5xl sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl"
+    class="homeHeader w-full text-5xl sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl"
   >
     <!-- English header -->
-    <div class="flex flex-column gap-2">
-      <span class="line block">
-        <span class="word">
-          <span class="y char">Y</span>
-          <span class="relative inline-block char">
-            <span class="o oHeart relative backLetters">o</span>
-            <app-icon-heart
-              class="iconHidden iconHeart inline-block absolute top-0 left-0"
-              width="100%"
-              height="100%"
-            ></app-icon-heart>
-          </span>
-          <span class="u char">u</span>
-          <span class="r char">r</span>
-        </span>
-        <span class="space">-</span>
-        <span class="word">
-          <span class="relative char">
-            <span class="t arrowT relative inline-block backLetters">t</span>
-            <app-icon-arrow
-              class="iconHidden iconArrow inline-block absolute top-0 left-0"
-              width="100%"
-              height="100%"
-            ></app-icon-arrow>
-          </span>
-          <span class="o char">o</span>
-          <span class="p char">p</span>
-        </span>
-        <span class="space">-</span>
-        <span class="word">
-          <span class="s char">s</span>
-          <span class="t char">t</span>
-          <span class="relative char">
-            <span class="a backAsterisk inline-block relative backLetters"
-              >a</span
-            >
-            <app-icon-asterisk
-              class="inline-block absolute top-0 left-0"
-              width="100%"
-              height="100%"
-            ></app-icon-asterisk>
-          </span>
-          <span class="t2 char">t</span>
-          <span class="s char">s</span>
-        </span>
-      </span>
-      <span class="line block">
-        <span class="word">
-          <span class="f char">f</span>
-          <span class="o char">o</span>
-          <span class="r char">r</span>
-        </span>
-        <span class="space">-</span>
-        <span class="word">
-          <span class="s char">S</span>
-          <span class="p char">p</span>
-          <span class="relative char">
-            <span class="o backSpotify inline-block relative backLetters"
-              >o</span
-            >
-            <span
-              class="spotifyIcon iconHidden inline-block absolute top-0 left-0"
-            >
-              <app-spotify-icon
-                width="100%"
-                height="100%"
-                iconColor="#1bd760"
-              ></app-spotify-icon>
+    <div class="mainHome">
+      <div class="textHeaderContainer">
+        <div>
+          <span class="line block">
+            <span class="word">
+              <span class="y char">Y</span>
+              <span class="relative inline-block char">
+                <span class="o oHeart relative backLetters">o</span>
+                <app-icon-heart
+                  class="iconHidden iconHeart inline-block absolute top-0 left-0"
+                  width="100%"
+                  height="100%"
+                ></app-icon-heart>
+              </span>
+              <span class="u char">u</span>
+              <span class="r char">r</span>
+            </span>
+            <span class="space">-</span>
+            <span class="word">
+              <span class="relative char">
+                <span class="t arrowT relative inline-block backLetters"
+                  >t</span
+                >
+                <app-icon-arrow
+                  class="iconHidden iconArrow inline-block absolute top-0 left-0"
+                  width="100%"
+                  height="100%"
+                ></app-icon-arrow>
+              </span>
+              <span class="o char">o</span>
+              <span class="p char">p</span>
+            </span>
+            <span class="space">-</span>
+            <span class="word">
+              <span class="s char">s</span>
+              <span class="t char">t</span>
+              <span class="relative char">
+                <span class="a backAsterisk inline-block relative backLetters"
+                  >a</span
+                >
+                <app-icon-asterisk
+                  class="inline-block absolute top-0 left-0"
+                  width="100%"
+                  height="100%"
+                ></app-icon-asterisk>
+              </span>
+              <span class="t2 char">t</span>
+              <span class="s char">s</span>
             </span>
           </span>
-          <span class="t char">t</span>
-          <span class="i char">i</span>
-          <span class="f char">f</span>
-          <span class="y char">y</span>
-        </span>
-      </span>
+          <span class="line block">
+            <span class="word">
+              <span class="f char">f</span>
+              <span class="o char">o</span>
+              <span class="r char">r</span>
+            </span>
+            <span class="space">-</span>
+            <span class="word">
+              <span class="s char">S</span>
+              <span class="p char">p</span>
+              <span class="relative char">
+                <span class="o backSpotify inline-block relative backLetters"
+                  >o</span
+                >
+                <span
+                  class="spotifyIcon iconHidden inline-block absolute top-0 left-0"
+                >
+                  <app-spotify-icon
+                    width="100%"
+                    height="100%"
+                    iconColor="#1bd760"
+                  ></app-spotify-icon>
+                </span>
+              </span>
+              <span class="t char">t</span>
+              <span class="i char">i</span>
+              <span class="f char">f</span>
+              <span class="y char">y</span>
+            </span>
+          </span>
+        </div>
 
-      <div class="w-5" #waveSvg (mousemove)="onMouseMove($event)">
-        <app-icon-music-waves width="100%" height="100%"></app-icon-music-waves>
+        <!-- Spanish header -->
+        <!-- <div>
+        <span class="line block">
+          <span class="word">
+            <span class="t char">T</span>
+            <span class="relative inline-block char">
+              <span class="u oHeart relative backLetters">u</span>
+              <app-icon-heart
+                class="iconHidden iconHeart inline-block absolute top-0 left-0"
+                width="100%"
+                height="100%"
+              ></app-icon-heart>
+            </span>
+            <span class="s char">s</span>
+          </span>
+          <span class="space">-</span>
+          <span class="word">
+            <span class="relative char">
+              <span class="t arrowT relative inline-block backLetters">t</span>
+              <app-icon-arrow
+                class="iconHidden iconArrow inline-block absolute top-0 left-0"
+                width="100%"
+                height="100%"
+              ></app-icon-arrow>
+            </span>
+            <span class="o char">o</span>
+            <span class="p char">p</span>
+          </span>
+          <span class="space">-</span>
+          <span class="word">
+            <span class="s char">s</span>
+            <span class="t char">t</span>
+            <span class="relative char">
+              <span class="a backAsterisk inline-block relative backLetters"
+                >a</span
+              >
+              <app-icon-asterisk
+                class="inline-block absolute top-0 left-0"
+                width="100%"
+                height="100%"
+              ></app-icon-asterisk>
+            </span>
+            <span class="t2 char">t</span>
+            <span class="s char">s</span>
+          </span>
+        </span>
+        <span class="line block">
+          <span class="word">
+            <span class="d char">d</span>
+            <span class="e char">e</span>
+          </span>
+          <span class="space">-</span>
+          <span class="word">
+            <span class="s char">S</span>
+            <span class="p char">p</span>
+            <span class="relative char">
+              <span class="o backSpotify inline-block relative backLetters"
+                >o</span
+              >
+              <span
+                class="spotifyIcon iconHidden inline-block absolute top-0 left-0"
+              >
+                <app-spotify-icon
+                  width="100%"
+                  height="100%"
+                  iconColor="#1bd760"
+                ></app-spotify-icon>
+              </span>
+            </span>
+            <span class="t char">t</span>
+            <span class="i char">i</span>
+            <span class="f char">f</span>
+            <span class="y char">y</span>
+          </span>
+        </span>
+      </div> -->
+
+        <div class="w-3" #waveSvg (mousemove)="onMouseMove($event)">
+          <app-icon-music-waves
+            width="100%"
+            height="100%"
+          ></app-icon-music-waves>
+        </div>
+      </div>
+
+      <div class="graphSvgContainer">
+        <app-graph-svg width="100%" height="100%"></app-graph-svg>
       </div>
     </div>
-
-    <!-- Spanish header -->
-    <!-- <div>
-      <span class="line">
-        <span class="word">
-          <span class="t char">T</span>
-          <span class="relative inline-block char">
-            <span class="u oHeart relative backLetters">u</span>
-            <app-icon-heart
-              class="iconHidden iconHeart inline-block absolute top-0 left-0"
-              width="100%"
-              height="100%"
-            ></app-icon-heart>
-          </span>
-          <span class="s char">s</span>
-        </span>
-        <span class="space">-</span>
-        <span class="word">
-          <span class="relative char">
-            <span class="t arrowT relative inline-block backLetters">t</span>
-            <app-icon-arrow
-              class="iconHidden iconArrow inline-block absolute top-0 left-0"
-              width="100%"
-              height="100%"
-            ></app-icon-arrow>
-          </span>
-          <span class="o char">o</span>
-          <span class="p char">p</span>
-        </span>
-        <span class="space">-</span>
-        <span class="word">
-          <span class="s char">s</span>
-          <span class="t char">t</span>
-          <span class="relative char">
-            <span class="a backAsterisk inline-block relative backLetters"
-              >a</span
-            >
-            <app-icon-asterisk
-              class="inline-block absolute top-0 left-0"
-              width="100%"
-              height="100%"
-            ></app-icon-asterisk>
-          </span>
-          <span class="t2 char">t</span>
-          <span class="s char">s</span>
-        </span>
-      </span>
-      <span class="line">
-        <span class="word">
-          <span class="d char">d</span>
-          <span class="e char">e</span>
-        </span>
-        <span class="space">-</span>
-        <span class="word">
-          <span class="s char">S</span>
-          <span class="p char">p</span>
-          <span class="relative char">
-            <span class="o backSpotify inline-block relative backLetters"
-              >o</span
-            >
-            <span
-              class="spotifyIcon iconHidden inline-block absolute top-0 left-0"
-            >
-              <app-spotify-icon
-                width="100%"
-                height="100%"
-                iconColor="#1bd760"
-              ></app-spotify-icon>
-            </span>
-          </span>
-          <span class="t char">t</span>
-          <span class="i char">i</span>
-          <span class="f char">f</span>
-          <span class="y char">y</span>
-        </span>
-      </span>
-    </div> -->
   </div>
 </div>

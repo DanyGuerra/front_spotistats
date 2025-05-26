@@ -17,6 +17,7 @@ import {
 import gsap from 'gsap';
 import { CommonModule } from '@angular/common';
 import { IconMusicWavesComponent } from '../icons/icon-music-waves/icon-music-waves.component';
+import { GraphSvgComponent } from '../icons/graph-svg/graph-svg.component';
 
 @Component({
   selector: 'app-home-animation',
@@ -29,6 +30,7 @@ import { IconMusicWavesComponent } from '../icons/icon-music-waves/icon-music-wa
     IconAsteriskComponent,
     IconHeartComponent,
     IconMusicWavesComponent,
+    GraphSvgComponent,
   ],
   templateUrl: './home-animation.component.html',
   styleUrl: './home-animation.component.less',

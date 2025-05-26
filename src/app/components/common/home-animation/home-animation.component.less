@@ -14,3 +14,50 @@
 .char {
   display: inline-block;
 }
+
+.mainHome {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 10px;
+  height: 80vh;
+}
+
+.textHeaderContainer {
+  grid-column: 1/3;
+  grid-row: 1/4;
+}
+
+.graphSvgContainer {
+  grid-column: 2/4;
+  grid-row: 1/7;
+}
+
+@media (max-width: 992px) {
+  .textHeaderContainer {
+    grid-column: 1/4;
+  }
+  .graphSvgContainer {
+    grid-row: 2/7;
+    grid-column: 2/4;
+  }
+  .mainHome {
+    height: 80vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainHome {
+    height: 60vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .mainHome {
+    height: 40vh;
+  }
+  .graphSvgContainer {
+    grid-row: 2/7;
+    grid-column: 1/4;
+  }
+}
