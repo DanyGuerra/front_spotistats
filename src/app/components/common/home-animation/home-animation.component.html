@@ -172,8 +172,21 @@
         </div>
       </div>
 
-      <div class="graphSvgContainer" #graphPath>
-        <app-graph-svg width="100%" height="100%"></app-graph-svg>
+      <div class="graphSvgContainer relative" #graphPath>
+        <app-graph-svg
+          class="relative"
+          width="100%"
+          height="100%"
+          (mouseIn)="handleMouseIn($event)"
+          (mouseOut)="handleMouseOut($event)"
+        ></app-graph-svg>
+
+        <div
+          class="font-bold carouselVertical word text-base absolute sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl"
+        >
+          <span class="text-200">Your </span>
+          <span class="carouselText text-primary"></span>
+        </div>
       </div>
     </div>
   </div>

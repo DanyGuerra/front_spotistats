@@ -10,6 +10,8 @@ import {
   fadeIn,
   fadeOut,
   flipAnimation,
+  scaleDownAnimation,
+  scaleUpAnimation,
   spinSlow,
   wavesStagger,
 } from 'src/utils/animations-utils';
@@ -18,9 +20,15 @@ import gsap from 'gsap';
 import { CommonModule } from '@angular/common';
 import { IconMusicWavesComponent } from '../icons/icon-music-waves/icon-music-waves.component';
 import { GraphSvgComponent } from '../icons/graph-svg/graph-svg.component';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+import TextPlugin from 'gsap/TextPlugin';
+import SplitText from 'gsap/SplitText';
 
+gsap.registerPlugin(MotionPathPlugin);
+gsap.registerPlugin(SplitText);
+gsap.registerPlugin(TextPlugin);
 gsap.registerPlugin(DrawSVGPlugin);
 
 @Component({
@@ -42,6 +50,9 @@ gsap.registerPlugin(DrawSVGPlugin);
 export class HomeAnimationComponent {
   @ViewChild('homeHeaderText', { static: true }) homeHeaderText!: ElementRef;
   @ViewChild('graphPath', { static: true }) graphPath!: ElementRef;
+  @ViewChild('wordContainer', { static: true }) wordContainerRef!: ElementRef;
+
+  @ViewChild('iconHeart', { static: true }) heartTemplate!: ElementRef;
 
   @ViewChild('waveSvg') waveSvg!: ElementRef<HTMLElement>;
   waveRects: SVGRectElement[] = [];
@@ -70,11 +81,11 @@ export class HomeAnimationComponent {
 
   ngAfterViewInit() {
     const rects = this.waveSvg.nativeElement.querySelectorAll('rect');
-    const { graphPath } = this.domElements;
     this.waveNodeList = rects;
     this.waveRects = Array.from(rects) as SVGRectElement[];
 
     this.initialAnimation();
+    this.startTextCarousel();
   }
 
   onMouseMove(event: MouseEvent): void {
@@ -102,6 +113,13 @@ export class HomeAnimationComponent {
         ease: 'sin.inOut',
       });
     });
+  }
+
+  handleMouseIn(element: HTMLElement) {
+    scaleUpAnimation(element, 1.5);
+  }
+  handleMouseOut(element: HTMLElement) {
+    scaleDownAnimation(element);
   }
 
   private initialAnimation() {
@@ -199,5 +217,33 @@ export class HomeAnimationComponent {
         time
       );
     });
+  }
+
+  private startTextCarousel() {
+    const phrases = [
+      'stats',
+      'music',
+      'top tracks',
+      'top artists',
+      'play history',
+    ];
+    let index = 0;
+    const el = document.querySelector('.carouselText');
+
+    const animate = () => {
+      gsap.to(el, {
+        duration: 1,
+        text: phrases[index],
+        ease: 'power2.inOut',
+        onComplete: () => {
+          setTimeout(() => {
+            index = (index + 1) % phrases.length;
+            animate();
+          }, 3000);
+        },
+      });
+    };
+
+    animate();
   }
 }
