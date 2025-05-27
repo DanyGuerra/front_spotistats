@@ -318,3 +318,19 @@ export function floatAnimation(element: SVGElement) {
     repeatRefresh: true,
   });
 }
+
+export function scaleUpAnimation(element: HTMLElement, scale: gsap.TweenValue) {
+  gsap.to(element, {
+    duration: 1.5,
+    scale: scale,
+    ease: 'elastic.out',
+  });
+}
+
+export function scaleDownAnimation(element: HTMLElement) {
+  gsap.to(element, {
+    duration: 1.5,
+    scale: 1,
+    ease: 'elastic.out',
+  });
+}
