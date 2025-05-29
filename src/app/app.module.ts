@@ -4,7 +4,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -19,6 +18,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { HomeAnimationComponent } from './components/common/home-animation/home-animation.component';
+import { FooterComponent } from './components/common/footer/footer.component';
 
 // jsons for ngx-translate
 export function HttpLoaderFactory(http: HttpClient) {
@@ -31,6 +31,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HeaderComponent,
+    FooterComponent,
     BrowserAnimationsModule,
     HttpClientModule,
     ButtonModule,

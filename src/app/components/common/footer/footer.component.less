@@ -1,0 +1,32 @@
+.footer {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 0, 0.5),
+    rgba(27, 215, 96, 1)
+  );
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+
+  @media (max-width: 575px) {
+    flex-direction: column;
+  }
+
+  @media (min-width: 576px) and (max-width: 767px) {
+    flex-direction: column;
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    flex-direction: row;
+  }
+
+  @media (min-width: 992px) and (max-width: 1199px) {
+    flex-direction: row;
+  }
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
+}

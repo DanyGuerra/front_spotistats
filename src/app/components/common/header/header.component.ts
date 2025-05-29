@@ -18,9 +18,7 @@ import {
   StatsTranslation,
   LanguagesTranslation,
 } from 'src/app/interfaces/ILanguageTranslation';
-import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { Language } from 'src/constants/types';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +32,6 @@ import { Language } from 'src/constants/types';
     AvatarModule,
     RippleModule,
     TranslateModule,
-    DropdownModule,
     FormsModule,
   ],
   templateUrl: './header.component.html',
@@ -43,19 +40,13 @@ import { Language } from 'src/constants/types';
 export class HeaderComponent implements OnInit, OnDestroy {
   private authSuscription: Subscription | null = null;
   private routerSubscription: Subscription | null = null;
+  langChangeSubscription: Subscription | null = null;
+  languagesTranslations!: LanguagesTranslation;
   isAuthenticated: boolean = false;
   items: MenuItem[] | undefined;
   userData!: IUserInfoStored | null;
   userTranslations!: UserTranslation;
   statsTranslations!: StatsTranslation;
-  languagesTranslations!: LanguagesTranslation;
-  langChangeSubscription: Subscription | null = null;
-  languages: any[] | undefined;
-  selectedLanguage!: {
-    name: string;
-    code: string;
-    language: Language;
-  };
 
   constructor(
     private authService: AuthService,
@@ -65,15 +56,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const storedLang = localStorage.getItem(LocalStorage.Language);
-
-    if (storedLang) {
-      const langObj = JSON.parse(storedLang);
-      this.selectedLanguage = langObj;
-    } else {
-      this.selectedLanguage = { name: 'English', code: 'US', language: 'en' };
-    }
-
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.updateUserData();
@@ -101,24 +83,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
           });
 
         this.setupMenu();
-        this.setLanguages(this.selectedLanguage?.language);
       }
     );
 
     this.authSuscription = this.authService
       .isAuthenticated()
       .subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated));
-  }
-
-  private setLanguages(currentLang: Language): void {
-    this.languages = [
-      { name: this.languagesTranslations.EN, code: 'US', language: 'en' },
-      { name: this.languagesTranslations.ES, code: 'MX', language: 'es' },
-    ];
-
-    this.selectedLanguage = this.languages.find(
-      (lang) => lang.language === currentLang
-    );
   }
 
   private updateUserData(): void {
@@ -154,7 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           },
           {
             label: this.statsTranslations?.RECENTLY_PLAYED,
-            icon: 'pi pi-headphones',
+            icon: 'pi pi-replay',
             command: () => this.navigateTo(`${userId}/recently-played`),
           },
         ],
@@ -182,7 +152,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.authSuscription?.unsubscribe();
     this.routerSubscription?.unsubscribe();
-    this.langChangeSubscription?.unsubscribe();
   }
 
   login() {
@@ -213,12 +182,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateToExternalUrl(url: string): void {
     this.router.navigateByUrl(url, { skipLocationChange: true });
-  }
-
-  dropdownChange(e: any) {
-    this.selectedLanguage = e.value;
-    this.translateService.use(e.value.language);
-
-    localStorage.setItem(LocalStorage.Language, JSON.stringify(e.value));
   }
 }

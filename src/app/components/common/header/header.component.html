@@ -9,38 +9,6 @@
   </div>
   <div class="flex flex-1 p-3 justify-content-end">
     <div class="flex align-items-center justify-content-center">
-      <div class="flex flex-column gap-2 px-2 py-2">
-        <p-dropdown
-          [options]="languages"
-          [(ngModel)]="selectedLanguage"
-          optionLabel="name"
-          placeholder=""
-          (onChange)="dropdownChange($event)"
-        >
-          <ng-template pTemplate="selectedItem">
-            <div class="flex align-items-center gap-2" *ngIf="selectedLanguage">
-              <img
-                src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                [class]="'fi fi-' + selectedLanguage.code.toLowerCase()"
-                style="width: 18px"
-              />
-              <div>{{ selectedLanguage.name }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-language pTemplate="item">
-            <div class="flex align-items-center gap-2">
-              <img
-                src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                [class]="'fi fi-' + language.code.toLowerCase()"
-                style="width: 18px"
-              />
-              <div>{{ language.name }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-    </div>
-    <div class="flex align-items-center justify-content-center">
       <div
         class="card flex justify-content-center"
         *ngIf="isAuthenticated; else loginButton"
