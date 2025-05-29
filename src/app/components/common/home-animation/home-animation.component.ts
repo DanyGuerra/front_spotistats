@@ -76,6 +76,7 @@ export class HomeAnimationComponent {
       backSpotify: headerText?.querySelector('.backSpotify')!,
       spotifyIcon: headerText?.querySelector('.spotifyIcon')!,
       graphPath: svgGraphElement.querySelector('#graphSvg #allPath'),
+      arrowTriangle: svgGraphElement.querySelector('#graphSvg #arrow'),
     };
   }
 
@@ -116,10 +117,10 @@ export class HomeAnimationComponent {
   }
 
   handleMouseIn(element: HTMLElement) {
-    scaleUpAnimation(element, 1.5);
+    scaleUpAnimation(gsap.timeline(), element, 1.5);
   }
   handleMouseOut(element: HTMLElement) {
-    scaleDownAnimation(element);
+    scaleDownAnimation(gsap.timeline(), element);
   }
 
   private initialAnimation() {
@@ -147,6 +148,7 @@ export class HomeAnimationComponent {
     const timeLine2 = gsap.timeline({ repeat: 5 });
     const timeLine3 = gsap.timeline({ repeat: 5 });
     const timeLine4 = gsap.timeline({ repeat: 3, repeatDelay: 2 });
+    const timeLineSvgDraw = gsap.timeline();
 
     this.fadeInChars(timeLine, words);
     flipAnimation(timeLine1, arrowT, iconArrow);
@@ -157,7 +159,7 @@ export class HomeAnimationComponent {
 
     animateVerticalShift(timeLine4, backSpotify, spotifyIcon, '0.5');
 
-    this.pathDraw();
+    this.pathDraw(timeLineSvgDraw);
   }
 
   private fadeInChars(timeLine: gsap.core.Timeline, elements: NodeList) {
@@ -179,8 +181,8 @@ export class HomeAnimationComponent {
     fadeIn(timeline, backAsterisk);
   }
 
-  private pathDraw() {
-    const { graphPath, nodesGraph } = this.domElements;
+  private pathDraw(timeline: gsap.core.Timeline) {
+    const { graphPath, nodesGraph, arrowTriangle } = this.domElements;
 
     const totalLength = (graphPath as SVGPathElement).getTotalLength();
     const nodeEls = Array.from(nodesGraph) as SVGPathElement[];
@@ -193,9 +195,7 @@ export class HomeAnimationComponent {
       });
     });
 
-    const tl = gsap.timeline();
-
-    tl.from(graphPath, {
+    timeline.from(graphPath, {
       duration: 3,
       drawSVG: '0%',
       ease: 'power1.inOut',
@@ -206,7 +206,7 @@ export class HomeAnimationComponent {
       const lengthAtNode = step * index;
       const time = (lengthAtNode / totalLength) * 3;
 
-      tl.to(
+      timeline.to(
         el,
         {
           scale: 1,
@@ -217,6 +217,9 @@ export class HomeAnimationComponent {
         time
       );
     });
+
+    scaleUpAnimation(timeline, arrowTriangle, 1.5);
+    scaleDownAnimation(timeline, arrowTriangle);
   }
 
   private startTextCarousel() {

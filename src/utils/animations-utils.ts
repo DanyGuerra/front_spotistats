@@ -319,16 +319,23 @@ export function floatAnimation(element: SVGElement) {
   });
 }
 
-export function scaleUpAnimation(element: HTMLElement, scale: gsap.TweenValue) {
-  gsap.to(element, {
+export function scaleUpAnimation(
+  timeline: gsap.core.Timeline,
+  element: HTMLElement,
+  scale: gsap.TweenValue
+) {
+  timeline.to(element, {
     duration: 1.5,
     scale: scale,
     ease: 'elastic.out',
   });
 }
 
-export function scaleDownAnimation(element: HTMLElement) {
-  gsap.to(element, {
+export function scaleDownAnimation(
+  timeline: gsap.core.Timeline,
+  element: HTMLElement
+) {
+  timeline.to(element, {
     duration: 1.5,
     scale: 1,
     ease: 'elastic.out',
