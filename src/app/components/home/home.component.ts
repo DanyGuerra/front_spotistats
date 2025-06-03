@@ -2,13 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { HomeAnimationComponent } from '../common/home-animation/home-animation.component';
+import { HomeContentComponent } from '../common/home-content/home-content.component';
 
 @Component({
   standalone: true,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less'],
-  imports: [HomeAnimationComponent],
+  imports: [HomeAnimationComponent, HomeContentComponent],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private authSuscription: Subscription | null = null;

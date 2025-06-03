@@ -1,1 +1,37 @@
-<p>home-content works!</p>
+<section
+  #nebulaContainer
+  class="flex flex-column gap-5 contentSection px-2 py-4 relative justify-content-center align-items-center"
+>
+  <div class="nebulaContainer absolute top-0 left-0 w-full z-0" #nebula>
+    <app-nebula style="opacity: 0.5" width="100%" height="100%"></app-nebula>
+  </div>
+  <!-- Top tracks -->
+  <app-card-top-home
+    #card
+    class="w-full sm:w-full md:w-8 lg:w-4 lg:w-6"
+    [title]="'STATS.TOP_TRACKS' | translate"
+    [description]="'STATS.TOP_TRACKS_DESCRIPTION' | translate"
+  >
+    <app-icon-track width="100%" height="100%"></app-icon-track
+  ></app-card-top-home>
+
+  <!-- Top artists -->
+  <app-card-top-home
+    #card
+    class="w-full sm:w-full md:w-8 lg:w-4 lg:w-6"
+    [title]="'STATS.TOP_ARTISTS' | translate"
+    [description]="'STATS.TOP_ARTISTS_DESCRIPTION' | translate"
+  >
+    <app-icon-artist width="100%" height="100%"></app-icon-artist
+  ></app-card-top-home>
+
+  <!-- Recently played -->
+  <app-card-top-home
+    #card
+    class="w-full sm:w-full md:w-8 lg:w-4 lg:w-6"
+    [title]="'STATS.RECENTLY_PLAYED' | translate"
+    [description]="'STATS.RECENTLY_PLAYED_DESCRIPTION' | translate"
+  >
+    <app-icon-replay width="100%" height="100%"></app-icon-replay
+  ></app-card-top-home>
+</section>
