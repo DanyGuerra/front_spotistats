@@ -107,13 +107,15 @@ export class IconlogoComponent implements AfterViewInit {
   private initialAnimation() {
     this.isAnimated.set(true);
 
+    const { oSecondLetter, heart } = this.svgElements;
+
     const timeline = gsap.timeline({
       onComplete: () => {
         this.isAnimated.set(false);
       },
     });
 
-    this.musicWavesAnimation(timeline);
+    beatAnimation(timeline, oSecondLetter, heart);
   }
 
   private musicWavesAnimation(
