@@ -10,10 +10,13 @@
     "ARTISTS": "Artistas",
     "TRACKS": "Canciones",
     "TOP_ARTISTS": "Artistas más escuchados",
+    "TOP_ARTISTS_DESCRIPTION": "Revisa tus artistas más escuchados",
     "TOP_TRACKS": "Canciones más escuchadas",
+    "TOP_TRACKS_DESCRIPTION": "Revisa tus canciones más escuchadas",
     "TOP_ARTIST": "Artista más escuchado",
     "TOP_TRACK": "Canción más escuchada",
-    "RECENTLY_PLAYED": "Escuchados recientemente"
+    "RECENTLY_PLAYED": "Escuchados recientemente",
+    "RECENTLY_PLAYED_DESCRIPTION": "Revisa las canciones que has escuchado recientemente"
   },
   "USER": {
     "PROFILE": "Perfil",
