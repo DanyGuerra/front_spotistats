@@ -186,6 +186,9 @@ export class HomeAnimationComponent {
 
     const totalLength = (graphPath as SVGPathElement).getTotalLength();
     const nodeEls = Array.from(nodesGraph) as SVGPathElement[];
+    const animationDuration = 5;
+
+    gsap.set(arrowTriangle, { transformOrigin: 'center center' });
 
     nodeEls.forEach((el) => {
       gsap.set(el, {
@@ -196,15 +199,30 @@ export class HomeAnimationComponent {
     });
 
     timeline.from(graphPath, {
-      duration: 3,
+      duration: animationDuration,
       drawSVG: '0%',
       ease: 'power1.inOut',
     });
 
+    timeline.to(
+      arrowTriangle,
+      {
+        duration: animationDuration,
+        ease: 'power1.inOut',
+        motionPath: {
+          path: graphPath,
+          align: graphPath,
+          autoRotate: false,
+          alignOrigin: [0.6, 0.5],
+        },
+      },
+      '<'
+    );
+
     const step = totalLength / nodeEls.length;
     nodeEls.forEach((el, index) => {
       const lengthAtNode = step * index;
-      const time = (lengthAtNode / totalLength) * 3;
+      const time = (lengthAtNode / totalLength) * animationDuration;
 
       timeline.to(
         el,
@@ -212,7 +230,7 @@ export class HomeAnimationComponent {
           scale: 1,
           autoAlpha: 1,
           duration: 0.3,
-          ease: 'eslastic.out',
+          ease: 'power1.inOut',
         },
         time
       );
