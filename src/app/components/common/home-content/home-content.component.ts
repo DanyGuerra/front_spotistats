@@ -59,6 +59,7 @@ export class HomeContentComponent {
         scrollTrigger: {
           trigger: card.nativeElement,
           start: 'top 50%',
+          end: 'top 50%',
           toggleActions: 'play none none none',
         },
         opacity: 0,
