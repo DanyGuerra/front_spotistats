@@ -43,6 +43,17 @@
     "LONG_TERM": "lifetime"
   },
   "HOME": {
-    "HEADER": "Your top stats for Spotify"
+    "HEADER": "Your top stats for Spotify",
+    "TIMELINE_SECTION": {
+      "TITLE": "View your stats by time range",
+      "TIME_RANGE": {
+        "SHORT_TERM": "4 weeks ago",
+        "MEDIUM_TERM": "6 months ago",
+        "LONG_TERM": "all time"
+      }
+    }
+  },
+  "FOOTER": {
+    "MADE_BY": "Made in Mexico with ❤️"
   }
 }

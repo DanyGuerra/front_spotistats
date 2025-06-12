@@ -44,6 +44,17 @@
     "LONG_TERM": "desde el principio"
   },
   "HOME": {
-    "HEADER": "Más escuchados en Spotify"
+    "HEADER": "Más escuchados en Spotify",
+    "TIMELINE_SECTION": {
+      "TITLE": "Ve tus estadísticas por periodo de tiempo",
+      "TIME_RANGE": {
+        "SHORT_TERM": "hace 4 semanas",
+        "MEDIUM_TERM": "hace 6 meses",
+        "LONG_TERM": "desde el principio"
+      }
+    }
+  },
+  "FOOTER": {
+    "MADE_BY": "Hecho en México con ❤️"
   }
 }
