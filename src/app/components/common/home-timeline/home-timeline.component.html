@@ -6,8 +6,25 @@
     <h1
       class="text-primary text-3xl sm:text-3xl md:text-5xl lg:text-5xl xl:text-5xl"
     >
-      View your stats by time range
+      {{ "HOME.TIMELINE_SECTION.TITLE" | translate }}
     </h1>
   </div>
-  <app-timeline-svg id="timelineSvg"></app-timeline-svg>
+
+  <div class="w-full flex align-items-center justify-content-center relative">
+    <app-timeline-svg id="timelineSvg"></app-timeline-svg>
+    <app-icon-heart
+      *ngFor="let heart of hearts"
+      [attr.data-speed]="heart.speed"
+      [attr.direction-rotation]="heart.direction"
+      [width]="heart.width"
+      [height]="heart.height"
+      class="heart absolute"
+      [ngClass]="{ dimmed: heart.dimmed }"
+      [ngStyle]="{
+        top: heart.top,
+        left: heart.left,
+        right: heart.right
+      }"
+    ></app-icon-heart>
+  </div>
 </section>

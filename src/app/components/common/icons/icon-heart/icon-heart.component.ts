@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-icon-heart',
   standalone: true,
-  imports: [],
   templateUrl: './icon-heart.component.html',
   styleUrl: './icon-heart.component.less',
 })
