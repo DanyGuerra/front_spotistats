@@ -25,6 +25,12 @@ import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import TextPlugin from 'gsap/TextPlugin';
 import SplitText from 'gsap/SplitText';
+import { RippleButtonComponent } from '../ripple-button/ripple-button.component';
+import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
+import { LocalStorage } from 'src/constants/localStorage';
+import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 gsap.registerPlugin(MotionPathPlugin);
 gsap.registerPlugin(SplitText);
@@ -43,11 +49,13 @@ gsap.registerPlugin(DrawSVGPlugin);
     IconHeartComponent,
     IconMusicWavesComponent,
     GraphSvgComponent,
+    RippleButtonComponent,
   ],
   templateUrl: './home-animation.component.html',
   styleUrl: './home-animation.component.less',
 })
 export class HomeAnimationComponent {
+  userData!: IUserInfoStored | null;
   @ViewChild('homeHeaderText', { static: true }) homeHeaderText!: ElementRef;
   @ViewChild('graphPath', { static: true }) graphPath!: ElementRef;
   @ViewChild('wordContainer', { static: true }) wordContainerRef!: ElementRef;
@@ -59,6 +67,12 @@ export class HomeAnimationComponent {
   waveNodeList!: NodeList;
 
   isAnimated = signal(false);
+
+  constructor(
+    private toastService: ToastService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   get domElements() {
     const headerText = this.homeHeaderText?.nativeElement;
@@ -80,6 +94,11 @@ export class HomeAnimationComponent {
     };
   }
 
+  ngOnInit() {
+    const storedUser = localStorage.getItem(LocalStorage.UserInfo);
+    this.userData = storedUser ? JSON.parse(storedUser) : null;
+  }
+
   ngAfterViewInit() {
     const rects = this.waveSvg.nativeElement.querySelectorAll('rect');
     this.waveNodeList = rects;
@@ -87,6 +106,33 @@ export class HomeAnimationComponent {
 
     this.initialAnimation();
     this.startTextCarousel();
+  }
+
+  handleClick() {
+    const userId = this.userData?.userId;
+
+    if (userId) {
+      this.navigateTo(`${userId}/`);
+    } else {
+      this.authService.login().subscribe({
+        next: (response) => {
+          const {
+            data: { url },
+          } = response;
+          window.location.href = url;
+        },
+        error: () => {
+          this.toastService.showError(
+            'Error',
+            'Something went wrong, try later'
+          );
+        },
+      });
+    }
+  }
+
+  navigateTo(url: string) {
+    this.router.navigate([url]);
   }
 
   onMouseMove(event: MouseEvent): void {
@@ -119,6 +165,7 @@ export class HomeAnimationComponent {
   handleMouseIn(element: HTMLElement) {
     scaleUpAnimation(gsap.timeline(), element, 1.5);
   }
+
   handleMouseOut(element: HTMLElement) {
     scaleDownAnimation(gsap.timeline(), element);
   }

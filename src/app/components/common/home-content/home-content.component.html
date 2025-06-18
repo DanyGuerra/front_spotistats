@@ -11,6 +11,8 @@
     class="w-full sm:w-full md:w-8 lg:w-4 lg:w-6"
     [title]="'STATS.TOP_TRACKS' | translate"
     [description]="'STATS.TOP_TRACKS_DESCRIPTION' | translate"
+    [buttonTitle]="'STATS.MY_TOP_TRACK' | translate"
+    (buttonClick)="handleClick('top-tracks')"
   >
     <app-icon-track width="100%" height="100%"></app-icon-track
   ></app-card-top-home>
@@ -21,6 +23,8 @@
     class="w-full sm:w-full md:w-8 lg:w-4 lg:w-6"
     [title]="'STATS.TOP_ARTISTS' | translate"
     [description]="'STATS.TOP_ARTISTS_DESCRIPTION' | translate"
+    [buttonTitle]="'STATS.MY_TOP_ARTIST' | translate"
+    (buttonClick)="handleClick('top-artists')"
   >
     <app-icon-artist width="100%" height="100%"></app-icon-artist
   ></app-card-top-home>
@@ -31,6 +35,8 @@
     class="w-full sm:w-full md:w-8 lg:w-4 lg:w-6"
     [title]="'STATS.RECENTLY_PLAYED' | translate"
     [description]="'STATS.RECENTLY_PLAYED_DESCRIPTION' | translate"
+    [buttonTitle]="'STATS.MY_RECENTLY_PLAYED' | translate"
+    (buttonClick)="handleClick('recently-played')"
   >
     <app-icon-replay width="100%" height="100%"></app-icon-replay
   ></app-card-top-home>

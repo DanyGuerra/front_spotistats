@@ -19,6 +19,7 @@ import {
   LanguagesTranslation,
 } from 'src/app/interfaces/ILanguageTranslation';
 import { FormsModule } from '@angular/forms';
+import { RippleButtonComponent } from '../ripple-button/ripple-button.component';
 
 @Component({
   selector: 'app-header',
@@ -33,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     RippleModule,
     TranslateModule,
     FormsModule,
+    RippleButtonComponent,
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],

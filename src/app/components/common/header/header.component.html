@@ -53,9 +53,14 @@
       </div>
 
       <ng-template #loginButton>
-        <p-button *ngIf="!isAuthenticated" size="small" (click)="login()">
-          {{ "BUTTONS.LOGIN" | translate }}
-        </p-button>
+        <app-ripple-button
+          *ngIf="!isAuthenticated"
+          size="medium"
+          type="primary"
+          (onClick)="login()"
+        >
+          {{ "BUTTONS.LOGIN" | translate }}</app-ripple-button
+        >
       </ng-template>
     </div>
   </div>

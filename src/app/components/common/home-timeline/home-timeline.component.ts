@@ -4,6 +4,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import gsap from 'gsap';
 import { IconHeartComponent } from '../icons/icon-heart/icon-heart.component';
 import { CommonModule } from '@angular/common';
+import { RippleButtonComponent } from '../ripple-button/ripple-button.component';
+import { LocalStorage } from 'src/constants/localStorage';
+import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
+import { AuthService } from 'src/app/services/auth.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-timeline',
@@ -13,6 +19,7 @@ import { CommonModule } from '@angular/common';
     TranslateModule,
     IconHeartComponent,
     CommonModule,
+    RippleButtonComponent,
   ],
   templateUrl: './home-timeline.component.html',
   styleUrl: './home-timeline.component.less',
@@ -20,6 +27,7 @@ import { CommonModule } from '@angular/common';
 export class HomeTimelineComponent {
   @ViewChild('timelineSection', { static: true, read: ElementRef })
   timelineSection!: ElementRef;
+  userData!: IUserInfoStored | null;
   hearts = [
     {
       speed: 1.75,
@@ -148,6 +156,12 @@ export class HomeTimelineComponent {
     { speed: 1, width: '24px', height: '24px', top: '100%', right: '14%' },
   ];
 
+  constructor(
+    private authService: AuthService,
+    private toastService: ToastService,
+    private router: Router
+  ) {}
+
   get domElements() {
     const section = this.timelineSection?.nativeElement;
     return {
@@ -162,10 +176,42 @@ export class HomeTimelineComponent {
     };
   }
 
+  ngOnInit() {
+    const storedUser = localStorage.getItem(LocalStorage.UserInfo);
+    this.userData = storedUser ? JSON.parse(storedUser) : null;
+  }
+
   ngAfterViewInit() {
     this.scrollTriggerText();
     this.scrollDrawPath();
     this.scrollHearts();
+  }
+
+  handleClick() {
+    const userId = this.userData?.userId;
+
+    if (userId) {
+      this.navigateTo(`${userId}/`);
+    } else {
+      this.authService.login().subscribe({
+        next: (response) => {
+          const {
+            data: { url },
+          } = response;
+          window.location.href = url;
+        },
+        error: () => {
+          this.toastService.showError(
+            'Error',
+            'Something went wrong, try later'
+          );
+        },
+      });
+    }
+  }
+
+  navigateTo(url: string) {
+    this.router.navigate([url]);
   }
 
   private scrollTriggerText() {
