@@ -16,6 +16,9 @@
     "TOP_ARTIST": "Top Artist",
     "TOP_TRACK": "Top Track",
     "RECENTLY_PLAYED": "Recently played",
+    "MY_TOP_ARTIST": "My top artists",
+    "MY_TOP_TRACK": "My top tracks",
+    "MY_RECENTLY_PLAYED": "My recently played",
     "RECENTLY_PLAYED_DESCRIPTION": "Check the songs you've listened to"
   },
   "USER": {
@@ -29,7 +32,9 @@
     "SHOW_ALL": "Show all",
     "LOGIN": "Login",
     "GO_HOME": "Go home",
-    "RETRY_LOGIN": "Retry login"
+    "RETRY_LOGIN": "Retry login",
+    "VIEW_STATS": "View my top stats",
+    "STATS_BY_RANGE": "Go to my statistics"
   },
   "SERVER_MESSAGES": {
     "BAD_REQUEST": "Bad Request",

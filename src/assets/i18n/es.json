@@ -16,6 +16,9 @@
     "TOP_ARTIST": "Artista más escuchado",
     "TOP_TRACK": "Canción más escuchada",
     "RECENTLY_PLAYED": "Escuchados recientemente",
+    "MY_TOP_ARTIST": "Mis artistas top",
+    "MY_TOP_TRACK": "Mis canciones top",
+    "MY_RECENTLY_PLAYED": "Escuchados recientemente",
     "RECENTLY_PLAYED_DESCRIPTION": "Revisa las canciones que has escuchado recientemente"
   },
   "USER": {
@@ -30,7 +33,9 @@
     "SHOW_ALL": "Ver todo",
     "LOGIN": "Iniciar sesión",
     "GO_HOME": "Ir a inicio",
-    "RETRY_LOGIN": "Reintentar inicio sesión"
+    "RETRY_LOGIN": "Reintentar inicio sesión",
+    "VIEW_STATS": "Ver mis top stats",
+    "STATS_BY_RANGE": "Ir a mis estadísticas"
   },
   "SERVER_MESSAGES": {
     "BAD_REQUEST": "Solicitud incorrecta",
