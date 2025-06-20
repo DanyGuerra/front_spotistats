@@ -60,5 +60,9 @@
   },
   "FOOTER": {
     "MADE_BY": "Made in Mexico with ❤️"
+  },
+  "CAROUSEL": {
+    "STATS": ["stats", "music", "top tracks", "top artists", "play history"],
+    "YOUR": ["Your", "Your", "Your", "Your", "Your"]
   }
 }

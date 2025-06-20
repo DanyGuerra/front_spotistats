@@ -61,5 +61,15 @@
   },
   "FOOTER": {
     "MADE_BY": "Hecho en México con ❤️"
+  },
+  "CAROUSEL": {
+    "STATS": [
+      "estadísticas",
+      "música",
+      "canciones top",
+      "artistas top",
+      "historial musical"
+    ],
+    "YOUR": ["Tus", "Tu", "Tus", "Tus", "Tu"]
   }
 }

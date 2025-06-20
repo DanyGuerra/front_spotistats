@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, signal } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SpotifyIconComponent } from '../icons/icon-spotify/icon-spotify.component';
 import { IconArrowComponent } from '../icons/icon-arrow/icon-arrow.component';
 import { IconAsteriskComponent } from '../icons/icon-asterisk/icon-asterisk.component';
@@ -31,6 +31,7 @@ import { LocalStorage } from 'src/constants/localStorage';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { forkJoin, Subscription } from 'rxjs';
 
 gsap.registerPlugin(MotionPathPlugin);
 gsap.registerPlugin(SplitText);
@@ -56,39 +57,64 @@ gsap.registerPlugin(DrawSVGPlugin);
 })
 export class HomeAnimationComponent {
   userData!: IUserInfoStored | null;
-  @ViewChild('homeHeaderText', { static: true }) homeHeaderText!: ElementRef;
-  @ViewChild('graphPath', { static: true }) graphPath!: ElementRef;
-  @ViewChild('wordContainer', { static: true }) wordContainerRef!: ElementRef;
+  langChangeSubscription!: Subscription | null;
+  carouselIntervalId!: any;
+  @ViewChild('homeHeaderText', { static: true })
+  homeHeaderText!: ElementRef;
 
-  @ViewChild('iconHeart', { static: true }) heartTemplate!: ElementRef;
+  @ViewChild('graphPath') graphPath!: ElementRef;
+  @ViewChild('wordContainer') wordContainerRef!: ElementRef;
+
+  @ViewChild('iconHeart') heartTemplate!: ElementRef;
 
   @ViewChild('waveSvg') waveSvg!: ElementRef<HTMLElement>;
   waveRects: SVGRectElement[] = [];
   waveNodeList!: NodeList;
 
   isAnimated = signal(false);
+  currentLang = this.translate.currentLang;
 
   constructor(
     private toastService: ToastService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public translate: TranslateService
   ) {}
 
   get domElements() {
     const headerText = this.homeHeaderText?.nativeElement;
-    const svgGraphElement = this.graphPath.nativeElement;
+    const svgGraphElement = this.graphPath?.nativeElement;
+
+    if (!headerText || !svgGraphElement) {
+      return {
+        words: [],
+        chars: [],
+        nodesGraph: [],
+        iconArrow: null,
+        arrowT: null,
+        oHeart: null,
+        iconHeart: null,
+        backAsterisk: null,
+        iconAsterisk: null,
+        backSpotify: null,
+        spotifyIcon: null,
+        graphPath: null,
+        arrowTriangle: null,
+      };
+    }
+
     return {
-      words: headerText?.querySelectorAll('.word') ?? [],
-      chars: headerText?.querySelectorAll('.char') ?? [],
-      nodesGraph: svgGraphElement?.querySelectorAll('.node') ?? [],
-      iconArrow: headerText?.querySelector('.iconArrow')!,
-      arrowT: headerText?.querySelector('.arrowT')!,
-      oHeart: headerText?.querySelector('.oHeart')!,
-      iconHeart: headerText?.querySelector('.iconHeart')!,
-      backAsterisk: headerText?.querySelector('.backAsterisk')!,
-      iconAsterisk: headerText?.querySelector('#iconAsterisk')!,
-      backSpotify: headerText?.querySelector('.backSpotify')!,
-      spotifyIcon: headerText?.querySelector('.spotifyIcon')!,
+      words: headerText.querySelectorAll('.word'),
+      chars: headerText.querySelectorAll('.char'),
+      nodesGraph: svgGraphElement.querySelectorAll('.node'),
+      iconArrow: headerText.querySelector('.iconArrow'),
+      arrowT: headerText.querySelector('.arrowT'),
+      oHeart: headerText.querySelector('.oHeart'),
+      iconHeart: headerText.querySelector('.iconHeart'),
+      backAsterisk: headerText.querySelector('.backAsterisk'),
+      iconAsterisk: headerText.querySelector('#iconAsterisk'),
+      backSpotify: headerText.querySelector('.backSpotify'),
+      spotifyIcon: headerText.querySelector('.spotifyIcon'),
       graphPath: svgGraphElement.querySelector('#graphSvg #allPath'),
       arrowTriangle: svgGraphElement.querySelector('#graphSvg #arrow'),
     };
@@ -104,8 +130,26 @@ export class HomeAnimationComponent {
     this.waveNodeList = rects;
     this.waveRects = Array.from(rects) as SVGRectElement[];
 
+    this.loadAndStartCarousel();
+
     this.initialAnimation();
-    this.startTextCarousel();
+
+    this.langChangeSubscription = this.translate.onLangChange.subscribe(
+      (event) => {
+        this.currentLang = event.lang;
+        this.loadAndStartCarousel();
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
+
+    if (this.carouselIntervalId) {
+      clearInterval(this.carouselIntervalId);
+    }
   }
 
   handleClick() {
@@ -287,31 +331,41 @@ export class HomeAnimationComponent {
     scaleDownAnimation(timeline, arrowTriangle);
   }
 
-  private startTextCarousel() {
-    const phrases = [
-      'stats',
-      'music',
-      'top tracks',
-      'top artists',
-      'play history',
-    ];
-    let index = 0;
-    const el = document.querySelector('.carouselText');
+  private loadAndStartCarousel() {
+    forkJoin({
+      stats: this.translate.get('CAROUSEL.STATS'),
+      your: this.translate.get('CAROUSEL.YOUR'),
+    }).subscribe(({ stats, your }) => {
+      this.startTextCarousel(stats, your);
+    });
+  }
 
-    const animate = () => {
+  private startTextCarousel(phrasesStats: string[], phrasesYour: string[]) {
+    let index = 0;
+    const el = document.querySelector('.carouselText')!;
+    const yourEl = document.querySelector('.carouselYour')!;
+
+    const updateTexts = () => {
       gsap.to(el, {
         duration: 1,
-        text: phrases[index],
+        text: phrasesStats[index],
         ease: 'power2.inOut',
-        onComplete: () => {
-          setTimeout(() => {
-            index = (index + 1) % phrases.length;
-            animate();
-          }, 3000);
-        },
       });
+
+      gsap.to(yourEl, {
+        duration: 1,
+        text: phrasesYour[index],
+        ease: 'power2.inOut',
+      });
+
+      index = (index + 1) % phrasesStats.length;
     };
 
-    animate();
+    if (this.carouselIntervalId) {
+      clearInterval(this.carouselIntervalId);
+    }
+
+    updateTexts();
+    this.carouselIntervalId = setInterval(updateTexts, 3000);
   }
 }
