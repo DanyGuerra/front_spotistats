@@ -3,6 +3,7 @@
 
   <!-- English header -->
   <div
+    *ngIf="currentLang === 'en'"
     #homeHeaderText
     class="homeHeader w-full text-5xl sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl"
   >
@@ -108,7 +109,7 @@
         <div
           class="font-bold carouselVertical word text-base absolute sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl"
         >
-          <span class="carouselYour text-200">Your</span>&nbsp;<span
+          <span class="carouselYour text-200"></span>&nbsp;<span
             class="carouselText text-primary"
           ></span>
         </div>
@@ -123,7 +124,8 @@
   </div>
 
   <!-- Spanish header -->
-  <!-- <div
+  <div
+    *ngIf="currentLang === 'es'"
     #homeHeaderText
     class="homeHeader w-full text-5xl sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl"
   >
@@ -227,8 +229,9 @@
         <div
           class="font-bold carouselVertical word text-base absolute sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl"
         >
-          <span class="text-200">Your </span>
-          <span class="carouselText text-primary"></span>
+          <span class="carouselYour text-200"></span>&nbsp;<span
+            class="carouselText text-primary"
+          ></span>
         </div>
       </div>
 
@@ -238,5 +241,5 @@
         }}</app-ripple-button>
       </div>
     </div>
-  </div> -->
+  </div>
 </section>

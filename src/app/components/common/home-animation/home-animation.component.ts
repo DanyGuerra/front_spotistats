@@ -59,7 +59,7 @@ export class HomeAnimationComponent {
   userData!: IUserInfoStored | null;
   langChangeSubscription!: Subscription | null;
   carouselIntervalId!: any;
-  @ViewChild('homeHeaderText', { static: true })
+  @ViewChild('homeHeaderText')
   homeHeaderText!: ElementRef;
 
   @ViewChild('graphPath') graphPath!: ElementRef;
@@ -72,7 +72,7 @@ export class HomeAnimationComponent {
   waveNodeList!: NodeList;
 
   isAnimated = signal(false);
-  currentLang = this.translate.currentLang;
+  currentLang: string | undefined = this.translate.currentLang;
 
   constructor(
     private toastService: ToastService,
@@ -117,12 +117,18 @@ export class HomeAnimationComponent {
       spotifyIcon: headerText.querySelector('.spotifyIcon'),
       graphPath: svgGraphElement.querySelector('#graphSvg #allPath'),
       arrowTriangle: svgGraphElement.querySelector('#graphSvg #arrow'),
+
+      carouselText: headerText.querySelector('.carouselText')!,
+      carouselYour: headerText.querySelector('.carouselYour')!,
     };
   }
 
   ngOnInit() {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
     this.userData = storedUser ? JSON.parse(storedUser) : null;
+
+    this.currentLang =
+      this.translate.currentLang || this.translate.getBrowserLang();
   }
 
   ngAfterViewInit() {
@@ -130,14 +136,14 @@ export class HomeAnimationComponent {
     this.waveNodeList = rects;
     this.waveRects = Array.from(rects) as SVGRectElement[];
 
-    this.loadAndStartCarousel();
-
-    this.initialAnimation();
-
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
       (event) => {
         this.currentLang = event.lang;
-        this.loadAndStartCarousel();
+
+        setTimeout(() => {
+          this.loadAndStartCarousel();
+          this.initialAnimation();
+        }, 0);
       }
     );
   }
@@ -214,7 +220,7 @@ export class HomeAnimationComponent {
     scaleDownAnimation(gsap.timeline(), element);
   }
 
-  private initialAnimation() {
+  initialAnimation() {
     const {
       words,
       iconArrow,
@@ -341,18 +347,18 @@ export class HomeAnimationComponent {
   }
 
   private startTextCarousel(phrasesStats: string[], phrasesYour: string[]) {
+    const { carouselText, carouselYour } = this.domElements;
+
     let index = 0;
-    const el = document.querySelector('.carouselText')!;
-    const yourEl = document.querySelector('.carouselYour')!;
 
     const updateTexts = () => {
-      gsap.to(el, {
+      gsap.to(carouselText, {
         duration: 1,
         text: phrasesStats[index],
         ease: 'power2.inOut',
       });
 
-      gsap.to(yourEl, {
+      gsap.to(carouselYour, {
         duration: 1,
         text: phrasesYour[index],
         ease: 'power2.inOut',
