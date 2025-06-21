@@ -13,10 +13,7 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private translateService: TranslateService
-  ) {
-    this.translateService.setDefaultLang('en');
-    this.translateService.use('en');
-  }
+  ) {}
 
   ngOnInit(): void {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
@@ -39,6 +36,14 @@ export class AppComponent implements OnInit {
     if (storedLang) {
       const lang = JSON.parse(storedLang);
       this.translateService.use(lang.language);
+    } else {
+      this.translateService.setDefaultLang('en');
+      const browserLang = this.translateService.getBrowserLang();
+      const supportedLangs = ['en', 'es'];
+      const langToUse = supportedLangs.includes(browserLang ?? '')
+        ? browserLang!
+        : 'en';
+      this.translateService.use(langToUse);
     }
   }
 }
