@@ -136,14 +136,14 @@ export class HomeAnimationComponent {
     this.waveNodeList = rects;
     this.waveRects = Array.from(rects) as SVGRectElement[];
 
+    setTimeout(() => {
+      this.loadAndStartCarousel();
+      this.initialAnimation();
+    }, 100);
+
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
       (event) => {
         this.currentLang = event.lang;
-
-        setTimeout(() => {
-          this.loadAndStartCarousel();
-          this.initialAnimation();
-        }, 0);
       }
     );
   }
