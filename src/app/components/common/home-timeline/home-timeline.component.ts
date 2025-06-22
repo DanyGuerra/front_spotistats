@@ -167,6 +167,7 @@ export class HomeTimelineComponent {
     return {
       allSection: section,
       textTimeline: section?.querySelector('#textTimelineSection'),
+      buttonTimeline: section?.querySelector('#buttonTimeline'),
       timelineSvg: section?.querySelector('#timelineSvg svg'),
       nodeGuideSvg: section?.querySelector('#timelineSvg svg .nodeGuide'),
       mainPath: section?.querySelector('#timelineSvg svg #mainPath'),
@@ -183,6 +184,7 @@ export class HomeTimelineComponent {
 
   ngAfterViewInit() {
     this.scrollTriggerText();
+    this.scrollTriggerButton();
     this.scrollDrawPath();
     this.scrollHearts();
   }
@@ -225,6 +227,24 @@ export class HomeTimelineComponent {
     });
 
     textScroll.from(this.domElements.textTimeline, {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      ease: 'power2.out',
+    });
+  }
+
+  private scrollTriggerButton() {
+    const textScroll = gsap.timeline({
+      scrollTrigger: {
+        trigger: this.domElements.buttonTimeline,
+        start: 'top 90%',
+        end: 'top 50%',
+        toggleActions: 'play none none none',
+      },
+    });
+
+    textScroll.from(this.domElements.buttonTimeline, {
       opacity: 0,
       y: 50,
       duration: 1,
