@@ -1,6 +1,6 @@
 <section
   #timelineSection
-  class="flex flex-column gap-4 align-items-center justify-content-center mt-6"
+  class="flex flex-column gap-1 align-items-center justify-content-center mt-6"
 >
   <div class="text-center w-8" id="textTimelineSection">
     <h1
@@ -8,11 +8,6 @@
     >
       {{ "HOME.TIMELINE_SECTION.TITLE" | translate }}
     </h1>
-    <div>
-      <app-ripple-button type="secondary" (onClick)="handleClick()">{{
-        "BUTTONS.STATS_BY_RANGE" | translate
-      }}</app-ripple-button>
-    </div>
   </div>
 
   <div class="w-full flex align-items-center justify-content-center relative">
@@ -31,5 +26,14 @@
         right: heart.right
       }"
     ></app-icon-heart>
+  </div>
+
+  <div id="buttonTimeline">
+    <app-ripple-button
+      type="secondary"
+      size="large"
+      (onClick)="handleClick()"
+      >{{ "BUTTONS.STATS_BY_RANGE" | translate }}</app-ripple-button
+    >
   </div>
 </section>
