@@ -239,9 +239,12 @@
       </div>
 
       <div class="button-view">
-        <app-ripple-button type="primary" (onClick)="handleClick()">{{
-          "BUTTONS.VIEW_STATS" | translate
-        }}</app-ripple-button>
+        <app-ripple-button
+          type="primary"
+          (onClick)="handleClick()"
+          size="large"
+          >{{ "BUTTONS.VIEW_STATS" | translate }}</app-ripple-button
+        >
       </div>
     </div>
   </div>
