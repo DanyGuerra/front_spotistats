@@ -12,12 +12,14 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { NebulaComponent } from '../icons/nebula/nebula.component';
 import { CardTopHomeComponent } from '../card-top-home/card-top-home.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LocalStorage } from 'src/constants/localStorage';
 import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { Subscription } from 'rxjs';
+import { ToastTranslation } from 'src/app/interfaces/ILanguageTranslation';
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
@@ -43,11 +45,14 @@ export class HomeContentComponent {
   @ViewChild('nebula', { static: true })
   nebulaContainer!: ElementRef;
   userData!: IUserInfoStored | null;
+  langChangeSubscription!: Subscription;
+  toastTranslations!: ToastTranslation;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private translate: TranslateService
   ) {}
 
   get domElements() {
@@ -63,11 +68,23 @@ export class HomeContentComponent {
   ngOnInit() {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
     this.userData = storedUser ? JSON.parse(storedUser) : null;
+
+    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
+      this.translate
+        .get('TOAST')
+        .subscribe((toastTranslations: ToastTranslation) => {
+          this.toastTranslations = toastTranslations;
+        });
+    });
   }
 
   ngAfterViewInit() {
     this.scrollTriggerCard();
     this.scrollTriggerNebula();
+  }
+
+  ngOnDestroy() {
+    this.langChangeSubscription?.unsubscribe();
   }
 
   handleClick(url: string) {
@@ -85,8 +102,8 @@ export class HomeContentComponent {
         },
         error: () => {
           this.toastService.showError(
-            'Error',
-            'Something went wrong, try later'
+            this.toastTranslations.ERROR.TITLE,
+            this.toastTranslations.ERROR.DESCRIPTION
           );
         },
       });
