@@ -1,4 +1,11 @@
-<section class="flex flex-column gap-4 pb-8">
+<section class="flex flex-column gap-5 pb-8">
+  <!-- TITLE -->
+  <div class="flex justify-content-center">
+    <div class="text-primary font-bold text-3xl">
+      {{ "USER.MY_PROFILE" | translate }}
+    </div>
+  </div>
+
   <!-- CARD USER DATA  -->
   <div class="flex justify-content-center">
     <div class="w-11 flex justify-content-center">
@@ -6,268 +13,283 @@
     </div>
   </div>
 
-  <div
-    class="flex justify-content-center align-items-stretch flex-wrap row-gap-6 column-gap-2"
-  >
-    <!-- TOP ARTISTS DATA-->
-    <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
-      <div class="flex align-items-center justify-content-center gap-4">
-        <h2>{{ "STATS.TOP_ARTISTS" | translate }}</h2>
-        <p-button
-          [label]="'BUTTONS.SHOW_ALL' | translate"
-          icon="pi pi-eye"
-          size="small"
-          routerLink="./top-artists"
-        />
+  <div class="flex flex-column align-items-center justify-content-center gap-2">
+    <div class="flex justify-content-center">
+      <div class="text-primary font-bold text-3xl">
+        {{ "STATS.MY_STATS" | translate }}
       </div>
+    </div>
+    <div
+      class="flex justify-content-center align-items-stretch flex-wrap row-gap-6 column-gap-2"
+    >
+      <!-- TOP ARTISTS DATA-->
+      <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
+        <div class="flex align-items-center justify-content-center gap-1">
+          <h3 class="text-primary">{{ "STATS.TOP_ARTISTS" | translate }}</h3>
+          <div class="flex justify-content-end button-show-all">
+            <p-button
+              [label]="'BUTTONS.SHOW_ALL' | translate"
+              icon="pi pi-eye"
+              size="small"
+              routerLink="./top-artists"
+            />
+          </div>
+        </div>
 
-      <!-- SKELETON -->
-      <p-dataView
-        [value]="skeletonElements"
-        *ngIf="isLoading.artists"
-        [layout]="layout"
-      >
-        <ng-template pTemplate="header">
-          <div class="flex justify-content-end">
-            <p-dataViewLayoutOptions />
-          </div>
-        </ng-template>
+        <!-- SKELETON -->
+        <p-dataView
+          [value]="skeletonElements"
+          *ngIf="isLoading.artists"
+          [layout]="layout"
+        >
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
 
-        <!-- SKELETON LIST -->
-        <ng-template pTemplate="list" let-topArtist>
-          <div class="flex flex-column pl-4">
-            <app-artist-list-skeleton
-              *ngFor="let item of skeletonElements; let index = index"
-              [index]="index"
-            ></app-artist-list-skeleton>
-          </div>
-        </ng-template>
+          <!-- SKELETON LIST -->
+          <ng-template pTemplate="list" let-topArtist>
+            <div class="flex flex-column pl-4">
+              <app-artist-list-skeleton
+                *ngFor="let item of skeletonElements; let index = index"
+                [index]="index"
+              ></app-artist-list-skeleton>
+            </div>
+          </ng-template>
 
-        <!-- SKELETON GRID -->
-        <ng-template pTemplate="grid" let-topArtist>
-          <div class="flex flex-wrap gap-2 justify-content-center pt-3">
-            <app-artist-card-skeleton
-              *ngFor="let skeleton of skeletonElements"
-              class="w-5rem md:w-8rem lg:w-10rem"
-            ></app-artist-card-skeleton>
-          </div>
-        </ng-template>
-      </p-dataView>
+          <!-- SKELETON GRID -->
+          <ng-template pTemplate="grid" let-topArtist>
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
+              <app-artist-card-skeleton
+                *ngFor="let skeleton of skeletonElements"
+                class="w-5rem md:w-8rem lg:w-10rem"
+              ></app-artist-card-skeleton>
+            </div>
+          </ng-template>
+        </p-dataView>
 
-      <!-- DATA-->
-      <p-dataView
-        #dv
-        [value]="topArtists"
-        *ngIf="!isLoading.artists"
-        [layout]="layout"
-        class="flex flex-column flex-grow-1 surface-0"
-      >
-        <ng-template pTemplate="header">
-          <div class="flex justify-content-end">
-            <p-dataViewLayoutOptions />
-          </div>
-        </ng-template>
+        <!-- DATA-->
+        <p-dataView
+          #dv
+          [value]="topArtists"
+          *ngIf="!isLoading.artists"
+          [layout]="layout"
+          class="flex flex-column flex-grow-1 surface-0"
+        >
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
 
-        <ng-template pTemplate="empty">
-          <div class="flex align-items-center justify-content-center h-12rem">
-            <h3>No data</h3>
-          </div>
-        </ng-template>
+          <ng-template pTemplate="empty">
+            <div class="flex align-items-center justify-content-center h-12rem">
+              <h3>No data</h3>
+            </div>
+          </ng-template>
 
-        <!-- DATA LIST-->
-        <ng-template pTemplate="list" let-topArtist>
-          <div class="flex flex-column pl-4">
-            <app-artist-list-item
-              *ngFor="let artist of topArtists"
-              [artist]="artist"
-            ></app-artist-list-item>
-          </div>
-        </ng-template>
+          <!-- DATA LIST-->
+          <ng-template pTemplate="list" let-topArtist>
+            <div class="flex flex-column pl-4">
+              <app-artist-list-item
+                *ngFor="let artist of topArtists"
+                [artist]="artist"
+              ></app-artist-list-item>
+            </div>
+          </ng-template>
 
-        <!-- DATA GRID-->
-        <ng-template pTemplate="grid" let-topArtist>
-          <div class="flex flex-wrap gap-2 justify-content-center pt-3">
-            <app-artist-card-item
-              *ngFor="let artist of topArtists"
-              [artist]="artist"
-              class="w-8rem md:w-9rem lg:w-10rem"
-            ></app-artist-card-item>
-          </div>
-        </ng-template>
-      </p-dataView>
-    </section>
+          <!-- DATA GRID-->
+          <ng-template pTemplate="grid" let-topArtist>
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
+              <app-artist-card-item
+                *ngFor="let artist of topArtists"
+                [artist]="artist"
+                class="w-8rem md:w-9rem lg:w-10rem"
+              ></app-artist-card-item>
+            </div>
+          </ng-template>
+        </p-dataView>
+      </section>
 
-    <!-- TOP TRACKS -->
-    <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
-      <div class="flex align-items-center justify-content-center gap-4">
-        <h2>{{ "STATS.TOP_TRACKS" | translate }}</h2>
-        <p-button
-          [label]="'BUTTONS.SHOW_ALL' | translate"
-          icon="pi pi-eye"
-          size="small"
-          routerLink="./top-tracks"
-        />
-      </div>
+      <!-- TOP TRACKS -->
+      <section class="flex flex-column xl:w-5 lg:w-5 md:w-11 sm:w-11 w-11">
+        <div class="flex align-items-center justify-content-center gap-1">
+          <h3 class="text-primary">{{ "STATS.TOP_TRACKS" | translate }}</h3>
+          <div class="flex justify-content-end button-show-all">
+            <p-button
+              [label]="'BUTTONS.SHOW_ALL' | translate"
+              icon="pi pi-eye"
+              size="small"
+              routerLink="./top-tracks"
+            />
+          </div>
+        </div>
 
-      <!-- SKELETON-->
-      <p-dataView
-        [value]="skeletonElements"
-        *ngIf="isLoading.tracks"
-        [layout]="layout"
-      >
-        <ng-template pTemplate="header">
-          <div class="flex justify-content-end">
-            <p-dataViewLayoutOptions />
-          </div>
-        </ng-template>
-        <!-- SKELETON LIST -->
-        <ng-template pTemplate="list" let-topTracks>
-          <div class="flex flex-column">
-            <app-track-list-skeleton
-              *ngFor="let item of skeletonElements; let index = index"
-              [index]="index"
-            ></app-track-list-skeleton>
-          </div>
-        </ng-template>
+        <!-- SKELETON-->
+        <p-dataView
+          [value]="skeletonElements"
+          *ngIf="isLoading.tracks"
+          [layout]="layout"
+        >
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
+          <!-- SKELETON LIST -->
+          <ng-template pTemplate="list" let-topTracks>
+            <div class="flex flex-column">
+              <app-track-list-skeleton
+                *ngFor="let item of skeletonElements; let index = index"
+                [index]="index"
+              ></app-track-list-skeleton>
+            </div>
+          </ng-template>
 
-        <!-- SKELETON GRID -->
-        <ng-template pTemplate="grid" let-topTracks>
-          <div class="flex flex-wrap gap-2 justify-content-center pt-3">
-            <app-track-card-skeleton
-              *ngFor="let item of skeletonElements"
-              class="w-8rem md:w-9rem lg:w-10rem"
-            ></app-track-card-skeleton>
-          </div>
-        </ng-template>
-      </p-dataView>
-
-      <!-- DATA -->
-      <p-dataView
-        #dv
-        [value]="topTracks"
-        *ngIf="!isLoading.tracks"
-        [layout]="layout"
-        class="flex flex-column flex-grow-1 surface-0"
-      >
-        <ng-template pTemplate="header">
-          <div class="flex justify-content-end">
-            <p-dataViewLayoutOptions />
-          </div>
-        </ng-template>
-        <ng-template pTemplate="empty">
-          <div class="flex align-items-center justify-content-center h-12rem">
-            <h3>No data</h3>
-          </div>
-        </ng-template>
-
-        <!-- DATA LIST-->
-        <ng-template pTemplate="list" let-topTrack>
-          <div class="flex flex-column">
-            <app-track-list-item
-              *ngFor="let track of topTracks"
-              [track]="track"
-            >
-            </app-track-list-item>
-          </div>
-        </ng-template>
-
-        <!-- DATA GRID-->
-        <ng-template pTemplate="grid" let-topArtist>
-          <div class="flex flex-wrap gap-2 justify-content-center pt-3">
-            <app-track-card-item
-              *ngFor="let track of topTracks"
-              [trackItem]="track"
-              class="w-8rem md:w-9rem lg:w-10rem"
-            ></app-track-card-item>
-          </div>
-        </ng-template>
-      </p-dataView>
-    </section>
-
-    <!-- RECENTLY PLAYED -->
-    <section class="xl:w-8 lg:w-8 md:w-11 sm:w-11 w-11">
-      <div class="flex align-items-center justify-content-center gap-4">
-        <h2 class="">{{ "STATS.RECENTLY_PLAYED" | translate }}</h2>
-        <p-button
-          [label]="'BUTTONS.SHOW_ALL' | translate"
-          icon="pi pi-eye"
-          size="small"
-          routerLink="./recently-played"
-        />
-      </div>
-
-      <!-- SKELETON-->
-      <p-dataView
-        [value]="skeletonElements"
-        *ngIf="isLoading.recentlyPlayed"
-        [layout]="layout"
-      >
-        <ng-template pTemplate="header">
-          <div class="flex justify-content-end">
-            <p-dataViewLayoutOptions />
-          </div>
-        </ng-template>
-
-        <!-- SKELETON LIST -->
-        <ng-template pTemplate="list" let-trackPlayed>
-          <div class="flex flex-column justify-content-start">
-            <app-recently-played-list-skeleton
-              *ngFor="let item of skeletonElements"
-            ></app-recently-played-list-skeleton>
-          </div>
-        </ng-template>
-
-        <!-- SKELETON GRID-->
-        <ng-template pTemplate="grid" let-trackPlayed>
-          <div class="flex flex-wrap gap-2 justify-content-center pt-3">
-            <app-track-card-skeleton
-              *ngFor="let item of skeletonElements"
-              class="w-8rem md:w-9rem lg:w-10rem"
-            ></app-track-card-skeleton>
-          </div>
-        </ng-template>
-      </p-dataView>
-
-      <!-- DATA -->
-      <p-dataView
-        #dv
-        [value]="tracksPlayed"
-        *ngIf="!isLoading.recentlyPlayed"
-        [layout]="layout"
-      >
-        <ng-template pTemplate="header">
-          <div class="flex justify-content-end">
-            <p-dataViewLayoutOptions />
-          </div>
-        </ng-template>
-        <ng-template pTemplate="empty">
-          <div class="flex align-items-center justify-content-center h-12rem">
-            <h3>No data</h3>
-          </div>
-        </ng-template>
+          <!-- SKELETON GRID -->
+          <ng-template pTemplate="grid" let-topTracks>
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
+              <app-track-card-skeleton
+                *ngFor="let item of skeletonElements"
+                class="w-8rem md:w-9rem lg:w-10rem"
+              ></app-track-card-skeleton>
+            </div>
+          </ng-template>
+        </p-dataView>
 
         <!-- DATA -->
-        <ng-template pTemplate="list">
-          <div class="flex flex-column justify-content-start">
-            <app-recently-played-list-item
-              *ngFor="let trackPlayed of tracksPlayed"
-              [trackPlayed]="trackPlayed"
-            ></app-recently-played-list-item>
-          </div>
-        </ng-template>
+        <p-dataView
+          #dv
+          [value]="topTracks"
+          *ngIf="!isLoading.tracks"
+          [layout]="layout"
+          class="flex flex-column flex-grow-1 surface-0"
+        >
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
+          <ng-template pTemplate="empty">
+            <div class="flex align-items-center justify-content-center h-12rem">
+              <h3>No data</h3>
+            </div>
+          </ng-template>
 
-        <!-- DATA GRID -->
-        <ng-template pTemplate="grid">
-          <div class="flex flex-wrap gap-2 justify-content-center pt-3">
-            <app-track-card-item
-              *ngFor="let track of tracksPlayed"
-              [trackItem]="track.track"
-              [playedAt]="track.played_at | timeFromNow"
-              class="w-8rem md:w-9rem lg:w-10rem"
-            ></app-track-card-item>
+          <!-- DATA LIST-->
+          <ng-template pTemplate="list" let-topTrack>
+            <div class="flex flex-column">
+              <app-track-list-item
+                *ngFor="let track of topTracks"
+                [track]="track"
+              >
+              </app-track-list-item>
+            </div>
+          </ng-template>
+
+          <!-- DATA GRID-->
+          <ng-template pTemplate="grid" let-topArtist>
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
+              <app-track-card-item
+                *ngFor="let track of topTracks"
+                [trackItem]="track"
+                class="w-8rem md:w-9rem lg:w-10rem"
+              ></app-track-card-item>
+            </div>
+          </ng-template>
+        </p-dataView>
+      </section>
+
+      <!-- RECENTLY PLAYED -->
+      <section class="xl:w-8 lg:w-8 md:w-11 sm:w-11 w-11">
+        <div class="flex align-items-center justify-content-center gap-1">
+          <h3 class="text-primary">
+            {{ "STATS.RECENTLY_PLAYED" | translate }}
+          </h3>
+          <div class="flex justify-content-end button-show-all">
+            <p-button
+              [label]="'BUTTONS.SHOW_ALL' | translate"
+              icon="pi pi-eye"
+              size="small"
+              routerLink="./recently-played"
+            />
           </div>
-        </ng-template>
-      </p-dataView>
-    </section>
+        </div>
+
+        <!-- SKELETON-->
+        <p-dataView
+          [value]="skeletonElements"
+          *ngIf="isLoading.recentlyPlayed"
+          [layout]="layout"
+        >
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
+
+          <!-- SKELETON LIST -->
+          <ng-template pTemplate="list" let-trackPlayed>
+            <div class="flex flex-column justify-content-start">
+              <app-recently-played-list-skeleton
+                *ngFor="let item of skeletonElements"
+              ></app-recently-played-list-skeleton>
+            </div>
+          </ng-template>
+
+          <!-- SKELETON GRID-->
+          <ng-template pTemplate="grid" let-trackPlayed>
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
+              <app-track-card-skeleton
+                *ngFor="let item of skeletonElements"
+                class="w-8rem md:w-9rem lg:w-10rem"
+              ></app-track-card-skeleton>
+            </div>
+          </ng-template>
+        </p-dataView>
+
+        <!-- DATA -->
+        <p-dataView
+          #dv
+          [value]="tracksPlayed"
+          *ngIf="!isLoading.recentlyPlayed"
+          [layout]="layout"
+        >
+          <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+              <p-dataViewLayoutOptions />
+            </div>
+          </ng-template>
+          <ng-template pTemplate="empty">
+            <div class="flex align-items-center justify-content-center h-12rem">
+              <h3>No data</h3>
+            </div>
+          </ng-template>
+
+          <!-- DATA -->
+          <ng-template pTemplate="list">
+            <div class="flex flex-column justify-content-start">
+              <app-recently-played-list-item
+                *ngFor="let trackPlayed of tracksPlayed"
+                [trackPlayed]="trackPlayed"
+              ></app-recently-played-list-item>
+            </div>
+          </ng-template>
+
+          <!-- DATA GRID -->
+          <ng-template pTemplate="grid">
+            <div class="flex flex-wrap gap-2 justify-content-center pt-3">
+              <app-track-card-item
+                *ngFor="let track of tracksPlayed"
+                [trackItem]="track.track"
+                [playedAt]="track.played_at | timeFromNow"
+                class="w-8rem md:w-9rem lg:w-10rem"
+              ></app-track-card-item>
+            </div>
+          </ng-template>
+        </p-dataView>
+      </section>
+    </div>
   </div>
 </section>

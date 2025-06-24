@@ -1,42 +1,46 @@
 <div
-  class="flex flex-column justify-content-center align-items-center gap-3 w-full surface-card px-3 py-4 border-round-2xl"
+  class="flex flex-column justify-content-center align-items-center gap-5 w-full surface-card px-3 py-4 border-round-2xl"
 >
-  <div
-    class="overflow-hidden border-circle image-wrapper w-8rem md:w-11rem lg:w-13rem"
-  >
-    <p-image
-      [src]="userInfo?.profileImage?.[0]?.url"
-      alt="Image profile"
-      width="100%"
-      *ngIf="userInfo?.profileImage; else avatarDefault"
-    />
-    <ng-template #avatarDefault>
-      <div
-        class="surface-50 flex align-items-center justify-content-center w-full h-8rem md:h-11rem lg:h-13rem"
-      >
-        <span class="pi pi-user" style="font-size: 3rem"></span>
-      </div>
-    </ng-template>
-  </div>
+  <div class="flex flex-column justify-content-center align-items-center gap-3">
+    <div
+      class="overflow-hidden border-circle image-wrapper w-8rem md:w-11rem lg:w-13rem"
+    >
+      <p-image
+        [src]="userInfo?.profileImage?.[0]?.url"
+        alt="Image profile"
+        width="100%"
+        *ngIf="userInfo?.profileImage; else avatarDefault"
+      />
+      <ng-template #avatarDefault>
+        <div
+          class="surface-50 flex align-items-center justify-content-center w-full h-8rem md:h-11rem lg:h-13rem"
+        >
+          <span class="pi pi-user" style="font-size: 3rem"></span>
+        </div>
+      </ng-template>
+    </div>
 
-  <div class="flex flex-column align-items-center gap-1 justify-content-center">
-    <span class="font-bold text-3xl text-primary">
-      {{ userInfo?.displayName }}
-    </span>
-    <div class="font-bold">
-      <span class=""> {{ "USER.FOLLOWERS" | translate }} </span>
-      <span class="">{{ userInfo?.followers?.total }}</span>
+    <div
+      class="flex flex-column align-items-center gap-1 justify-content-center"
+    >
+      <span class="font-bold text-2xl text-primary">
+        {{ userInfo?.displayName }}
+      </span>
+      <div class="font-bold">
+        <span class=""> {{ "USER.FOLLOWERS" | translate }} </span>
+        <span class="">{{ userInfo?.followers?.total }}</span>
+      </div>
     </div>
   </div>
 
-  <div class="flex justify-content-evenly w-full gap-1">
-    <div class="flex align-items-center flex-column w-3 gap-2">
+  <div class="flex justify-content-evenly w-full">
+    <!-- DATA TOP ARTST -->
+    <div class="flex align-items-center card flex-column gap-2">
       <div
         class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl text-center"
       >
         {{ "STATS.TOP_ARTIST" | translate }}
       </div>
-      <!-- DATA TOP ARTST -->
 
       <app-artist-card-item
         [artist]="topArtist"
@@ -57,7 +61,7 @@
     </div>
 
     <!-- DATA TOP TRACK -->
-    <div class="flex align-items-center flex-column w-3 gap-2">
+    <div class="flex align-items-center card flex-column gap-2">
       <div
         class="font-bold text-primary text-sm sm:text-sm md:text-lg lg:text-xl xl:text-xl text-center"
       >
