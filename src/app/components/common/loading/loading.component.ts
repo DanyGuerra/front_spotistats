@@ -32,14 +32,14 @@ export class LoadingComponent {
     const rects = this.svgMusicWaves.nativeElement.querySelectorAll('rect');
     gsap.fromTo(
       rects,
-      { scaleY: 1.1, transformOrigin: 'center center' },
+      { scaleY: 0.2, transformOrigin: 'center bottom' },
       {
-        scaleY: 0,
+        scaleY: 1,
         repeat: -1,
         yoyo: true,
-        duration: 0.5,
+        duration: 0.3,
         ease: 'power1.inOut',
-        stagger: 0.02,
+        stagger: 0.06,
       }
     );
   }
