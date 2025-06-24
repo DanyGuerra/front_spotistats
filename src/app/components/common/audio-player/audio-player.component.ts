@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -13,6 +14,8 @@ import { ClickOutsideDirective } from 'src/app/directives/click-outside.directiv
 import { IconPlayComponent } from '../icons/icon-play/icon-play.component';
 import { IconPauseComponent } from '../icons/icon-pause/icon-pause.component';
 import { ToastService } from 'src/app/services/toast.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastTranslation } from 'src/app/interfaces/ILanguageTranslation';
 
 @Component({
   selector: 'app-audio-player',
@@ -32,11 +35,16 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
   @Input() urlPreview!: string;
   isPlaying: boolean = false;
+  toastTranslations!: ToastTranslation;
+  langChangeSubscription!: Subscription;
 
   audioDuration: number = 0;
   currentTime: number = 0;
 
-  constructor(private toastService: ToastService) {}
+  constructor(
+    private toastService: ToastService,
+    private translateService: TranslateService
+  ) {}
 
   private loadedMetadataListener = () => {
     this.audioDuration = this.audioRef.nativeElement.duration;
@@ -49,6 +57,18 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   private endedListener = () => {
     this.isPlaying = false;
   };
+
+  ngOnInit() {
+    this.langChangeSubscription = this.translateService.onLangChange.subscribe(
+      () => {
+        this.translateService
+          .get('TOAST')
+          .subscribe((toastTranslations: ToastTranslation) => {
+            this.toastTranslations = toastTranslations;
+          });
+      }
+    );
+  }
 
   ngAfterViewInit() {
     this.audioRef.nativeElement.addEventListener(
@@ -75,6 +95,7 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
       'ended',
       this.endedListener
     );
+    this.langChangeSubscription.unsubscribe();
   }
 
   playAudio() {
@@ -83,8 +104,8 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
       this.isPlaying = true;
     } else {
       this.toastService.showError(
-        'Something went wrong',
-        'The audio is not available, try later'
+        this.toastTranslations.ERROR.TITLE,
+        this.toastTranslations.ERROR.DESCRIPTION
       );
     }
   }

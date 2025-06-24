@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IResponseLogin } from '../interfaces/IResponseLogin.interface';
 import { IResponseAuthLog } from '../interfaces/IResponseAuthLog.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
 import { LocalStorage } from 'src/constants/localStorage';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastTranslation } from '../interfaces/ILanguageTranslation';
 
 @Injectable({
   providedIn: 'root',
@@ -16,20 +18,35 @@ export class AuthService {
   private hostApiSpoxContext = environment.hostApiSpoxContext;
   private isAuthenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
+  private isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private translate: TranslateService
   ) {}
 
+  getLoading(): Observable<boolean> {
+    return this.isLoading.asObservable();
+  }
+
+  private setLoading(state: boolean): void {
+    this.isLoading.next(state);
+  }
+
   login(): Observable<IResponseLogin> {
-    return this.http.get<IResponseLogin>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/login`,
-      {
-        withCredentials: true,
-      }
-    );
+    this.setLoading(true);
+    return this.http
+      .get<IResponseLogin>(
+        `${this.hostApiSpox}${this.hostApiSpoxContext}auth/login`,
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(finalize(() => this.setLoading(false)));
   }
 
   logout(logId: string | undefined) {
@@ -46,9 +63,12 @@ export class AuthService {
           this.isAuthenticatedSubject.next(false);
           this.router.navigate(['/']);
         },
-        error: (err) => {
-          this.toastService.showError('Something went wrong', 'Try later');
-          console.error('Error durante el logout:', err);
+        error: () => {
+          const toast = this.translate.instant('TOAST') as ToastTranslation;
+          this.toastService.showError(
+            toast.ERROR.TITLE,
+            toast.ERROR.DESCRIPTION
+          );
         },
       });
   }
