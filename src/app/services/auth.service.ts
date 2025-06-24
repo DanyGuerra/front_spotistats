@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IResponseLogin } from '../interfaces/IResponseLogin.interface';
 import { IResponseAuthLog } from '../interfaces/IResponseAuthLog.interface';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
@@ -18,6 +18,9 @@ export class AuthService {
   private hostApiSpoxContext = environment.hostApiSpoxContext;
   private isAuthenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
+  private isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   constructor(
     private http: HttpClient,
@@ -26,13 +29,24 @@ export class AuthService {
     private translate: TranslateService
   ) {}
 
+  getLoading(): Observable<boolean> {
+    return this.isLoading.asObservable();
+  }
+
+  private setLoading(state: boolean): void {
+    this.isLoading.next(state);
+  }
+
   login(): Observable<IResponseLogin> {
-    return this.http.get<IResponseLogin>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/login`,
-      {
-        withCredentials: true,
-      }
-    );
+    this.setLoading(true);
+    return this.http
+      .get<IResponseLogin>(
+        `${this.hostApiSpox}${this.hostApiSpoxContext}auth/login`,
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(finalize(() => this.setLoading(false)));
   }
 
   logout(logId: string | undefined) {

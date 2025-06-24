@@ -19,6 +19,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { HomeAnimationComponent } from './components/common/home-animation/home-animation.component';
 import { FooterComponent } from './components/common/footer/footer.component';
+import { LoadingComponent } from './components/common/loading/loading.component';
 
 // jsons for ngx-translate
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     ButtonModule,
     ToastModule,
+    LoadingComponent,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
