@@ -37,9 +37,13 @@ export class LoadingComponent {
         scaleY: 1,
         repeat: -1,
         yoyo: true,
-        duration: 0.3,
-        ease: 'power1.inOut',
-        stagger: 0.06,
+        duration: 0.25,
+        stagger: {
+          each: 0.05,
+          repeat: 4,
+          yoyo: true,
+        },
+        ease: 'sine.inOut',
       }
     );
   }
