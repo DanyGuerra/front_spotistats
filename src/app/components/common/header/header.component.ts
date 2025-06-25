@@ -17,6 +17,7 @@ import {
   UserTranslation,
   StatsTranslation,
   LanguagesTranslation,
+  ToastTranslation,
 } from 'src/app/interfaces/ILanguageTranslation';
 import { FormsModule } from '@angular/forms';
 import { RippleButtonComponent } from '../ripple-button/ripple-button.component';
@@ -44,6 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription | null = null;
   langChangeSubscription: Subscription | null = null;
   languagesTranslations!: LanguagesTranslation;
+  toastTranslations!: ToastTranslation;
   isAuthenticated: boolean = false;
   items: MenuItem[] | undefined;
   userData!: IUserInfoStored | null;
@@ -82,6 +84,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
           .get('LANGUAGES')
           .subscribe((languagesTranslations: LanguagesTranslation) => {
             this.languagesTranslations = languagesTranslations;
+          });
+
+        this.translateService
+          .get('TOAST')
+          .subscribe((toastTranslations: ToastTranslation) => {
+            this.toastTranslations = toastTranslations;
           });
 
         this.setupMenu();
@@ -154,6 +162,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.authSuscription?.unsubscribe();
     this.routerSubscription?.unsubscribe();
+    this.langChangeSubscription?.unsubscribe();
+    this.langChangeSubscription?.unsubscribe();
   }
 
   login() {
@@ -165,7 +175,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         window.location.href = url;
       },
       error: () => {
-        this.toastService.showError('Error', 'Something went wrong, try later');
+        this.toastService.showError(
+          this.toastTranslations.ERROR.TITLE,
+          this.toastTranslations.ERROR.DESCRIPTION
+        );
       },
     });
   }

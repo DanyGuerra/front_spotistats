@@ -71,5 +71,11 @@
       "historial musical"
     ],
     "YOUR": ["Tus", "Tu", "Tus", "Tus", "Tu"]
+  },
+  "TOAST": {
+    "ERROR": {
+      "TITLE": "Error",
+      "DESCRIPTION": "Algo salió mal, intenta más tarde"
+    }
   }
 }

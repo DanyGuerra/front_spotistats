@@ -32,6 +32,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { forkJoin, Subscription } from 'rxjs';
+import { ToastTranslation } from 'src/app/interfaces/ILanguageTranslation';
 
 gsap.registerPlugin(MotionPathPlugin);
 gsap.registerPlugin(SplitText);
@@ -58,6 +59,7 @@ gsap.registerPlugin(DrawSVGPlugin);
 export class HomeAnimationComponent {
   userData!: IUserInfoStored | null;
   langChangeSubscription!: Subscription | null;
+  toastTranslations!: ToastTranslation;
   carouselIntervalId!: any;
   @ViewChild('homeHeaderText')
   homeHeaderText!: ElementRef;
@@ -144,6 +146,11 @@ export class HomeAnimationComponent {
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
       (event) => {
         this.currentLang = event.lang;
+        this.translate
+          .get('TOAST')
+          .subscribe((toastTranslations: ToastTranslation) => {
+            this.toastTranslations = toastTranslations;
+          });
       }
     );
   }
@@ -173,8 +180,8 @@ export class HomeAnimationComponent {
         },
         error: () => {
           this.toastService.showError(
-            'Error',
-            'Something went wrong, try later'
+            this.toastTranslations.ERROR.TITLE,
+            this.toastTranslations.ERROR.DESCRIPTION
           );
         },
       });

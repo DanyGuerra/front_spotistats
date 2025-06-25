@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { TimelineSvgComponent } from '../icons/timeline-svg/timeline-svg.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import gsap from 'gsap';
 import { IconHeartComponent } from '../icons/icon-heart/icon-heart.component';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,8 @@ import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ToastTranslation } from 'src/app/interfaces/ILanguageTranslation';
 
 @Component({
   selector: 'app-home-timeline',
@@ -28,6 +30,8 @@ export class HomeTimelineComponent {
   @ViewChild('timelineSection', { static: true, read: ElementRef })
   timelineSection!: ElementRef;
   userData!: IUserInfoStored | null;
+  langChangeSubscription!: Subscription;
+  toastTranslations!: ToastTranslation;
   hearts = [
     {
       speed: 1.75,
@@ -159,7 +163,8 @@ export class HomeTimelineComponent {
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   get domElements() {
@@ -180,6 +185,14 @@ export class HomeTimelineComponent {
   ngOnInit() {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
     this.userData = storedUser ? JSON.parse(storedUser) : null;
+
+    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
+      this.translate
+        .get('TOAST')
+        .subscribe((toastTranslations: ToastTranslation) => {
+          this.toastTranslations = toastTranslations;
+        });
+    });
   }
 
   ngAfterViewInit() {
@@ -204,8 +217,8 @@ export class HomeTimelineComponent {
         },
         error: () => {
           this.toastService.showError(
-            'Error',
-            'Something went wrong, try later'
+            this.toastTranslations.ERROR.TITLE,
+            this.toastTranslations.ERROR.DESCRIPTION
           );
         },
       });
