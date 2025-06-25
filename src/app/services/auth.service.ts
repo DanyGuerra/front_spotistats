@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IResponseLogin } from '../interfaces/IResponseLogin.interface';
 import { IResponseAuthLog } from '../interfaces/IResponseAuthLog.interface';
-import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  finalize,
+  throwError,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
@@ -46,7 +52,21 @@ export class AuthService {
           withCredentials: true,
         }
       )
-      .pipe(finalize(() => this.setLoading(false)));
+      .pipe(
+        catchError((error) => {
+          this.translate
+            .get('TOAST')
+            .subscribe((toastTranslations: ToastTranslation) => {
+              this.toastService.showError(
+                toastTranslations.ERROR.TITLE,
+                toastTranslations.ERROR.DESCRIPTION
+              );
+            });
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.setLoading(false))
+      );
   }
 
   logout(logId: string | undefined) {
