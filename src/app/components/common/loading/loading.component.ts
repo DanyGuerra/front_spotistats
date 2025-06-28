@@ -3,6 +3,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { IconMusicWavesComponent } from '../icons/icon-music-waves/icon-music-waves.component';
 import gsap from 'gsap';
+import { StatsService } from 'src/app/services/stats.service';
 
 @Component({
   selector: 'app-loading',
@@ -13,14 +14,22 @@ import gsap from 'gsap';
 })
 export class LoadingComponent {
   isLoading: boolean = false;
+  statsLoading: boolean = false;
   @ViewChild('svgMusicWaves', { read: ElementRef, static: false })
   svgMusicWaves!: ElementRef;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private statsService: StatsService
+  ) {}
 
   ngOnInit() {
     this.authService.getLoading().subscribe((state) => {
       this.isLoading = state;
+    });
+
+    this.statsService.getLoading().subscribe((state) => {
+      this.statsLoading = state;
     });
   }
 

@@ -102,21 +102,55 @@ export class AuthService {
   }
 
   getAuthLog(logId: string | null): Observable<IResponseAuthLog> {
-    return this.http.get<IResponseAuthLog>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log?id=${logId}`,
-      {
-        withCredentials: true,
-      }
-    );
+    this.setLoading(true);
+    return this.http
+      .get<IResponseAuthLog>(
+        `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log?id=${logId}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        catchError((error) => {
+          this.translate
+            .get('TOAST')
+            .subscribe((toastTranslations: ToastTranslation) => {
+              this.toastService.showError(
+                toastTranslations.ERROR.TITLE,
+                toastTranslations.ERROR.DESCRIPTION
+              );
+            });
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.setLoading(false))
+      );
   }
 
   getAuthLogByUserId(userId: string | null): Observable<IResponseAuthLog> {
-    return this.http.get<IResponseAuthLog>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log-userid?userid=${userId}`,
-      {
-        withCredentials: true,
-      }
-    );
+    this.setLoading(true);
+    return this.http
+      .get<IResponseAuthLog>(
+        `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log-userid?userid=${userId}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        catchError((error) => {
+          this.translate
+            .get('TOAST')
+            .subscribe((toastTranslations: ToastTranslation) => {
+              this.toastService.showError(
+                toastTranslations.ERROR.TITLE,
+                toastTranslations.ERROR.DESCRIPTION
+              );
+            });
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.setLoading(false))
+      );
   }
 
   logRefresh(id: string | null): Observable<IResponseAuthLog> {

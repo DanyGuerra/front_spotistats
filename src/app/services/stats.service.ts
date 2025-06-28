@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  finalize,
+  throwError,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IResponseUserInfo } from '../interfaces/IResponseUserInfo';
 import {
@@ -16,6 +22,9 @@ import { LocalStorage } from 'src/constants/localStorage';
 import { IResponseCurrentlyPlayed } from '../interfaces/IResponseCurrentlyPlayed';
 import { ILoadingSubject } from '../interfaces/ILoadingSubject';
 import { IUserInfoStored } from '../interfaces/IUserInfoStored';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastTranslation } from '../interfaces/ILanguageTranslation';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +38,10 @@ export class StatsService {
     recentlyPlayed: false,
   };
 
+  private isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
   private topTracksSubject: BehaviorSubject<IResponseTopTracks | undefined> =
     new BehaviorSubject<IResponseTopTracks | undefined>(undefined);
   private topArtistsSubject: BehaviorSubject<IResponseTopArtists | undefined> =
@@ -36,7 +49,19 @@ export class StatsService {
   private isDataLoadingSubject: BehaviorSubject<ILoadingSubject> =
     new BehaviorSubject<ILoadingSubject>(this.initialIsLoading);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private translate: TranslateService,
+    private toastService: ToastService
+  ) {}
+
+  getLoading(): Observable<boolean> {
+    return this.isLoading.asObservable();
+  }
+
+  private setLoading(state: boolean) {
+    this.isLoading.next(state);
+  }
 
   private getUserLogId(): string | null {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
@@ -48,9 +73,26 @@ export class StatsService {
   }
 
   getUserInfo(logId: string | null): Observable<IResponseUserInfo> {
-    return this.http.get<IResponseUserInfo>(
-      `${this.hostApiSpox}${this.hostApiSpoxContext}stats/me?id=${logId}`
-    );
+    this.setLoading(true);
+    return this.http
+      .get<IResponseUserInfo>(
+        `${this.hostApiSpox}${this.hostApiSpoxContext}stats/me?id=${logId}`
+      )
+      .pipe(
+        catchError((error) => {
+          this.translate
+            .get('TOAST')
+            .subscribe((toastTranslations: ToastTranslation) => {
+              this.toastService.showError(
+                toastTranslations.ERROR.TITLE,
+                toastTranslations.ERROR.DESCRIPTION
+              );
+            });
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.setLoading(false))
+      );
   }
 
   getRecentlyPlayedTracks(
