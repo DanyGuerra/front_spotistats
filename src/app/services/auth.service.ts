@@ -102,7 +102,6 @@ export class AuthService {
   }
 
   getAuthLog(logId: string | null): Observable<IResponseAuthLog> {
-    this.setLoading(true);
     return this.http
       .get<IResponseAuthLog>(
         `${this.hostApiSpox}${this.hostApiSpoxContext}auth/get-log?id=${logId}`,
@@ -122,8 +121,7 @@ export class AuthService {
             });
 
           return throwError(() => error);
-        }),
-        finalize(() => this.setLoading(false))
+        })
       );
   }
 
