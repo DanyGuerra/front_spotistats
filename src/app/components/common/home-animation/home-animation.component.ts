@@ -59,7 +59,6 @@ gsap.registerPlugin(DrawSVGPlugin);
 export class HomeAnimationComponent {
   userData!: IUserInfoStored | null;
   langChangeSubscription!: Subscription | null;
-  toastTranslations!: ToastTranslation;
   carouselIntervalId!: any;
   @ViewChild('homeHeaderText')
   homeHeaderText!: ElementRef;
@@ -77,7 +76,6 @@ export class HomeAnimationComponent {
   currentLang: string | undefined = this.translate.currentLang;
 
   constructor(
-    private toastService: ToastService,
     private authService: AuthService,
     private router: Router,
     public translate: TranslateService
@@ -146,11 +144,6 @@ export class HomeAnimationComponent {
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
       (event) => {
         this.currentLang = event.lang;
-        this.translate
-          .get('TOAST')
-          .subscribe((toastTranslations: ToastTranslation) => {
-            this.toastTranslations = toastTranslations;
-          });
       }
     );
   }
@@ -177,12 +170,6 @@ export class HomeAnimationComponent {
             data: { url },
           } = response;
           window.location.href = url;
-        },
-        error: () => {
-          this.toastService.showError(
-            this.toastTranslations.ERROR.TITLE,
-            this.toastTranslations.ERROR.DESCRIPTION
-          );
         },
       });
     }

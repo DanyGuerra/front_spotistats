@@ -11,28 +11,7 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./login-error.component.less'],
 })
 export class LoginErrorComponent {
-  langChangeSubscription!: Subscription;
-  toastTranslations!: ToastTranslation;
-
-  constructor(
-    private authService: AuthService,
-    private toastService: ToastService,
-    private translate: TranslateService
-  ) {}
-
-  ngOnInit() {
-    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
-      this.translate
-        .get('TOAST')
-        .subscribe((toastTranslations: ToastTranslation) => {
-          this.toastTranslations = toastTranslations;
-        });
-    });
-  }
-
-  ngOnDestroy() {
-    this.langChangeSubscription?.unsubscribe();
-  }
+  constructor(private authService: AuthService) {}
 
   login() {
     this.authService.login().subscribe({
@@ -41,12 +20,6 @@ export class LoginErrorComponent {
           data: { url },
         } = response;
         window.location.href = url;
-      },
-      error: () => {
-        this.toastService.showError(
-          this.toastTranslations.ERROR.TITLE,
-          this.toastTranslations.ERROR.DESCRIPTION
-        );
       },
     });
   }

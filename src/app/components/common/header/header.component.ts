@@ -45,7 +45,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription | null = null;
   langChangeSubscription: Subscription | null = null;
   languagesTranslations!: LanguagesTranslation;
-  toastTranslations!: ToastTranslation;
   isAuthenticated: boolean = false;
   items: MenuItem[] | undefined;
   userData!: IUserInfoStored | null;
@@ -55,7 +54,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toastService: ToastService,
     private translateService: TranslateService
   ) {}
 
@@ -84,12 +82,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           .get('LANGUAGES')
           .subscribe((languagesTranslations: LanguagesTranslation) => {
             this.languagesTranslations = languagesTranslations;
-          });
-
-        this.translateService
-          .get('TOAST')
-          .subscribe((toastTranslations: ToastTranslation) => {
-            this.toastTranslations = toastTranslations;
           });
 
         this.setupMenu();
@@ -173,12 +165,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           data: { url },
         } = response;
         window.location.href = url;
-      },
-      error: () => {
-        this.toastService.showError(
-          this.toastTranslations.ERROR.TITLE,
-          this.toastTranslations.ERROR.DESCRIPTION
-        );
       },
     });
   }
