@@ -30,8 +30,6 @@ export class HomeTimelineComponent {
   @ViewChild('timelineSection', { static: true, read: ElementRef })
   timelineSection!: ElementRef;
   userData!: IUserInfoStored | null;
-  langChangeSubscription!: Subscription;
-  toastTranslations!: ToastTranslation;
   hearts = [
     {
       speed: 1.75,
@@ -160,12 +158,7 @@ export class HomeTimelineComponent {
     { speed: 1, width: '24px', height: '24px', top: '100%', right: '14%' },
   ];
 
-  constructor(
-    private authService: AuthService,
-    private toastService: ToastService,
-    private router: Router,
-    private translate: TranslateService
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   get domElements() {
     const section = this.timelineSection?.nativeElement;
@@ -185,14 +178,6 @@ export class HomeTimelineComponent {
   ngOnInit() {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
     this.userData = storedUser ? JSON.parse(storedUser) : null;
-
-    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
-      this.translate
-        .get('TOAST')
-        .subscribe((toastTranslations: ToastTranslation) => {
-          this.toastTranslations = toastTranslations;
-        });
-    });
   }
 
   ngAfterViewInit() {
@@ -214,12 +199,6 @@ export class HomeTimelineComponent {
             data: { url },
           } = response;
           window.location.href = url;
-        },
-        error: () => {
-          this.toastService.showError(
-            this.toastTranslations.ERROR.TITLE,
-            this.toastTranslations.ERROR.DESCRIPTION
-          );
         },
       });
     }

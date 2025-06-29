@@ -45,15 +45,8 @@ export class HomeContentComponent {
   @ViewChild('nebula', { static: true })
   nebulaContainer!: ElementRef;
   userData!: IUserInfoStored | null;
-  langChangeSubscription!: Subscription;
-  toastTranslations!: ToastTranslation;
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private toastService: ToastService,
-    private translate: TranslateService
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   get domElements() {
     const constellationElement = this.constellation?.nativeElement;
@@ -68,23 +61,11 @@ export class HomeContentComponent {
   ngOnInit() {
     const storedUser = localStorage.getItem(LocalStorage.UserInfo);
     this.userData = storedUser ? JSON.parse(storedUser) : null;
-
-    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
-      this.translate
-        .get('TOAST')
-        .subscribe((toastTranslations: ToastTranslation) => {
-          this.toastTranslations = toastTranslations;
-        });
-    });
   }
 
   ngAfterViewInit() {
     this.scrollTriggerCard();
     this.scrollTriggerNebula();
-  }
-
-  ngOnDestroy() {
-    this.langChangeSubscription?.unsubscribe();
   }
 
   handleClick(url: string) {
@@ -99,12 +80,6 @@ export class HomeContentComponent {
             data: { url },
           } = response;
           window.location.href = url;
-        },
-        error: () => {
-          this.toastService.showError(
-            this.toastTranslations.ERROR.TITLE,
-            this.toastTranslations.ERROR.DESCRIPTION
-          );
         },
       });
     }
