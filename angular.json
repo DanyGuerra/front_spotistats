@@ -65,7 +65,21 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
+            "test": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
                 }
               ]
             }
@@ -80,6 +94,9 @@
             },
             "development": {
               "buildTarget": "front_spotistats:build:development"
+            },
+            "test": {
+              "buildTarget": "front_spotistats:build:test"
             }
           },
           "defaultConfiguration": "development"
