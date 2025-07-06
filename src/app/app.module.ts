@@ -20,7 +20,6 @@ import { MessageService } from 'primeng/api';
 import { HomeAnimationComponent } from './components/common/home-animation/home-animation.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { LoadingComponent } from './components/common/loading/loading.component';
-import { ApiKeyInterceptor } from './interceptors/api-key.interceptor';
 
 // jsons for ngx-translate
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,7 +48,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeAnimationComponent,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     MessageService,
   ],
