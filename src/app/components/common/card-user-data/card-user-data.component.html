@@ -57,7 +57,7 @@
       ></app-artist-card-skeleton>
 
       <!-- NO DATA -->
-      <h1 *ngIf="!topArtist && !isLoading.artists">No data</h1>
+      <h3 *ngIf="topArtist === undefined && !isLoading.artists">No data</h3>
     </div>
 
     <!-- DATA TOP TRACK -->
@@ -82,7 +82,7 @@
       ></app-track-card-skeleton>
 
       <!-- NO DATA -->
-      <h1 *ngIf="!topTrack && !isLoading.tracks">No data</h1>
+      <h3 *ngIf="topTrack === undefined && !isLoading.tracks">No data</h3>
     </div>
   </div>
 </div>
