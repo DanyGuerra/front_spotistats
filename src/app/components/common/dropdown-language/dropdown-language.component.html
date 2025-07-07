@@ -14,9 +14,13 @@
           </div>
           <div class="flex align-items-center gap-2" *ngIf="selectedLanguage">
             <img
-              src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-              [class]="'fi fi-' + selectedLanguage.code.toLowerCase()"
-              style="width: 18px"
+              [src]="
+                'https://flagcdn.com/w40/' +
+                selectedLanguage.code.toLowerCase() +
+                '.png'
+              "
+              alt="{{ selectedLanguage.name }}"
+              width="18"
             />
             <div>{{ selectedLanguage.name }}</div>
           </div>
@@ -25,9 +29,11 @@
       <ng-template let-language pTemplate="item">
         <div class="flex align-items-center gap-2">
           <img
-            src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-            [class]="'fi fi-' + language.code.toLowerCase()"
-            style="width: 18px"
+            [src]="
+              'https://flagcdn.com/w40/' + language.code.toLowerCase() + '.png'
+            "
+            alt="{{ language.name }}"
+            width="18"
           />
           <div>{{ language.name }}</div>
         </div>
