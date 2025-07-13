@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  hostApiSpox: 'https://spotistats-1elr.onrender.com/',
+  hostApiSpox: 'https://dd9huazc15.execute-api.us-east-1.amazonaws.com/dev/',
   hostApiSpoxContext: 'api/v1/',
 };
