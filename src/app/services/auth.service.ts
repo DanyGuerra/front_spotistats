@@ -70,6 +70,7 @@ export class AuthService {
   }
 
   logout(logId: string | undefined) {
+    this.setLoading(true);
     this.http
       .delete<IResponseAuthLog>(
         `${this.hostApiSpox}${this.hostApiSpoxContext}auth/logout?id=${logId}`,
@@ -77,6 +78,7 @@ export class AuthService {
           withCredentials: true,
         }
       )
+      .pipe(finalize(() => this.setLoading(false)))
       .subscribe({
         next: () => {
           localStorage.removeItem(LocalStorage.UserInfo);
