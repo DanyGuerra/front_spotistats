@@ -40,27 +40,6 @@ jobs:
         with:
           terraform_version: 1.7.5
 
-      - name: Terraform Init
-        working-directory: ./infra
-        run: terraform init
-
-      - name: Terraform Plan
-        working-directory: ./infra
-        run: terraform plan -var "bucket_name=${{ secrets.S3_BUCKET_NAME }}"
-
-      - name: Get Terraform Outputs
-        id: tf_outputs
-        working-directory: ./infra
-        run: |
-          echo "bucket_name=$(terraform output -raw bucket_name)" >> $GITHUB_OUTPUT
-          echo "distribution_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_OUTPUT
-
       - name: Upload app to S3
         run: |
-          aws s3 sync dist/front_spotistats s3://${{ steps.tf_outputs.outputs.bucket_name }} --delete
-
-      - name: Invalidate CloudFront Cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ steps.tf_outputs.outputs.distribution_id }} \
-            --paths "/*"
+          aws s3 sync dist/front_spotistats s3://${{ secrets.S3_BUCKET_NAME }} --delete
