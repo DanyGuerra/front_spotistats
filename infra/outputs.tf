@@ -8,3 +8,7 @@ output "cloudfront_url" {
   value       = "https://${aws_cloudfront_distribution.topstats_distribution.domain_name}"
 }
 
+output "cloudfront_distribution_id" {
+  description = "ID de la distribución de CloudFront"
+  value       = aws_cloudfront_distribution.topstats_distribution.id
+}
