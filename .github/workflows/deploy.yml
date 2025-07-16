@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Build and upload app
+    name: Build and upload
     runs-on: ubuntu-latest
 
     env:
@@ -38,3 +38,9 @@ jobs:
       - name: Upload app to S3
         run: |
           aws s3 sync dist/front_spotistats s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.DISTRIBUTION_ID }} \
+            --paths "/*"
