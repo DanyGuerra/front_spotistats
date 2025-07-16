@@ -48,10 +48,6 @@ jobs:
         working-directory: ./infra
         run: terraform plan -var "bucket_name=${{ secrets.S3_BUCKET_NAME }}"
 
-      - name: Terraform Apply
-        working-directory: ./infra
-        run: terraform apply -auto-approve -var "bucket_name=${{ secrets.S3_BUCKET_NAME }}"
-
       - name: Get Terraform Outputs
         id: tf_outputs
         working-directory: ./infra
