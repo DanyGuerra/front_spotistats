@@ -1,27 +1,39 @@
-# FrontSpotistats
+<h1><img src="./src/favicon.ico" alt="TopStats Logo" width="24" height="24" /> TopStats</h1>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.3.
+[🌐 Live App](https://d2eikr7pny939u.cloudfront.net/)
 
-## Development server
+TopStats is a web application built with Angular that provides detailed statistics about a user's music activity. Powered by the **[Spotify Web API](https://developer.spotify.com/documentation/web-api)**, TopStats transforms your listening history into an engaging and interactive experience.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🚀 Features
 
-## Code scaffolding
+- 🔥 Personalized music stats pulled from your Spotify account
+- 🧠 Analysis of your top tracks and top artists
+- 📅 Time filters: last month, last 6 months, all time
+- 📈 Interactive and responsive visualizations
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🛠️ Tech Stack
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Framework**: [Angular](https://angular.io/)
+- **Styling**: SCSS + PrimeNG + PrimeFlex
+- **Animations**: [GSAP](https://greensock.com/gsap/)
+- **API**: [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
+- **Authentication**: OAuth 2.0 with Spotify
+- **Deployment**: AWS S3 + CloudFront (CDN)
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🧪 Development Scripts
 
-## Further help
+```bash
+# Install dependencies
+npm install
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Run development server
+ng serve
+
+# Build for production
+ng build --configuration production
