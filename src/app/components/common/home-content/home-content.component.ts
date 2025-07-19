@@ -10,16 +10,13 @@ import { IconArtistComponent } from '../icons/icon-artist/icon-artist.component'
 import { IconReplayComponent } from '../icons/icon-replay/icon-replay.component';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import { NebulaComponent } from '../icons/nebula/nebula.component';
+// import { NebulaComponent } from '../icons/nebula/nebula.component';
 import { CardTopHomeComponent } from '../card-top-home/card-top-home.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorage } from 'src/constants/localStorage';
 import { IUserInfoStored } from 'src/app/interfaces/IUserInfoStored';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { ToastService } from 'src/app/services/toast.service';
-import { Subscription } from 'rxjs';
-import { ToastTranslation } from 'src/app/interfaces/ILanguageTranslation';
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
@@ -29,7 +26,7 @@ gsap.registerPlugin(ScrollTrigger);
     IconTrackComponent,
     IconArtistComponent,
     IconReplayComponent,
-    NebulaComponent,
+    // NebulaComponent,
     CardTopHomeComponent,
     TranslateModule,
   ],
@@ -65,7 +62,7 @@ export class HomeContentComponent {
 
   ngAfterViewInit() {
     this.scrollTriggerCard();
-    this.scrollTriggerNebula();
+    // this.scrollTriggerNebula();
   }
 
   handleClick(url: string) {
@@ -94,7 +91,7 @@ export class HomeContentComponent {
       gsap.from(card.nativeElement, {
         scrollTrigger: {
           trigger: card.nativeElement,
-          start: 'top 50%',
+          start: 'top 60%',
           end: 'top 50%',
           toggleActions: 'play none none none',
         },
