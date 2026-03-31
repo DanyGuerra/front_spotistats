@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { HomeAnimationComponent } from '../common/home-animation/home-animation.component';
 import { HomeContentComponent } from '../common/home-content/home-content.component';
 import { HomeTimelineComponent } from '../common/home-timeline/home-timeline.component';
+import { ThreeBackgroundComponent } from '../common/three-background/three-background.component';
 
 @Component({
   standalone: true,
@@ -14,6 +15,7 @@ import { HomeTimelineComponent } from '../common/home-timeline/home-timeline.com
     HomeAnimationComponent,
     HomeContentComponent,
     HomeTimelineComponent,
+    ThreeBackgroundComponent,
   ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
