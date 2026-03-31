@@ -14,6 +14,8 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
   private animationFrameId: number | null = null;
+  private intersectionObserver!: IntersectionObserver;
+  private isVisible = true;
   
   // User interaction
   private raycaster = new THREE.Raycaster();
@@ -53,6 +55,11 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
     
     window.addEventListener('resize', this.onWindowResize);
     window.addEventListener('mousemove', this.onMouseMove);
+
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      this.isVisible = entries[0].isIntersecting;
+    }, { threshold: 0 });
+    this.intersectionObserver.observe(this.rendererContainer.nativeElement);
   }
 
   ngOnDestroy(): void {
@@ -61,6 +68,10 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
 
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
+    }
+    
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
     }
 
     if (this.renderer) {
@@ -82,10 +93,10 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
     this.isMobile = window.innerWidth < 768;
     
     // Performance optimizations for mobile devices
-    this.cols = this.isMobile ? 40 : 120;
-    this.rows = this.isMobile ? 24 : 50;
-    this.spacingX = this.isMobile ? 44 : 22;
-    this.spacingZ = this.isMobile ? 44 : 22;
+    this.cols = this.isMobile ? 24 : 120;
+    this.rows = this.isMobile ? 16 : 50;
+    this.spacingX = this.isMobile ? 66 : 22;
+    this.spacingZ = this.isMobile ? 66 : 22;
 
     this.scene = new THREE.Scene();
     
@@ -105,7 +116,7 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
     // Bar Graphs Field Construction (Equalizer)
     const count = this.cols * this.rows;
     // Solid vertical boxes
-    const boxSize = this.isMobile ? 22 : 11;
+    const boxSize = this.isMobile ? 33 : 11;
     const geometry = new THREE.BoxGeometry(boxSize, 1, boxSize);
     
     const material = new THREE.MeshBasicMaterial({ 
@@ -122,6 +133,9 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
     this.ngZone.runOutsideAngular(() => {
       const renderLoop = () => {
         this.animationFrameId = requestAnimationFrame(renderLoop);
+
+        // Skip heavy calculations and rendering if scrolled out of view to preserve mobile ScrollTrigger performance
+        if (!this.isVisible) return; 
 
         // Fire the Raycaster to the invisible plane to calculate the exact point under the mouse in 3D
         if (!this.isMobile) {
