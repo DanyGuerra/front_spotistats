@@ -33,10 +33,12 @@ import { TrackCardSkeletonComponent } from '../skeletons/cards/track-card-skelet
 })
 export class CardUserDataComponent implements OnInit {
   userInfo!: IUserInfoStored | null;
-  topArtist!: TopArtistItem;
-  topTrack!: Track;
+  topArtist?: TopArtistItem;
+  topTrack?: Track;
   isloadingSubscription!: Subscription;
   isLoading: ILoadingSubject = initialIsLoading;
+  noArtistData = false;
+  noTrackData = false;
 
   constructor(private statsService: StatsService) {}
 
@@ -45,14 +47,28 @@ export class CardUserDataComponent implements OnInit {
     const userInfo: IUserInfoStored | null = JSON.parse(userDataStored!!);
     this.statsService.getTopArtists(TopTimeRange.LongTerm, 1).subscribe({
       next: (data) => {
-        this.topArtist = data.data.items[0];
+        if (data?.data?.items?.length > 0) {
+          this.topArtist = data.data.items[0];
+        } else {
+          this.noArtistData = true;
+        }
       },
+      error: () => {
+        this.noArtistData = true;
+      }
     });
 
     this.statsService.getTopTracks(TopTimeRange.LongTerm, 1).subscribe({
       next: (data) => {
-        this.topTrack = data.data.items[0];
+        if (data?.data?.items?.length > 0) {
+          this.topTrack = data.data.items[0];
+        } else {
+          this.noTrackData = true;
+        }
       },
+      error: () => {
+        this.noTrackData = true;
+      }
     });
 
     this.isloadingSubscription = this.statsService.isDataLoading().subscribe({
