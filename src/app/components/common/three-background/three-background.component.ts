@@ -15,29 +15,30 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
   private renderer!: THREE.WebGLRenderer;
   private animationFrameId: number | null = null;
   
-  // Interacción del Usuario
+  // User interaction
   private raycaster = new THREE.Raycaster();
   private mouse = new THREE.Vector2(-1000, -1000); 
   private intersectPoint = new THREE.Vector3();
   private planeForRaycast = new THREE.Plane(new THREE.Vector3(0, 1, 0), 100); 
 
-  // Malla Instanciada para los gráficos de barra (Ondas + Stats)
+  // Instanced Mesh for bar graphs (Waves + Stats)
   private instancedMesh!: THREE.InstancedMesh;
+  private isMobile = false;
   private cols = 120;
   private rows = 50;
   private spacingX = 22;
   private spacingZ = 22;
   private globalTime = 0;
 
-  // Optimización de Memoria
+  // Memory Optimization
   private dummy = new THREE.Object3D();
   private color = new THREE.Color();
   
-  // Temática de Colores: Ondas Musicales de Spotify
-  private colorBase = new THREE.Color('#0A0A0A'); // Fondo oscuro pero visible 
-  private colorMid = new THREE.Color('#1E1E1E'); // Gris tenue para dar volumen
-  private colorPrimary = new THREE.Color('#1DB954'); // Verde Spotify Clásico vivo
-  private colorHighlight = new THREE.Color('#4bd57a'); // Verde iluminado para picos altos sin cegar al texto
+  // Color Theme: Spotify Musical Waves
+  private colorBase = new THREE.Color('#0A0A0A'); // Dark but visible background
+  private colorMid = new THREE.Color('#1E1E1E'); // Dim gray for volume
+  private colorPrimary = new THREE.Color('#1DB954'); // Vivid Classic Spotify Green
+  private colorHighlight = new THREE.Color('#4bd57a'); // Illuminated green for high peaks without blinding the text
   
   constructor(private ngZone: NgZone) {}
 
@@ -78,31 +79,39 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
 
   private initThreeJs(): void {
     const container = this.rendererContainer.nativeElement;
+    this.isMobile = window.innerWidth < 768;
     
+    // Performance optimizations for mobile devices
+    this.cols = this.isMobile ? 40 : 120;
+    this.rows = this.isMobile ? 24 : 50;
+    this.spacingX = this.isMobile ? 44 : 22;
+    this.spacingZ = this.isMobile ? 44 : 22;
+
     this.scene = new THREE.Scene();
     
-    // Profundidad de Niebla inmersiva ajustada a un balance medio
+    // Immersive Fog depth adjusted to a medium balance
     this.scene.fog = new THREE.FogExp2(0x0A0A0A, 0.0012);
 
-    // Cámara posicionada viendo "Hacia Abajo y al Horizonte" como un panel de datos
+    // Camera positioned looking "Downward and to the Horizon" like a data panel
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 4000);
     this.camera.position.set(0, 250, 700);
     this.camera.lookAt(0, -100, 0);
 
     this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' }); 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.isMobile ? 1 : 2));
     container.appendChild(this.renderer.domElement);
 
-    // Construcción del Campo de Bar Graphs (Ecualizador)
+    // Bar Graphs Field Construction (Equalizer)
     const count = this.cols * this.rows;
-    // Cajas sólidas y verticales
-    const geometry = new THREE.BoxGeometry(11, 1, 11);
+    // Solid vertical boxes
+    const boxSize = this.isMobile ? 22 : 11;
+    const geometry = new THREE.BoxGeometry(boxSize, 1, boxSize);
     
     const material = new THREE.MeshBasicMaterial({ 
        color: 0xffffff,
        transparent: true,
-       opacity: 0.70 // Balance perfecto del 70%, no lastima los textos ni tampoco borra tu arte del mapa
+       opacity: 0.70 // Perfect 70% balance, doesn't hurt text legibility or fade out your art
     });
 
     this.instancedMesh = new THREE.InstancedMesh(geometry, material, count);
@@ -114,12 +123,14 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
       const renderLoop = () => {
         this.animationFrameId = requestAnimationFrame(renderLoop);
 
-        // Disparar el Raycaster al plano invisible para calcular el punto exacto bajo el mouse en 3D
-        this.raycaster.setFromCamera(this.mouse, this.camera);
-        this.raycaster.ray.intersectPlane(this.planeForRaycast, this.intersectPoint);
+        // Fire the Raycaster to the invisible plane to calculate the exact point under the mouse in 3D
+        if (!this.isMobile) {
+          this.raycaster.setFromCamera(this.mouse, this.camera);
+          this.raycaster.ray.intersectPlane(this.planeForRaycast, this.intersectPoint);
+        }
 
         this.globalTime += 1;
-        const time = this.globalTime * 0.008; // 3 veces más lento que antes (0.03 -> 0.008)
+        const time = this.globalTime * 0.008; // Slower time scaling
 
         let index = 0;
 
@@ -129,52 +140,52 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
               const worldX = (x - this.cols / 2) * this.spacingX;
               const worldZ = (z - this.rows / 2) * this.spacingZ;
               
-              // 1. ONDA MUSICAL BASE Múltiple Cruzada (Frecuencias más bajas y relajantes = "Smoth")
+              // 1. BASE MUSICAL WAVE Multiple Crossed (Lower, relaxing frequencies = "Smooth")
               let waveAmplitude = Math.sin(worldX * 0.006 + time) * 12 
                                 + Math.cos(worldZ * 0.008 - time * 0.5) * 12;
               
-              // 2. LA FRECUENCIA MAESTRA (Una pista de audio central simulada de Izq a Der)
+              // 2. MASTER FREQUENCY (A simulated central audio track from Left to Right)
               const centerDistZ = Math.abs(worldZ);
               if (centerDistZ < 300) {
-                  // A mayor cercanía al centro, mayor volumen estadístico
+                  // Closer to the center means higher statistical volume
                   const trackPulse = Math.max(0, 1.0 - (centerDistZ / 300));
-                  // Forma de onda de altibajos agresiva relajada un poco
+                  // Aggressive up and down waveform shape slightly relaxed
                   const eqWave = Math.sin(worldX * 0.02 + time * 2) * Math.cos(worldX * 0.01) * 35;
                   waveAmplitude += trackPulse * eqWave;
               }
 
-              // 3. INTERACCIÓN DEL USUARIO (El Cursor levanta la estadística y cambia su espectro)
+              // 3. USER INTERACTION (Cursor raises the statistic and changes its spectrum)
               let hoverInfluence = 0;
-              if (this.intersectPoint) {
+              if (this.intersectPoint && !this.isMobile) {
                   const dx = worldX - this.intersectPoint.x;
                   const dz = worldZ - this.intersectPoint.z;
                   const dist = Math.sqrt(dx * dx + dz * dz);
 
-                  // Radio de influencia sobre el mar de datos
+                  // Radius of influence over the data sea
                   if (dist < 280) {
                       hoverInfluence = Math.pow((280 - dist) / 280, 2);
-                      // Onda de rebote interactiva con menos punzada agresiva (Smothness visual)
+                      // Interactive bounce wave with less aggressive spiking (Visual smoothness)
                       const interactiveSpike = Math.cos(dist * 0.06 - time * 4) * 50;
-                      // El usuario literalmente forma picos topográficos
+                      // The user literally shapes topographic peaks
                       waveAmplitude += Math.max(0, interactiveSpike * hoverInfluence);
                   }
               }
 
-              // Establecemos una altura mínima sana
+              // Establish a healthy minimum height
               const finalHeight = Math.max(2, waveAmplitude + 40);
               
-              // Crecimientos hacia arriba anclando el piso. (y = height / 2 ajusta el fondo siempre a -100)
+              // Growing upwards from the floor. (y = height / 2 keeps the bottom always at -100)
               this.dummy.position.set(worldX, -150 + finalHeight / 2, worldZ);
               this.dummy.scale.set(1, finalHeight, 1);
               this.dummy.updateMatrix();
               
               this.instancedMesh.setMatrixAt(index, this.dummy.matrix);
 
-              // 4. MAPEO DE TEMPERATURA / COLORES ESTADÍSTICOS
-              // Dependiendo del "Volumen de Data" (Altura de la onda), pintamos el bloque
+              // 4. STATISTICAL TEMPERATURE / COLOR MAPPING
+              // Depending on the "Data Volume" (Wave height), we paint the block
               const colorRatio = Math.min(1.0, Math.max(0, finalHeight / 110)); 
               
-              // Lerp Tricolor: Oscuro -> Verde Spotify -> Blanco Brillante
+              // Tricolor Lerp: Dark -> Spotify Green -> Bright White
               if (colorRatio < 0.5) {
                   const localRatio = colorRatio * 2.0; 
                   this.color.copy(this.colorBase).lerp(this.colorPrimary, localRatio);
@@ -183,7 +194,7 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
                   this.color.copy(this.colorPrimary).lerp(this.colorHighlight, localRatio);
               }
 
-              // Sobreescribir con resplandor verde radioactivo si el mouse está interactuando encima
+              // Overwrite with radioactive green glow if the mouse is interacting on top
               if (hoverInfluence > 0) {
                   this.color.lerp(this.colorHighlight, hoverInfluence * 0.6);
               }
@@ -193,7 +204,7 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
            }
         }
         
-        // Avisar a la GPU de la mutación algorítmica
+        // Notify the GPU of the algorithmic mutation
         this.instancedMesh.instanceMatrix.needsUpdate = true;
         if(this.instancedMesh.instanceColor) this.instancedMesh.instanceColor.needsUpdate = true;
 
@@ -209,13 +220,13 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.isMobile ? 1 : 2));
   }
 
   private onMouseMove(event: MouseEvent): void {
     const clientX = event.clientX;
     const clientY = event.clientY;
-    // Normalizar coordenadas del puntero de -1 a 1 para el Raycaster de la Cámara WebGL
+    // Normalize pointer coordinates from -1 to 1 for the WebGL Camera Raycaster
     this.mouse.x = (clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(clientY / window.innerHeight) * 2 + 1;
   }
