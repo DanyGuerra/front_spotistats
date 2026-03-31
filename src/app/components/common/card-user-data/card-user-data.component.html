@@ -43,21 +43,21 @@
       </div>
 
       <app-artist-card-item
+        *ngIf="topArtist"
         [artist]="topArtist"
         class="w-full"
         [showRank]="false"
-        *ngIf="topArtist && !isLoading.artists"
       ></app-artist-card-item>
 
       <!-- SKELETON TOP ARTIST -->
 
       <app-artist-card-skeleton
-        *ngIf="!topArtist && isLoading.artists"
+        *ngIf="!topArtist && !noArtistData"
         class="w-full"
       ></app-artist-card-skeleton>
 
       <!-- NO DATA -->
-      <h3 *ngIf="topArtist === undefined && !isLoading.artists">No data</h3>
+      <h3 *ngIf="noArtistData" class="text-color-secondary mt-2">{{ "STATS.NO_DATA" | translate }}</h3>
     </div>
 
     <!-- DATA TOP TRACK -->
@@ -69,20 +69,20 @@
       </div>
 
       <app-track-card-item
-        *ngIf="topTrack && !isLoading.tracks"
+        *ngIf="topTrack"
         [trackItem]="topTrack"
         class="w-full"
         [showRank]="false"
       ></app-track-card-item>
 
       <app-track-card-skeleton
-        *ngIf="!topTrack && isLoading.tracks"
+        *ngIf="!topTrack && !noTrackData"
         [showRank]="false"
         class="w-full"
       ></app-track-card-skeleton>
 
       <!-- NO DATA -->
-      <h3 *ngIf="topTrack === undefined && !isLoading.tracks">No data</h3>
+      <h3 *ngIf="noTrackData" class="text-color-secondary mt-2">{{ "STATS.NO_DATA" | translate }}</h3>
     </div>
   </div>
 </div>
