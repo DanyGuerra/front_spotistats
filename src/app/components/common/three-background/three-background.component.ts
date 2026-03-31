@@ -16,6 +16,7 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
   private animationFrameId: number | null = null;
   private intersectionObserver!: IntersectionObserver;
   private isVisible = true;
+  private lastWidth = window.innerWidth;
   
   // Lightweight Particle System
   private particles!: THREE.Points;
@@ -29,29 +30,19 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
   ngAfterViewInit(): void {
     this.initThreeJs();
     this.animate();
-
-    this.onWindowResize = this.onWindowResize.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
     
     window.addEventListener('resize', this.onWindowResize);
     window.addEventListener('mousemove', this.onMouseMove);
-
-    this.intersectionObserver = new IntersectionObserver((entries) => {
-      this.isVisible = entries[0].isIntersecting;
-    }, { threshold: 0 });
-    this.intersectionObserver.observe(this.rendererContainer.nativeElement);
+    window.addEventListener('scroll', this.onScroll);
   }
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.onWindowResize);
     window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('scroll', this.onScroll);
 
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
-    }
-    
-    if (this.intersectionObserver) {
-      this.intersectionObserver.disconnect();
     }
 
     if (this.renderer) {
@@ -154,7 +145,11 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
-  private onWindowResize(): void {
+  private onWindowResize = (): void => {
+    // Prevent the collapsing address bar on mobile from triggering heavy WebGL re-allocations during scroll
+    if (window.innerWidth < 768 && window.innerWidth === this.lastWidth) return;
+    this.lastWidth = window.innerWidth;
+
     if(!this.camera || !this.renderer) return;
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
@@ -162,9 +157,15 @@ export class ThreeBackgroundComponent implements OnInit, AfterViewInit, OnDestro
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   }
 
-  private onMouseMove(event: MouseEvent): void {
+  private onMouseMove = (event: MouseEvent): void => {
     // Normalize coordinates for camera parallax offset
     this.targetMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.targetMouse.y = (event.clientY / window.innerHeight) * 2 - 1;
+  }
+
+  private onScroll = (): void => {
+    // True optimization: stop rendering once scrolled past the hero section
+    // Using 1.5x windowHeight to provide a safe buffer
+    this.isVisible = window.scrollY < window.innerHeight * 1.5;
   }
 }
