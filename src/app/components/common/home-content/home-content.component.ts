@@ -61,8 +61,11 @@ export class HomeContentComponent {
   }
 
   ngAfterViewInit() {
-    this.scrollTriggerCard();
-    // this.scrollTriggerNebula();
+    setTimeout(() => {
+      this.scrollTriggerCard();
+      // this.scrollTriggerNebula();
+      ScrollTrigger.refresh();
+    }, 300);
   }
 
   handleClick(url: string) {

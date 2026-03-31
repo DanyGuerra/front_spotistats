@@ -2,6 +2,9 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { TimelineSvgComponent } from '../icons/timeline-svg/timeline-svg.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
+
+gsap.registerPlugin(ScrollTrigger);
 import { IconHeartComponent } from '../icons/icon-heart/icon-heart.component';
 import { CommonModule } from '@angular/common';
 import { RippleButtonComponent } from '../ripple-button/ripple-button.component';
@@ -181,10 +184,13 @@ export class HomeTimelineComponent {
   }
 
   ngAfterViewInit() {
-    this.scrollTriggerText();
-    this.scrollTriggerButton();
-    this.scrollDrawPath();
-    this.scrollHearts();
+    setTimeout(() => {
+      this.scrollTriggerText();
+      this.scrollTriggerButton();
+      this.scrollDrawPath();
+      this.scrollHearts();
+      ScrollTrigger.refresh();
+    }, 300);
   }
 
   handleClick() {
