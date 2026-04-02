@@ -18,6 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
     '/stats/me',
     '/stats/top-artists',
     '/stats/top-tracks',
+    '/stats/recently-played',
+    '/auth/get-log-userid',
   ];
 
   constructor(private authService: AuthService) {}

@@ -86,11 +86,9 @@ export class AuthService {
           this.router.navigate(['/']);
         },
         error: () => {
-          const toast = this.translate.instant('TOAST') as ToastTranslation;
-          this.toastService.showError(
-            toast.ERROR.TITLE,
-            toast.ERROR.DESCRIPTION
-          );
+          localStorage.removeItem(LocalStorage.UserInfo);
+          this.isAuthenticatedSubject.next(false);
+          this.router.navigate(['/']);
         },
       });
   }
@@ -156,7 +154,8 @@ export class AuthService {
   logRefresh(id: string | null): Observable<IResponseAuthLog> {
     return this.http.post<IResponseAuthLog>(
       `${this.hostApiSpox}${this.hostApiSpoxContext}auth/token/refresh?id=${id}`,
-      {}
+      {},
+      { withCredentials: true }
     );
   }
 }
